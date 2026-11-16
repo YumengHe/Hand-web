@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>两只手的区别 · 无极 2 与 Sharpa Wave</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top">
+      <span class="kicker">Our Hardware · 无极 2 vs Sharpa Wave</span>
+      <span class="mast-actions">
+        <a class="ghost" href="index.html">← 文献库</a>
+        <a class="ghost" href="start.html">入门五步</a>
+        <a class="ghost" href="setup.html">Sharpa 开箱和接线</a>
+        <a class="ghost" href="notes.html">问答记录</a>
+        <button id="theme" class="ghost" type="button" aria-label="切换明暗主题">◐ 主题</button>
+      </span>
+    </div>
+    <h1>两只手的区别</h1>
+    <p class="lede">我们手上有 1 只无极 2 和 2 只 Sharpa Wave。这一页用大白话讲它们的关节、自由度和其他差别，以及这些差别对做实验意味着什么。</p>
+    <dl class="stats">
+      <div><dt>无极 2 自由度</dt><dd>20</dd></div>
+      <div><dt>Sharpa Wave 自由度</dt><dd>22</dd></div>
+      <div><dt>无极 2 重量</dt><dd>0.8 kg</dd></div>
+      <div><dt>Sharpa Wave 重量</dt><dd>1.3 kg</dd></div>
+    </dl>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section id="devices">
+    <h2>我们的设备清单</h2>
+    <p class="route-note">机身标签上写的型号记在这里，查资料、找厂商售后时要用。</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>设备</th><th>标签上的型号</th><th>怎么读</th><th>状态</th></tr></thead>
+        <tbody>
+          <tr><td>Sharpa 第 1 只</td><td><code>Wave SE-R-01</code></td><td>Wave 是产品名；SE 是规格较低的那一档；R 是右手（Right）；01 是代号</td><td>已确认，2026-11-15。已装到底座上</td></tr>
+          <tr><td>Sharpa 第 2 只</td><td class="na">还没看</td><td>如果是左手，中间应该是 L</td><td>待确认</td></tr>
+          <tr><td>无极 2</td><td class="na">还没看</td><td>需要确认是 2.1 还是 2.2 版，两版用的说明书不同</td><td>待确认</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <section>
+    <h2>一句话结论</h2>
+    <div class="verdicts">
+      <div class="verdict" style="--c: var(--c-teleop)">
+        <h3>无极 2：更轻、更灵活、反应更快</h3>
+        <p>每根手指 4 个关节，结构规整。关节能转的角度很大，手指还能往手背方向反着弯。电脑每秒和它通信 1000 次。但按官方文档，目前的 2.2 测试版<strong>没有触觉</strong>。</p>
+      </div>
+      <div class="verdict" style="--c: var(--c-rl)">
+        <h3>Sharpa Wave：更像人手、有精细触觉</h3>
+        <p>比无极 2 多 2 个关节：拇指多一个，小指根部多一个让手掌能“拢”起来的关节。每个指尖都有高精度触觉，能感觉到碰在哪、用了多大力、有没有打滑。代价是更重、更大。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>先搞懂：关节和自由度</h2>
+    <div class="explain">
+      <p><strong>关节</strong>就是手指上能弯的地方。看你自己的食指：从指尖往下数，有三处能弯。</p>
+      <p><strong>自由度</strong>（英文缩写 DoF）是“能独立控制的动作”的数量。一个关节不一定只有一个自由度。比如食指根部那个关节，既能<span class="k k-fe">前后弯</span>（握拳），又能<span class="k k-aa">左右摆</span>（张开五指），这就是一个关节、两个自由度。</p>
+      <p>机器人手上，<strong>一个自由度通常对应一个电机</strong>。所以“20 自由度”就是有 20 个电机，能独立做 20 种动作。数字越大手越灵活，但要控制的东西也越多。</p>
+    </div>
+    <h3 class="sub">关节的名字</h3>
+    <p class="route-note">论文和说明书里用的是解剖学缩写，对照自己的手看一遍就记住了。</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>缩写</th><th>在哪</th><th>大白话</th></tr></thead>
+        <tbody>
+          <tr><td><code>DIP</code></td><td>四指最靠近指尖的关节</td><td>指尖关节</td></tr>
+          <tr><td><code>PIP</code></td><td>四指中间的关节</td><td>中间关节</td></tr>
+          <tr><td><code>MCP</code></td><td>手指和手掌连接处</td><td>指根关节，握拳时凸起来的那排</td></tr>
+          <tr><td><code>IP</code></td><td>拇指上唯一的指间关节</td><td>拇指只有两节，所以只有一个</td></tr>
+          <tr><td><code>CMC</code></td><td>手掌里、靠近手腕处</td><td>掌根关节。拇指能转过来碰到其他手指，靠的就是它</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="route-note">动作有两种：<span class="k k-fe">弯曲/伸直</span>（英文 flexion/extension，缩写 FE 或 flex）和<span class="k k-aa">左右侧摆</span>（abduction/adduction，缩写 AA 或 abd）。</p>
+  </section>
+
+  <section>
+    <h2>关节分布图</h2>
+    <p class="route-note">每一列是一根手指，从下（手掌）到上（指尖）。每个圆点是一个自由度，也就是一个电机。</p>
+    <div class="legend">
+      <span><i class="dot fe"></i>弯曲/伸直</span>
+      <span><i class="dot aa"></i>左右侧摆</span>
+      <span><i class="dot palm"></i>手掌拢起</span>
+      <span><i class="dot extra"></i>带圈的 = 另一只手没有的</span>
+    </div>
+    <div class="hands">
+      <figure class="hand">
+        <figcaption><strong>无极 2</strong><span>20 自由度 · 每指 4 个</span></figcaption>
+        <div class="fingers" id="map-wuji"></div>
+      </figure>
+      <figure class="hand">
+        <figcaption><strong>Sharpa Wave</strong><span>22 自由度 · 拇指 5、小指 5、其余 4</span></figcaption>
+        <div class="fingers" id="map-sharpa"></div>
+      </figure>
+    </div>
+
+    <h3 class="sub">差的那 2 个自由度在哪</h3>
+    <div class="explain">
+      <p><strong>拇指的第二个关节（MCP）能不能左右摆。</strong>Sharpa 能，无极 2 不能。多了这个动作，拇指指腹能更正地对准其他手指，捏小东西时更稳。</p>
+      <p><strong>小指根部有没有“掌根关节”。</strong>Sharpa 有，能转 0–25°。你把拇指和小指对碰，会看到手掌小指那一侧拱起来，这就是它的作用。握锤子把、握球这类需要手掌包住东西的动作会受益。</p>
+      <p>除了这两处，两只手的四指结构完全一样：指根弯曲 + 指根侧摆 + 中间关节 + 指尖关节。</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>每个关节能转多少度</h2>
+    <p class="route-note">0° 是手指伸直。正数是往手心弯，负数是往手背反着弯。</p>
+    <div class="tablewrap">
+      <table class="num">
+        <thead><tr><th>关节</th><th>无极 2</th><th>Sharpa Wave</th><th>怎么理解</th></tr></thead>
+        <tbody>
+          <tr class="grp"><td colspan="4">四指（食指、中指、无名指、小指）</td></tr>
+          <tr><td>指根 · 弯曲</td><td>−60° ~ 90°</td><td>−10° ~ 84°</td><td>无极能往手背反弯很多</td></tr>
+          <tr><td>指根 · 侧摆</td><td>±40°</td><td>±18°</td><td>无极手指能张得更开</td></tr>
+          <tr><td>中间关节</td><td>−60° ~ 120°</td><td>0° ~ 95°</td><td>无极范围更大</td></tr>
+          <tr><td>指尖关节</td><td>−60° ~ 90°</td><td>0° ~ 75°</td><td>无极范围更大</td></tr>
+          <tr><td>小指掌根</td><td class="na">没有</td><td>0° ~ 25°</td><td>Sharpa 独有</td></tr>
+          <tr class="grp"><td colspan="4">拇指</td></tr>
+          <tr><td>掌根 · 弯曲</td><td>−68° ~ 74°</td><td>−5° ~ 105°</td><td>—</td></tr>
+          <tr><td>掌根 · 侧摆</td><td>−85° ~ 40°</td><td>±18°</td><td>无极拇指根部摆动范围大得多</td></tr>
+          <tr><td>第二关节 · 弯曲</td><td>−60° ~ 90°</td><td>−25° ~ 75°</td><td>—</td></tr>
+          <tr><td>第二关节 · 侧摆</td><td class="na">没有</td><td>±18°</td><td>Sharpa 独有</td></tr>
+          <tr><td>指间关节</td><td>−60° ~ 90°</td><td>0° ~ 95°</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="explain">
+      <p><strong>怎么看这张表：</strong>Sharpa 的角度范围和真人的手差不多；无极 2 的范围比人手大，能做出人手做不到的姿势（比如手指大幅向后翻）。范围大意味着手能摆出的姿势更多，但用人手动作去教它时，人做不出来的那部分范围就用不上。</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>其他差别</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>项目</th><th>无极 2</th><th>Sharpa Wave</th><th>大白话</th></tr></thead>
+        <tbody>
+          <tr><td>触觉</td><td>2.2 测试版<strong>没有</strong>；表皮只是软垫</td><td>每个指尖都有；能测三个方向的力和扭转，还能感觉打滑</td><td>最大的差别。有触觉才能做“靠摸”的研究</td></tr>
+          <tr><td>触觉精细度</td><td class="na">—</td><td><strong>我们的 SE 版：60×60 个感应点</strong>（高配版是 240×240）</td><td>指尖像一块小摄像头，点数越多“摸”得越清楚</td></tr>
+          <tr><td>力矩传感器</td><td>官方文档未写</td><td>每根手指根部 1 个，共 5 个</td><td>能测出每根手指根部受了多大的扭力，是触觉之外的另一种“感觉”</td></tr>
+          <tr><td>重量</td><td>约 0.8 kg（裸手 0.65 kg）</td><td>1.3 kg</td><td>装在机械臂末端，越轻越省机械臂的力气</td></tr>
+          <tr><td>尺寸</td><td>180 × 80 × 40 mm</td><td>208 × 90 × 50 mm</td><td>无极接近普通成年人的手，Sharpa 略大</td></tr>
+          <tr><td>电机怎么带动关节</td><td>电机直接带关节，能被外力推动</td><td>22 个厂商自研的驱动模块</td><td>无极的手指你用手一掰就动，电机自己能感觉到被推了</td></tr>
+          <tr><td>通信频率</td><td>每秒 1000 次</td><td>每秒 500 次</td><td>电脑多久和手“对话”一次。越高反应越快</td></tr>
+          <tr><td>指尖力气</td><td>官方文档未写</td><td><strong>SE 版 12 N</strong>（高配版 20 N）</td><td>12 N 大约是指尖顶起 1.2 公斤的力</td></tr>
+          <tr><td>能捏住的最细的东西</td><td>0 mm（指尖能碰到一起）</td><td>10 mm</td><td>拿针、拿纸片这类极细的东西无极有优势</td></tr>
+          <tr><td>供电</td><td>12 V</td><td>18–28 V</td><td>电源不通用，别插错</td></tr>
+          <tr><td>网线接口</td><td>百兆以太网</td><td>千兆以太网</td><td>Sharpa 要传触觉图像，所以需要更快的网</td></tr>
+          <tr><td>仿真模型</td><td>官方提供</td><td>官方提供，另有触觉仿真和强化学习示例</td><td>两只手都能先在电脑里练</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>对做实验意味着什么</h2>
+    <div class="explain">
+      <p><strong>同一个方法想在两只手上都跑：</strong>四指部分结构一样，最容易对应。拇指和小指要单独处理：Sharpa 多出来的 2 个关节，要么固定不动，要么额外给它们设计动作。</p>
+      <p><strong>把人手动作“翻译”给机器人手（重定向）：</strong>Sharpa 的结构和角度范围更接近人手，翻译起来更直接。无极 2 也能做，但它的拇指少一个侧摆，对捏的姿势会有一点差别。</p>
+      <p><strong>想研究触觉：</strong>只能用 Sharpa。而且有两只，可以做双手配合的任务。</p>
+      <p><strong>想研究不靠触觉、只靠关节反馈的手内操作：</strong>无极 2 很合适。它的电机能被外力推动，手指碰到东西时电机电流会变化，这本身就是一种粗略的“感觉”。通信每秒 1000 次也有利于快速动作。</p>
+      <p><strong>在电脑里练好再搬到真手：</strong>两只手关节数不同、角度范围不同，所以要各自训练一遍，不能把一只手练出来的程序直接装到另一只上。</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>需要你们自己确认的</h2>
+    <div class="caveat">
+      <ul>
+        <li><strong>无极 2 的版本号。</strong>这一页的无极数据来自官方文档里 2.2（测试版）的说明，文档明确说它是“无触觉的原型机”，参数不代表最终产品，2.1 版用的是另一份手册。请看一下你们那只手的标签。</li>
+        <li><strong>Sharpa 的型号已确认是 Wave SE（标签 Wave SE-R-01，R 表示右手）。</strong>SE 是两档里规格较低的一档：触觉 60×60、每秒 30 帧、指尖力 12 N，不能输出原始触觉图像。官网规格表没有给两列数值标注型号，这里按第三方资料对应到 SE，建议拿到说明书后再核对一次。另一只 Sharpa 的标签也请看一下。</li>
+        <li><strong>无极 2 的指尖力。</strong>官方文档没有写。经销商页面给的数字在 12 N 到 15 N 之间，互相不一致，这里没有采用。</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <p>数据来源：
+    <a href="https://docs.wuji.tech/docs/en/wuji-hand/latest/overview" target="_blank" rel="noopener">无极官方文档</a>、
+    <a href="https://github.com/wuji-technology/wuji-hand-description" target="_blank" rel="noopener">无极官方模型文件</a>、
+    <a href="https://www.sharpa.com/pages/wave" target="_blank" rel="noopener">Sharpa 官网规格表</a>、
+    <a href="https://github.com/sharpa-robotics/sharpa-urdf-usd-xml" target="_blank" rel="noopener">Sharpa 官方模型文件</a>（关节清单取自其中的右手 URDF）、<a href="https://www.sharpa.com/pages/documentation" target="_blank" rel="noopener">Sharpa 官方用户手册</a>（角度范围、力矩传感器）。查询日期 2026-11-15。
+  </p>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var root = document.documentElement;
+  try { var t = JSON.parse(localStorage.getItem('hand.theme')); if (t) root.dataset.theme = t; } catch (e) {}
+  document.getElementById('theme').addEventListener('click', function () {
+    var cur = root.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    var next = cur === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('hand.theme', JSON.stringify(next)); } catch (e) {}
+  });
+
+  // 每根手指从指尖到手掌列出关节；每个关节里是它的自由度类型。
+  // fe = 弯曲/伸直，aa = 左右侧摆，palm = 手掌拢起；带 ! 的是另一只手没有的。
+  var FINGER = [['指尖 DIP', ['fe']], ['中间 PIP', ['fe']], ['指根 MCP', ['fe', 'aa']]];
+  var HANDS = {
+    'map-wuji': [
+      ['拇指', [['指间 IP', ['fe']], ['第二 MCP', ['fe']], ['掌根 CMC', ['fe', 'aa']]]],
+      ['食指', FINGER], ['中指', FINGER], ['无名指', FINGER], ['小指', FINGER]
+    ],
+    'map-sharpa': [
+      ['拇指', [['指间 IP', ['fe']], ['第二 MCP', ['fe', 'aa!']], ['掌根 CMC', ['fe', 'aa']]]],
+      ['食指', FINGER], ['中指', FINGER], ['无名指', FINGER],
+      ['小指', FINGER.concat([['掌根 CMC', ['palm!']]])]
+    ]
+  };
+  var NAME = { fe: '弯曲/伸直', aa: '左右侧摆', palm: '手掌拢起' };
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+
+  Object.keys(HANDS).forEach(function (id) {
+    var box = document.getElementById(id);
+    HANDS[id].forEach(function (f) {
+      var col = el('div', 'finger');
+      var total = 0;
+      var chain = el('div', 'chain');
+      // 所有手指底部对齐：不足 4 行的在顶部补空位
+      for (var pad = f[1].length; pad < 4; pad++) chain.appendChild(el('div', 'joint empty'));
+      f[1].forEach(function (j) {
+        var row = el('div', 'joint');
+        var dots = el('div', 'dots');
+        j[1].forEach(function (d) {
+          var extra = d.slice(-1) === '!';
+          var kind = extra ? d.slice(0, -1) : d;
+          var dot = el('i', 'dot ' + kind + (extra ? ' extra' : ''));
+          dot.title = NAME[kind] + (extra ? '（另一只手没有）' : '');
+          dots.appendChild(dot);
+          total++;
+        });
+        row.appendChild(dots);
+        row.appendChild(el('span', 'jname', j[0]));
+        chain.appendChild(row);
+      });
+      col.appendChild(chain);
+      col.appendChild(el('div', 'fname', f[0]));
+      col.appendChild(el('div', 'fcount', total + ' 个'));
+      box.appendChild(col);
+    });
+  });
+})();
+</script>
+</body>
+</html>

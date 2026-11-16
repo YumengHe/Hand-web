@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sharpa 开箱和接线 · 灵巧手</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top">
+      <span class="kicker">Sharpa Wave SE · Setup</span>
+      <span class="mast-actions">
+        <a class="ghost" href="index.html">← 文献库</a>
+        <a class="ghost" href="start.html">入门五步</a>
+        <a class="ghost" href="compare.html">两只手的区别</a>
+        <a class="ghost" href="notes.html">问答记录</a>
+        <button id="theme" class="ghost" type="button" aria-label="切换明暗主题">◐ 主题</button>
+      </span>
+    </div>
+    <h1>Sharpa Wave SE：开箱、固定和接线</h1>
+    <p class="lede">从拆箱到手指能动：装到底座上、接线、通电、连电脑、校准，以及不用的时候怎么关。全部做完，就可以开始“入门五步”了。</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section id="sharpa-setup">
+    <p class="route-note">以下步骤整理自 Sharpa 官方用户手册的 Get Started 一章。我们这只的标签是 <code>Wave SE-R-01</code>：SE 是型号，R 是右手。（<a href="compare.html#devices">设备清单</a>）</p>
+    <div class="tools manual-links">
+      <div><b>官方手册</b><a href="https://www.sharpa.com/pages/documentation" target="_blank" rel="noopener">在线版</a> · <a href="https://documentationpdf.sharpa.com/api/pdf/wave" target="_blank" rel="noopener">PDF 版（174 页）</a></div>
+      <div><b>注意</b>手册标题写的是 W01，没有单独提 SE。开箱和接线应该是一样的，但性能数字（指尖力、触觉）以 SE 自己的规格为准。</div>
+    </div>
+
+    <h3 class="sub">箱子里应该有这 9 样</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>东西</th><th>是干什么的</th></tr></thead>
+        <tbody>
+          <tr><td>手本体</td><td>—</td></tr>
+          <tr><td>法兰转接件（Flange adapter）</td><td>一个圆形金属件，夹在手和底座之间</td></tr>
+          <tr><td><strong>底座（Base）</strong></td><td><strong>让手立在桌面上用的支架。官方自带，不用自己 3D 打印</strong></td></tr>
+          <tr><td>L 形扳手</td><td>拧螺丝用</td></tr>
+          <tr><td>螺丝</td><td>两种：M4×12 十颗（细的），M6×10 八颗（粗的）。怎么分见下面的图</td></tr>
+          <tr><td>接线盒（Connection box）</td><td>一个小盒子，把手的专用接口变成普通的电源口和网线口</td></tr>
+          <tr><td>电源适配器</td><td>把墙上的交流电变成手用的直流电，线长 3.5 米。它不是充电器，手里没有电池，用的时候要一直插着</td></tr>
+          <tr><td>网线</td><td>接线盒连电脑</td></tr>
+          <tr><td>手腕线（Wrist cable）</td><td>手连接线盒，2 米长，两头是带螺纹的圆形插头</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <h3 class="sub">先分清两种螺丝</h3>
+    <div class="explain">
+      <p>“M” 后面的数字是螺丝杆的<strong>粗细</strong>（直径，单位毫米），“×” 后面的数字是螺丝杆的<strong>长度</strong>。所以 <strong>M4 是细的，M6 是粗的</strong>。</p>
+    </div>
+    <figure class="screws">
+      <svg viewBox="0 0 560 264" role="img" aria-label="M4×12 和 M6×10 两种螺丝按相同比例画出的对比图：M4 更细更长，M6 更粗更短">
+        <!-- M4 x 12 -->
+        <g transform="translate(150,34)">
+          <rect class="sc-head" x="-28" y="0" width="56" height="32" rx="5"/>
+          <rect class="sc-shaft" x="-16" y="32" width="32" height="96"/>
+          <g class="sc-thread"><path d="M-16 44h32M-16 56h32M-16 68h32M-16 80h32M-16 92h32M-16 104h32M-16 116h32"/></g>
+          <g class="sc-dim">
+            <path d="M-16 144h32M-16 138v12M16 138v12"/>
+            <text x="0" y="168" text-anchor="middle">粗 4 毫米</text>
+            <path d="M-46 32v96M-52 32h12M-52 128h12"/>
+            <text x="-58" y="85" text-anchor="end">长 12 毫米</text>
+          </g>
+          <text class="sc-name" x="0" y="200" text-anchor="middle">M4 × 12</text>
+          <text class="sc-note" x="0" y="216" text-anchor="middle">细、长 · 10 颗 · 固定手</text>
+        </g>
+        <!-- M6 x 10 -->
+        <g transform="translate(410,34)">
+          <rect class="sc-head" x="-40" y="0" width="80" height="48" rx="6"/>
+          <rect class="sc-shaft" x="-24" y="48" width="48" height="80"/>
+          <g class="sc-thread"><path d="M-24 62h48M-24 76h48M-24 90h48M-24 104h48M-24 118h48"/></g>
+          <g class="sc-dim">
+            <path d="M-24 144h48M-24 138v12M24 138v12"/>
+            <text x="0" y="168" text-anchor="middle">粗 6 毫米</text>
+            <path d="M-58 48v80M-64 48h12M-64 128h12"/>
+            <text x="-70" y="93" text-anchor="end">长 10 毫米</text>
+          </g>
+          <text class="sc-name" x="0" y="200" text-anchor="middle">M6 × 10</text>
+          <text class="sc-note" x="0" y="216" text-anchor="middle">粗、短 · 8 颗 · 固定底座</text>
+        </g>
+      </svg>
+      <figcaption>两颗螺丝按同一比例画的示意图（放大了约 2 倍）。螺丝头的形状是示意，以实物为准；螺丝杆的粗细和长度是按规格画的。</figcaption>
+    </figure>
+    <div class="explain">
+      <p><strong>最简单的分法：</strong>把两种螺丝并排放，杆更粗、更短的是 M6，杆更细、更长的是 M4。数量也能帮你确认：10 颗的是 M4，8 颗的是 M6。</p>
+      <p><strong>拧不进去就停。</strong>螺丝拿错了会明显插不进或者晃荡，不要硬拧，换另一种试试。</p>
+    </div>
+
+    <h3 class="sub">第一部分：把手装到底座上</h3>
+    <div class="pitfall">
+      <strong>踩过的坑：顺序不能反。</strong>一定要<strong>先把转接件装到底座上</strong>，再把手装到转接件上。如果先把手和转接件装在一起，手会挡住 M6 螺丝的位置，M6 就拧不上了，只能拆掉重来。<span class="pitfall-src">实测，2026-11-15</span>
+    </div>
+    <ol class="plain">
+      <li>用 <strong>4 颗 M6 螺丝（粗的那种）</strong>把法兰转接件固定到底座上。对角线交替着拧紧，不要一颗拧死再拧下一颗。</li>
+      <li>把手放到转接件上。</li>
+      <li>用 <strong>6 颗 M4 螺丝（细的那种）</strong>把手固定住。</li>
+      <li>把装好的整体放在平整、稳当的桌面上。</li>
+    </ol>
+    <p class="aside"><strong>实际用量（实测，2026-11-15）：</strong>M6 用 4 颗，M4 用 6 颗。箱子里给的是 M6 八颗、M4 十颗，所以装完会各剩 4 颗，是正常的，留着当备用。</p>
+
+    <h3 class="sub">第二部分：接线</h3>
+    <ol class="plain">
+      <li><strong>先确认没通电。</strong></li>
+      <li><strong>接手腕线。</strong>一头插手（插座在手腕背面），一头插接线盒。插头上有个定位的凸起，对准插座的缺口，顺着直推进去，再把外圈的螺母拧到锁紧。对不准不要硬插。</li>
+      <li><strong>接网线。</strong>一头插接线盒，一头插电脑。</li>
+      <li><strong>接电源。</strong>先把电源适配器插到接线盒的圆孔上，最后再插墙上的插座。</li>
+    </ol>
+    <p class="aside">接线盒上有两个电源口（一个圆孔、一个黄色的 XT30 口）。只用圆孔那个配原装适配器，两个不能同时接。</p>
+
+    <h3 class="sub">第三部分：通电检查</h3>
+    <ol class="plain">
+      <li>通电后等大约 20 秒。这期间不要碰指尖。</li>
+      <li>接线盒上的灯<strong>常亮绿色</strong>，说明供电正常。</li>
+      <li>手背上的灯变成<strong>青色、一明一暗像呼吸一样</strong>，说明手启动好了，电脑可以找到它了。</li>
+    </ol>
+
+    <h3 class="sub" id="lights">手背上的灯是什么意思</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>灯的样子</th><th>意思</th><th>怎么办</th></tr></thead>
+        <tbody>
+          <tr><td>青色，一明一暗</td><td>启动好了，待命中</td><td>正常，不用管</td></tr>
+          <tr><td>白色常亮</td><td>已启用，正在工作</td><td>正常，不用管</td></tr>
+          <tr><td><strong>黄色常亮</strong></td><td><strong>有一条“警告”</strong>：手发现了点小问题，但还没到出错的程度</td><td>在 Sharpa Pilot 里看故障代码（FaultCode），它会说具体是什么</td></tr>
+          <tr><td>红色常亮</td><td>出错了</td><td>停止操作，看故障代码</td></tr>
+          <tr><td>红色闪烁</td><td>严重故障</td><td>立刻停止操作，看故障代码</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="explain">
+      <p><strong>黄灯时先试这几样</strong>（不需要连电脑）：确认没有东西碰着或压着手指；摸一下外壳是不是很烫，烫就断电放凉；然后把电源从墙上拔掉，等十几秒再插上，等 20 秒，期间不要碰手。</p>
+      <p><strong>还是黄灯</strong>：就必须连上电脑，在 Sharpa Pilot 里读故障代码。常见的警告有：关节被掰过了头、关节受力太大、温度偏高（70°C 以上）、触觉配置读写出错。</p>
+      <p><strong>别看错灯</strong>：这张表说的是<strong>手背上</strong>那个灯。接线盒上的电源灯应该是绿色。网线插口旁边的小灯闪黄色或橙色是正常的，那只是表示网线在传数据。</p>
+    </div>
+
+    <h3 class="sub">第四部分：让电脑连上它</h3>
+    <div class="pitfall">
+      <strong>踩过的坑：电脑只有一个网口。</strong>手要占一个网口，上网也要占一个。解决办法是买一个“USB 转网口”的转接头（USB 3.0、千兆），原来的网口继续上网，新的专门连手。临时想试的话，可以先下载好软件，再把上网的网线拔下来换成连手的。<span class="pitfall-src">实测，2026-11-15 · 详见<a href="notes.html#q6">问答记录</a></span>
+    </div>
+    <ol class="plain">
+      <li>电脑装 Ubuntu 22.04，安装官方桌面软件。<strong>这个软件以前叫 Sharpa Pilot，现在改名叫 Sharpa Wave</strong>，是同一个东西。官网下载页上没有直接的下载按钮，要到 GitHub 的<a href="https://github.com/sharpa-robotics/sharpa-wave/releases" target="_blank" rel="noopener">发布页</a>去下。当前最新版是 2.1.0（2026-11-06 发布），<a href="https://github.com/sharpa-robotics/sharpa-wave/releases/download/v2.1.0/sharpa-wave_2.1.0_amd64_linux.deb">点这里直接下载</a>，大约 310 MB。
+        <br>下载完在终端里运行：<code>cd ~/Downloads</code>，然后 <code>sudo dpkg -i sharpa-wave_2.1.0_amd64_linux.deb</code>。如果提示缺东西，再运行 <code>sudo apt-get install -f</code>。装好后在应用菜单里找 Sharpa Wave，或者终端运行 <code>sharpa-wave</code>。
+        <br><strong>✅ 我们的台式机是 Ubuntu 24.04，已装好 2.1.0（2026-11-15）。</strong>24.04 用这个软件没问题；后面训练用的 sharpa-rl-lab 官方只在 22.04 上测试过，到那一步再处理。确认方法：<code>dpkg -l | grep sharpa</code>，看到 <code>sharpa-wave</code> 一行、开头是 <code>ii</code> 就对了。</li>
+      <li>把电脑插网线的那个网卡手动设置成：地址 <code>192.168.10.240</code>，子网掩码 <code>255.255.255.0</code>。</li>
+      <li>右手的出厂地址是 <code>192.168.10.20</code>（左手是 <code>192.168.10.10</code>）。在终端运行 <code>ping 192.168.10.20</code>，有回应就是连上了。</li>
+      <li>打开 Sharpa Pilot，等手的卡片出现，点进去。</li>
+    </ol>
+
+    <h3 class="sub">第五部分：校准，然后动一动</h3>
+    <ol class="plain">
+      <li><strong>校准</strong>（让手知道“伸直”是哪个位置，官方建议每次通电都做一次）：进 Calib 面板，点 Start Calibration，等大约 95 秒。校准时手会自己动，人不要碰它，周围不要有东西挡着。</li>
+      <li><strong>拖滑块</strong>：进 Sliders 面板，拖动滑块，对应的关节就会动。</li>
+      <li><strong>放一段演示</strong>：进 Replay 面板，选一个预设动作，点 Play。</li>
+    </ol>
+    <p class="aside">做到这里，下面“五个步骤”里的第一步就完成了一大半，剩下的是改用代码而不是界面去控制它。</p>
+
+    <h3 class="sub" id="power-off">第六部分：不用的时候怎么关</h3>
+    <p><strong>这只手没有开关按钮，关机就是拔电源。</strong>它里面没有电池，电一断就彻底关了。</p>
+    <ol class="plain">
+      <li><strong>先让手空下来。</strong>手里抓着东西就先拿走。有程序在控制它就先停掉程序，让手指停在自然张开的姿势。</li>
+      <li><strong>关掉电脑上的 Sharpa Pilot。</strong></li>
+      <li><strong>把电源适配器从墙上的插座拔下来。</strong>接线盒的绿灯和手背的灯都灭了，就是关好了。</li>
+      <li><strong>等 30 分钟再摸外壳。</strong>刚断电时可能还很烫。</li>
+    </ol>
+    <p class="aside">其他的线（手到接线盒、接线盒到电脑）不用拔，留着下次直接插电就能用。如果要拔这些线，一定先断电再拔。断电后手指会变松，能被掰动，这是正常的。下次通电后要重新校准一次。</p>
+    <p class="aside">手背的按钮不是关机键：连按 2 次是重启，连按 3 次是恢复出厂设置并重启。官方手册没有单独写“关机步骤”，上面的顺序是根据手册的接线和安全说明整理的。</p>
+
+    <div class="caveat">
+      <ul>
+        <li><strong>会烫。</strong>手的外壳工作时和刚断电后可能很烫，断电后至少等 30 分钟再摸。</li>
+        <li><strong>会夹手。</strong>手在动的时候，手指不要靠近关节缝隙。</li>
+        <li><strong>指尖很娇贵。</strong>指尖是触觉传感器，别碰尖锐的东西，压上去的力不要超过 50 N（大约 5 公斤）。</li>
+        <li><strong>不防水。</strong>别在潮湿或有液体的地方用。</li>
+        <li><strong>出现异响、异常抖动就立刻断电。</strong></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>下一步</h2>
+    <p>手能连上电脑、能拖滑块动起来之后，去 <a href="start.html">只用手的入门五步</a>，从第一步开始。</p>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <p>整理自 Sharpa 官方用户手册，加上我们自己装的时候踩的坑。整理于 2026-11-15。</p>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var root = document.documentElement;
+  var t = null;
+  try { t = JSON.parse(localStorage.getItem('hand.theme')); } catch (e) {}
+  if (t) root.dataset.theme = t;
+  document.getElementById('theme').addEventListener('click', function () {
+    var cur = root.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    var next = cur === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('hand.theme', JSON.stringify(next)); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

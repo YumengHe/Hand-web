@@ -1,0 +1,1682 @@
+[
+ {
+  "id": "2609.18117",
+  "short": "OpenDexGrasp",
+  "title": "OpenDexGrasp: Open-vocabulary Task-Oriented Dexterous Grasping",
+  "authors": [
+   "Jiyao Zhang",
+   "Junhan Wang",
+   "Tianyu Wang",
+   "Zeyuan Chen",
+   "Anthony Bolton",
+   "Yitong Peng",
+   "Hao Dong"
+  ],
+  "date": "2026-09-16",
+  "cat": "grasp",
+  "star": false,
+  "zh": "开放词汇的任务导向灵巧抓取：从自由形式语言推断功能意图，并生成可执行的高自由度抓取。",
+  "abstract": "Dexterous grasp synthesis has advanced rapidly in generating stable and physically plausible hand poses, but real-world manipulation requires grasps that preserve the function implied by the task. We study open-vocabulary task-oriented dexterous grasp generation, where a robot must infer functional intent from free-form language, ground it in multi-view visual observations and object geometry, and generate an executable high-degree-of-freedom grasp. We present OpenDexGrasp, a unified data and generative modeling framework for this setting. OpenDexVerse provides dual-source supervision organized by the Coverage-to-Alignment (C2A) Recipe: OpenDex-Scale offers large-scale semantic and geometric coverage through automatic grasp synthesis and vision-language annotation, while OpenDex-Align supplies high-quality embodied alignment through human teleoperation and category-level transfer. OpenDexGrasp learns a shared perception-action latent representation that couples open-vocabulary vision-language context with dexterous action generation. Affordance grounding and grasp generation provide complementary supervision over this latent space, enabling direct generation of task-consistent dexterous grasps without a separate affordance-to-pose inference stage. Extensive simulation and real-robot experiments demonstrate improved functional alignment, physical feasibility, generalization to unseen categories, and real-world execution success. Additional details and videos are available at https://opendexgrasp.github.io/.",
+  "tasks": [
+   "grasp"
+  ],
+  "did": "按一句话描述的用途，决定抓物体的哪里、怎么抓。仿真和真机都做了。"
+ },
+ {
+  "id": "2607.11481",
+  "short": "TeleDexter",
+  "title": "Towards Human-level Dexterous Teleoperation",
+  "authors": [
+   "Puhao Li",
+   "Zeyuan Chen",
+   "Yingying Wu",
+   "Pengkun Wei",
+   "Yuyang Li",
+   "Tianyu Wang",
+   "Jiaxiao Shi",
+   "Mingrui Yu",
+   "Baoxiong Jia",
+   "Song-chun Zhu",
+   "Tengyu Liu",
+   "Siyuan Huang"
+  ],
+  "date": "2026-07-13",
+  "cat": "teleop",
+  "star": false,
+  "zh": "手-物协同跟踪控制器：把操作者意图映射为学习到的底层接触执行，实现手内平移、重定向与指步态的遥操作。",
+  "abstract": "Humans routinely wield tools, swap grasps, and reposition objects within a single hand, seamlessly orchestrating contact transitions that span translation, reorientation, and finger gaiting. Endowing robot dexterous hands with this level of in-hand dexterity through teleoperation requires precise control of object motion via dynamic hand-object contact, yet current teleoperation systems remain far from this capability. To bridge this gap, we take a major step towards human-level dexterous teleoperation by introducing TeleDexter, a hand-object co-tracking controller that maps operator intent into learned, low-level contact execution. The controller is trained on consecutive co-tracking subgoals derived from human reference motions, utilizing a hybrid reward that couples sparse subgoal objectives with dense tracking rewards to enable learning across diverse interaction modalities rather than frame-wise trajectory imitation. The entire pipeline requires only single-stage RL and, with random action masking and domain randomization, transfers zero-shot to the real robot. We evaluate TeleDexter on seven challenging dexterous teleoperation tasks spanning object reorientation and long-horizon tool use across two dexterous hands, achieving a 75% average success rate where all baselines consistently fail. Furthermore, the collected demonstrations successfully train autonomous policies via behavioral cloning, marking a concrete step towards human-level dexterous teleoperation.",
+  "tasks": [
+   "rotate",
+   "tool"
+  ],
+  "did": "人遥控着手，在手里把物体转向、挪位置、换握法，再接着用工具。共 7 个任务，在两种手上做。"
+ },
+ {
+  "id": "2607.11874",
+  "short": "REGRIND",
+  "title": "A Minimalist Retargeting-Guided Reinforcement Learning Recipe for Dexterous Manipulation",
+  "authors": [
+   "Yunhai Feng",
+   "Natalie Leung",
+   "Jiaxuan Wang",
+   "Lujie Yang",
+   "Haozhi Qi",
+   "Preston Culbertson"
+  ],
+  "date": "2026-07-13",
+  "cat": "human",
+  "star": false,
+  "zh": "极简配方：把单条人类手-物演示重定向为机器人参考，再用 RL 跟踪，并分析影响 sim-to-real 的因素。",
+  "abstract": "Recent work in humanoid whole-body control has found success with a simple recipe: retarget human motion to robot kinematic references, then train policies via reinforcement learning (RL) to track them. But how does this recipe transfer to dexterous manipulation? The answer is not obvious, as manipulation involves complex, contact-rich dynamics and requires delicate regulation of contact modes and forces. We present REGRIND, a minimalist retargeting-guided RL pipeline that learns dexterous manipulation policies from a single human demonstration. REGRIND retargets human hand-object motion to a robot reference that preserves hand-object spatial and contact relationships, trains a residual RL policy in simulation to track object-centric keypoints along that reference, and transfers the resulting policy zero-shot to hardware with careful system identification. The resulting policies produce fluid, human-like behavior on two different multi-fingered hands across contact-rich tool-use tasks, including operating a pair of scissors and turning a screwdriver. Through systematic hardware experiments, we identify and analyze the key factors that govern sim-to-real transfer in dexterous manipulation, offering practical guidance for retargeting-based learning in contact-rich settings. Videos and code are available at https://yunhaifeng.com/REGRIND.",
+  "tasks": [
+   "tool"
+  ],
+  "did": "用剪刀剪、用螺丝刀拧。每个任务只看一条人类示范，在两种真手上做成。"
+ },
+ {
+  "id": "2606.19333",
+  "short": "Do as I Do",
+  "title": "Do as I Do: Dexterous Manipulation Data from Everyday Human Videos",
+  "authors": [
+   "Bhawna Paliwal",
+   "Haritheja Etukuru",
+   "William Liang",
+   "Pieter Abbeel",
+   "Nur Muhammad Mahi Shafiullah",
+   "Jitendra Malik"
+  ],
+  "date": "2026-06-17",
+  "cat": "human",
+  "star": false,
+  "zh": "把日常单目 RGB 人类视频重建并重定向为多指灵巧手可执行的操作数据。",
+  "abstract": "How can we scalably generate data for robotic manipulation, especially on human-like platforms such as dexterous multi-fingered hands? Learning from human videos has recently emerged as a likely answer to this question. However, difficulties in estimating hand-object interaction and crossing the human-to-robot embodiment gap have hindered the adoption of abundant monocular RGB-only human videos as the primary source of robot manipulation data. In this work, we present DO AS I DO, an algorithm to reconstruct and retarget monocular RGB human videos to multi-fingered dexterous robotic hands. DO AS I DO reconstructs hand-object interactions from various egocentric and exocentric in-the-wild video sources. The algorithm then retargets these hand-object interaction estimates into a sequence of actions executable in the real world, yielding robot-complete manipulation data from disparate human videos. Overall, DO AS I DO outperforms previous state of the art in estimating hand-object interactions and extracting dexterous manipulation trajectories from RGB videos, as we show in experiments on datasets with ground truths and on a dataset of video clips collected online. Our experiments enable us to propose an efficacy playbook for practitioners collecting human data for manipulation.",
+  "tasks": [
+   "daily"
+  ],
+  "did": "没有固定任务。做的是把网上各种人手干活的视频，变成机器人手能照着执行的动作数据。"
+ },
+ {
+  "id": "2603.26660",
+  "short": "Ruka-v2",
+  "title": "Ruka-v2: Tendon Driven Open-Source Dexterous Hand with Wrist and Abduction for Robot Learning",
+  "authors": [
+   "Xinqi Lucas Liu",
+   "Ruoxi Hu",
+   "Alejandro Ojeda Olarte",
+   "Zhuoran Chen",
+   "Kenny Ma",
+   "Charles Cheng Ji",
+   "Lerrel Pinto",
+   "Raunaq Bhirangi",
+   "Irmak Guzey"
+  ],
+  "date": "2026-03-27",
+  "cat": "hardware",
+  "star": false,
+  "zh": "RUKA 的升级版：增加腕部自由度与手指内收/外展，更接近人手运动能力。",
+  "abstract": "Lack of accessible and dexterous robot hardware has been a significant bottleneck to achieving human-level dexterity in robots. Last year, we released Ruka, a fully open-sourced, tendon-driven humanoid hand with 11 degrees of freedom - 2 per finger and 3 at the thumb - buildable for under $1,300. It was one of the first fully open-sourced humanoid hands, and introduced a novel data-driven approach to finger control that captures tendon dynamics within the control system. Despite these contributions, Ruka lacked two degrees of freedom essential for closely imitating human behavior: wrist mobility and finger adduction/abduction. In this paper, we introduce Ruka-v2: a fully open-sourced, tendon-driven humanoid hand featuring a decoupled 2-DOF parallel wrist and abduction/adduction at the fingers. The parallel wrist adds smooth, independent flexion/extension and radial/ulnar deviation, enabling manipulation in confined environments such as cabinets. Abduction enables motions such as grasping thin objects, in-hand rotation, and calligraphy. We present the design of Ruka-v2 and evaluate it against Ruka through user studies on teleoperated tasks, finding a 51.3% reduction in completion time and a 21.2% increase in success rate. We further demonstrate its full range of applications for robot learning: bimanual and single-arm teleoperation across 13 dexterous tasks, and autonomous policy learning on 3 tasks. All 3D print files, assembly instructions, controller software, and videos are available at https://ruka-hand-v2.github.io/ .",
+  "tasks": [
+   "none"
+  ],
+  "did": "主要是造手。用遥操作演示了 13 个任务，提到的有伸进柜子取东西、抓很薄的东西、手里转东西、写毛笔字。"
+ },
+ {
+  "id": "2603.22264",
+  "short": "UniDex",
+  "title": "UniDex: A Robot Foundation Suite for Universal Dexterous Hand Control from Egocentric Human Videos",
+  "authors": [
+   "Gu Zhang",
+   "Qicheng Xu",
+   "Haozhe Zhang",
+   "Jianhan Ma",
+   "Long He",
+   "Yiming Bao",
+   "Zeyu Ping",
+   "Zhecheng Yuan",
+   "Chenhao Lu",
+   "Chengbo Yuan",
+   "Tianhai Liang",
+   "Xiaoyu Tian",
+   "Maanping Shao",
+   "Feihong Zhang",
+   "Mingyu Ding",
+   "Yang Gao",
+   "Hao Zhao",
+   "Hang Zhao",
+   "Huazhe Xu"
+  ],
+  "date": "2026-03-23",
+  "cat": "human",
+  "star": false,
+  "zh": "把第一视角人类视频转成跨 8 种灵巧手的机器人数据集（5 万+ 轨迹），并配套统一 VLA 策略与采集装置。",
+  "abstract": "Dexterous manipulation remains challenging due to the cost of collecting real-robot teleoperation data, the heterogeneity of hand embodiments, and the high dimensionality of control. We present UniDex, a robot foundation suite that couples a large-scale robot-centric dataset with a unified vision-language-action (VLA) policy and a practical human-data capture setup for universal dexterous hand control. First, we construct UniDex-Dataset, a robot-centric dataset over 50K trajectories across eight dexterous hands (6--24 DoFs), derived from egocentric human video datasets. To transform human data into robot-executable trajectories, we employ a human-in-the-loop retargeting procedure to align fingertip trajectories while preserving plausible hand-object contacts, and we operate on explicit 3D pointclouds with human hands masked to narrow kinematic and visual gaps. Second, we introduce the Function-Actuator-Aligned Space (FAAS), a unified action space that maps functionally similar actuators to shared coordinates, enabling cross-hand transfer. Leveraging FAAS as the action parameterization, we train UniDex-VLA, a 3D VLA policy pretrained on UniDex-Dataset and finetuned with task demonstrations. In addition, we build UniDex-Cap, a simple portable capture setup that records synchronized RGB-D streams and human hand poses and converts them into robot-executable trajectories to enable human-robot data co-training that reduces reliance on costly robot demonstrations. On challenging tool-use tasks across two different hands, UniDex-VLA achieves 81% average task progress and outperforms prior VLA baselines by a large margin, while exhibiting strong spatial, object, and zero-shot cross-hand generalization. Together, UniDex-Dataset, UniDex-VLA, and UniDex-Cap provide a scalable foundation suite for universal dexterous manipulation.",
+  "tasks": [
+   "daily"
+  ],
+  "did": "看人类第一视角视频学，再在多种不同的手上做日常操作任务。具体任务摘要里没列，见原文。"
+ },
+ {
+  "id": "2603.12120",
+  "short": "CRAFT Hand",
+  "title": "CRAFT: A Tendon-Driven Hand with Hybrid Hard-Soft Compliance",
+  "authors": [
+   "Leo Lin",
+   "Shivansh Patel",
+   "Jay Moon",
+   "Svetlana Lazebnik",
+   "Unnat Jain"
+  ],
+  "date": "2026-03-12",
+  "cat": "hardware",
+  "star": false,
+  "zh": "硬连杆 + 软关节的混合柔顺腱驱动手，采用滚动接触关节，兼顾强度与接触鲁棒性。",
+  "abstract": "We introduce CRAFT hand, a tendon-driven anthropomorphic hand with hybrid hard-soft compliance for contact-rich manipulation. The design is based on a simple idea: contact is not uniform across the hand. Impacts concentrate at joints, while links carry most of the load. CRAFT places soft material at joints and keeps links rigid, and uses rollingcontact joint surfaces to keep flexion on repeatable motion paths. Fifteen motors mounted on the fingers drive the hand through tendons, keeping the form factor compact and the fingers light. In structural tests, CRAFT improves strength and endurance while maintaining comparable repeatability. In teleoperation, CRAFT improves handling of fragile and low-friction items, and the hand covers 33/33 grasps in the Feix taxonomy. The full design costs under $600 and will be released open-source with visionbased teleoperation and simulation integration. Project page: http://craft-hand.github.io/",
+  "tasks": [
+   "none"
+  ],
+  "did": "主要是造手。用遥操作试了拿易碎的和滑的东西，并验证这只手能做出 33 种标准握法。"
+ },
+ {
+  "id": "2602.21811",
+  "short": "DexRepNet++",
+  "title": "DexRepNet++: Learning Dexterous Robotic Manipulation with Geometric and Spatial Hand-Object Representations",
+  "authors": [
+   "Qingtao Liu",
+   "Zhengnan Sun",
+   "Yu Cui",
+   "Haoming Li",
+   "Gaofeng Li",
+   "Lin Shao",
+   "Jiming Chen",
+   "Qi Ye"
+  ],
+  "date": "2026-02-25",
+  "cat": "rl",
+  "star": false,
+  "zh": "提出刻画物体表面特征与手-物空间关系的表征 DexRep，提升抓取、手内重定向、双手交接的泛化能力。",
+  "abstract": "Robotic dexterous manipulation is a challenging problem due to high degrees of freedom (DoFs) and complex contacts of multi-fingered robotic hands. Many existing deep reinforcement learning (DRL) based methods aim at improving sample efficiency in high-dimensional output action spaces. However, existing works often overlook the role of representations in achieving generalization of a manipulation policy in the complex input space during the hand-object interaction. In this paper, we propose DexRep, a novel hand-object interaction representation to capture object surface features and spatial relations between hands and objects for dexterous manipulation skill learning. Based on DexRep, policies are learned for three dexterous manipulation tasks, i.e. grasping, in-hand reorientation, bimanual handover, and extensive experiments are conducted to verify the effectiveness. In simulation, for grasping, the policy learned with 40 objects achieves a success rate of 87.9% on more than 5000 unseen objects of diverse categories, significantly surpassing existing work trained with thousands of objects; for the in-hand reorientation and handover tasks, the policies also boost the success rates and other metrics of existing hand-object representations by 20% to 40%. The grasp policies with DexRep are deployed to the real world under multi-camera and single-camera setups and demonstrate a small sim-to-real gap.",
+  "tasks": [
+   "grasp",
+   "rotate",
+   "bimanual"
+  ],
+  "did": "三个任务：抓取、在手里把物体转向、两只手之间交接物体。其中抓取上了真机。"
+ },
+ {
+  "id": "2602.17908",
+  "short": "WHED",
+  "title": "WHED: A Wearable Hand Exoskeleton for Natural, High-Quality Demonstration Collection",
+  "authors": [
+   "Mingzhang Zhu",
+   "Alvin Zhu",
+   "Jose Victor S. H. Ramos",
+   "Beom Jun Kim",
+   "Yike Shi",
+   "Yufeng Wu",
+   "Ruochen Hou",
+   "Quanyou Wang",
+   "Eric Song",
+   "Tony Fan",
+   "Yuchen Cui",
+   "Dennis W. Hong"
+  ],
+  "date": "2026-02-20",
+  "cat": "teleop",
+  "star": false,
+  "zh": "可穿戴手部外骨骼，强调佩戴舒适性与自然的拇指运动，用于野外高质量演示采集。",
+  "abstract": "Scalable learning of dexterous manipulation remains bottlenecked by the difficulty of collecting natural, high-fidelity human demonstrations of multi-finger hands due to occlusion, complex hand kinematics, and contact-rich interactions. We present WHED, a wearable hand-exoskeleton system designed for in-the-wild demonstration capture, guided by two principles: wearability-first operation for extended use and a pose-tolerant, free-to-move thumb coupling that preserves natural thumb behaviors while maintaining a consistent mapping to the target robot thumb degrees of freedom. WHED integrates a linkage-driven finger interface with passive fit accommodation, a modified passive hand with robust proprioceptive sensing, and an onboard sensing/power module. We also provide an end-to-end data pipeline that synchronizes joint encoders, AR-based end-effector pose, and wrist-mounted visual observations, and supports post-processing for time alignment and replay. We demonstrate feasibility on representative grasping and manipulation sequences spanning precision pinch and full-hand enclosure grasps, and show qualitative consistency between collected demonstrations and replayed executions.",
+  "tasks": [
+   "grasp"
+  ],
+  "did": "做的是戴在手上采集示范数据的设备。演示了两种抓法：指尖捏取、整只手握住。"
+ },
+ {
+  "id": "2602.16710",
+  "short": "EgoScale",
+  "title": "EgoScale: Scaling Dexterous Manipulation with Diverse Egocentric Human Data",
+  "authors": [
+   "Ruijie Zheng",
+   "Dantong Niu",
+   "Yuqi Xie",
+   "Jing Wang",
+   "Mengda Xu",
+   "Yunfan Jiang",
+   "Fernando Castañeda",
+   "Fengyuan Hu",
+   "You Liang Tan",
+   "Letian Fu",
+   "Trevor Darrell",
+   "Furong Huang",
+   "Yuke Zhu",
+   "Danfei Xu",
+   "Linxi Fan"
+  ],
+  "date": "2026-02-18",
+  "cat": "human",
+  "star": true,
+  "zh": "在两万多小时带动作标注的第一视角人类视频上预训练 VLA，发现数据规模与验证损失呈对数线性关系。",
+  "abstract": "Human behavior is among the most scalable sources of data for learning physical intelligence, yet how to effectively leverage it for dexterous manipulation remains unclear. While prior work demonstrates human to robot transfer in constrained settings, it is unclear whether large scale human data can support fine grained, high degree of freedom dexterous manipulation. We present EgoScale, a human to dexterous manipulation transfer framework built on large scale egocentric human data. We train a Vision Language Action (VLA) model on over 20,854 hours of action labeled egocentric human video, more than 20 times larger than prior efforts, and uncover a log linear scaling law between human data scale and validation loss. This validation loss strongly correlates with downstream real robot performance, establishing large scale human data as a predictable supervision source. Beyond scale, we introduce a simple two stage transfer recipe: large scale human pretraining followed by lightweight aligned human robot mid training. This enables strong long horizon dexterous manipulation and one shot task adaptation with minimal robot supervision. Our final policy improves average success rate by 54% over a no pretraining baseline using a 22 DoF dexterous robotic hand, and transfers effectively to robots with lower DoF hands, indicating that large scale human motion provides a reusable, embodiment agnostic motor prior.",
+  "tasks": [
+   "daily"
+  ],
+  "did": "用一只 22 个自由度的手（和 Sharpa 的自由度数一样）做一连串步骤的日常操作，看一次示范就能学新任务。"
+ },
+ {
+  "id": "2602.15828",
+  "short": "Dex4D",
+  "title": "Dex4D: Task-Agnostic Point Track Policy for Zero-Shot Dexterous Manipulation",
+  "authors": [
+   "Yuxuan Kuang",
+   "Sungjae Park",
+   "Katerina Fragkiadaki",
+   "Shubham Tulsiani"
+  ],
+  "date": "2026-02-17",
+  "cat": "rl",
+  "star": false,
+  "zh": "在仿真中学习与任务无关的点轨迹条件策略，再与视频生成模型组合，零样本完成多样的真实任务。",
+  "abstract": "Learning generalist policies capable of accomplishing a wide range of everyday tasks remains an open challenge in dexterous manipulation. In particular, collecting large-scale manipulation data via real-world teleoperation is expensive and difficult to scale. While learning in simulation provides a feasible alternative, designing multiple task-specific environments and rewards for training is similarly challenging. We propose Dex4D, a framework that instead leverages simulation for learning task-agnostic dexterous skills that can be flexibly recomposed to perform diverse real-world manipulation tasks. Specifically, Dex4D learns a domain-agnostic 3D point track conditioned policy capable of transforming a rigid object from a current pose to a target pose. We train this 'Anypose-to-Anypose' policy in simulation across thousands of objects with diverse pose configurations, covering a broad space of robot-object interactions that can be composed at test time. At deployment, this policy can be zero-shot transferred to real-world tasks without finetuning, simply by prompting it with desired object-centric point tracks extracted from generated videos. During execution, Dex4D uses online point tracking for closed-loop perception and control. Extensive experiments in simulation and on real robots show that our method enables zero-shot deployment for diverse dexterous manipulation tasks and yields consistent improvements over prior baselines. Furthermore, we demonstrate strong generalization to novel objects, scene layouts, backgrounds, and trajectories, highlighting the robustness and scalability of the proposed framework. Project page: https://dex4d.github.io/.",
+  "tasks": [
+   "daily"
+  ],
+  "did": "只练一个本事：把物体从任意摆法挪成指定摆法。再用这个本事拼出各种日常任务，直接上真机。"
+ },
+ {
+  "id": "2602.09013",
+  "short": "VideoManip",
+  "title": "Dexterous Manipulation Policies from RGB Human Videos via 3D Hand-Object Trajectory Reconstruction",
+  "authors": [
+   "Hongyi Chen",
+   "Tony Dong",
+   "Tiancheng Wu",
+   "Liquan Wang",
+   "Yash Jangir",
+   "Yaru Niu",
+   "Yufei Ye",
+   "Homanga Bharadhwaj",
+   "Zackory Erickson",
+   "Jeffrey Ichnowski"
+  ],
+  "date": "2026-02-09",
+  "cat": "human",
+  "star": false,
+  "zh": "无需穿戴设备：从单目 RGB 人类视频重建 3D 手-物轨迹，直接用于训练灵巧手策略。",
+  "abstract": "Multi-finger robotic hand manipulation and grasping are challenging due to the high-dimensional action space and the difficulty of acquiring large-scale training data. Existing approaches largely rely on human teleoperation with wearable devices or specialized sensing equipment to capture hand-object interactions, which limits scalability. In this work, we propose VIDEOMANIP, a device-free framework that learns dexterous manipulation directly from RGB human videos. Leveraging recent advances in computer vision, VIDEOMANIP reconstructs explicit 3D robot-object trajectories from monocular videos by estimating human hand poses, object meshes, and retargets the reconstructed human motions to robotic hands for manipulation learning. To make the reconstructed robot data suitable for dexterous manipulation training, we introduce hand-object contact optimization with interaction-centric grasp modeling, as well as a demonstration synthesis strategy that generates diverse training trajectories from a single video, enabling generalizable policy learning without additional robot demonstrations. In simulation, the learned grasping model achieves a 70.25% success rate across 20 diverse objects using the Inspire Hand. In the real world, manipulation policies trained from RGB videos achieve an average 62.86% success rate across seven tasks using the LEAP Hand, outperforming retargeting-based methods by 15.87%. Project videos are available at videomanip.github.io.",
+  "tasks": [
+   "grasp",
+   "daily"
+  ],
+  "did": "仿真里抓 20 种物体；真机（LEAP 手）上做 7 个操作任务。全部只看人类视频学。"
+ },
+ {
+  "id": "2602.05325",
+  "short": "RoboPaint",
+  "title": "RoboPaint: From Human Demonstration to Any Robot and Any View",
+  "authors": [
+   "Jiacheng Fan",
+   "Zhiyue Zhao",
+   "Yiqian Zhang",
+   "Chao Chen",
+   "Peide Wang",
+   "Hengdi Zhang",
+   "Zhengxue Cheng"
+  ],
+  "date": "2026-02-05",
+  "cat": "human",
+  "star": false,
+  "zh": "Real-Sim-Real 数据管线：在标准化采集间记录人类多模态演示，经触觉感知重定向生成机器人训练数据，无需遥操作。",
+  "abstract": "Acquiring large-scale, high-fidelity robot demonstration data remains a critical bottleneck for scaling Vision-Language-Action (VLA) models in dexterous manipulation. We propose a Real-Sim-Real data collection and data editing pipeline that transforms human demonstrations into robot-executable, environment-specific training data without direct robot teleoperation. Standardized data collection rooms are built to capture multimodal human demonstrations (synchronized 3 RGB-D videos, 11 RGB videos, 29-DoF glove joint angles, and 14-channel tactile signals). Based on these human demonstrations, we introduce a tactile-aware retargeting method that maps human hand states to robot dex-hand states via geometry and force-guided optimization. Then the retargeted robot trajectories are rendered in a photorealistic Isaac Sim environment to build robot training data. Real world experiments have demonstrated: (1) The retargeted dex-hand trajectories achieve an 84\\% success rate across 10 diverse object manipulation tasks. (2) VLA policies (Pi0.5) trained exclusively on our generated data achieve 80\\% average success rate on three representative tasks, i.e., pick-and-place, pushing and pouring. To conclude, robot training data can be efficiently \"painted\" from human demonstrations using our real-sim-real data pipeline. We offer a scalable, cost-effective alternative to teleoperation with minimal performance loss for complex dexterous manipulation.",
+  "tasks": [
+   "daily"
+  ],
+  "did": "拿起放下、推、倒东西这三类任务，另外测了 10 个物体操作任务。训练数据全部由人类示范转换而来。"
+ },
+ {
+  "id": "2601.02778",
+  "short": "Force-Based Sim2Real",
+  "title": "Closing the Reality Gap: Zero-Shot Sim-to-Real Deployment for Dexterous Force-Based Grasping and Manipulation",
+  "authors": [
+   "Zhe Zhao",
+   "Haoyu Dong",
+   "Zhengmao He",
+   "Yang Li",
+   "Xinyu Yi",
+   "Zhibin Li"
+  ],
+  "date": "2026-01-06",
+  "cat": "rl",
+  "star": false,
+  "zh": "结合稠密触觉与关节力矩感知的 sim-to-real RL 框架，配合快速触觉仿真，实现力控抓取与操作的零样本部署。",
+  "abstract": "Human-like dexterous hands with multiple fingers offer human-level manipulation capabilities, but training control policies that can directly deploy on real hardware remains difficult due to contact-rich physics and imperfect actuation. We close this gap with a practical sim-to-real reinforcement learning (RL) framework that utilizes dense tactile feedback combined with joint torque sensing to explicitly regulate physical interactions. To enable effective sim-to-real transfer, we introduce (i) a computationally fast tactile simulation that computes distances between dense virtual tactile units and the object via parallel forward kinematics, providing high-rate, high-resolution touch signals needed by RL; (ii) a current-to-torque calibration that eliminates the need for torque sensors on dexterous hands by mapping motor current to joint torque; and (iii) actuator dynamics modeling to bridge the actuation gaps with randomization of non-ideal effects such as backlash, torque-speed saturation. Using an asymmetric actor-critic PPO pipeline trained entirely in simulation, our policies deploy directly to a five-finger hand. The resulting policies demonstrated two essential skills: (1) command-based, controllable grasp force tracking, and (2) reorientation of objects in the hand, both of which were robustly executed without fine-tuning on the robot. By combining tactile and torque in the observation space with effective sensing/actuation modeling, our system provides a practical solution to achieve reliable dexterous manipulation. To our knowledge, this is the first demonstration of controllable grasping on a multi-finger dexterous hand trained entirely in simulation and transferred zero-shot on real hardware.",
+  "tasks": [
+   "grasp",
+   "rotate"
+  ],
+  "did": "两个本事：按指令用指定的力度握住东西；在手里把物体转向。靠触觉加关节力矩，直接上真手。"
+ },
+ {
+  "id": "2512.03874",
+  "short": "OmniDexVLG",
+  "title": "OmniDexVLG: Learning Dexterous Grasp Generation from Vision Language Model-Guided Grasp Semantics, Taxonomy and Functional Affordance",
+  "authors": [
+   "Lei Zhang",
+   "Diwen Zheng",
+   "Kaixin Bai",
+   "Zhenshan Bing",
+   "Zoltan-Csaba Marton",
+   "Zhaopeng Chen",
+   "Alois Christian Knoll",
+   "Jianwei Zhang"
+  ],
+  "date": "2025-12-03",
+  "cat": "grasp",
+  "star": false,
+  "zh": "由 VLM 引导的抓取语义、分类学与功能可供性：数据生成、语义推理与抓取生成三个模块。",
+  "abstract": "Dexterous grasp generation aims to produce grasp poses that align with task requirements and human interpretable grasp semantics. However, achieving semantically controllable dexterous grasp synthesis remains highly challenging due to the lack of unified modeling of multiple semantic dimensions, including grasp taxonomy, contact semantics, and functional affordance. To address these limitations, we present OmniDexVLG, a multimodal, semantics aware grasp generation framework capable of producing structurally diverse and semantically coherent dexterous grasps under joint language and visual guidance. Our approach begins with OmniDexDataGen, a semantic rich dexterous grasp dataset generation pipeline that integrates grasp taxonomy guided configuration sampling, functional affordance contact point sampling, taxonomy aware differential force closure grasp sampling, and physics based optimization and validation, enabling systematic coverage of diverse grasp types. We further introduce OmniDexReasoner, a multimodal grasp type semantic reasoning module that leverages multi agent collaboration, retrieval augmented generation, and chain of thought reasoning to infer grasp related semantics and generate high quality annotations that align language instructions with task specific grasp intent. Building upon these components, we develop a unified Vision Language Grasping generation model that explicitly incorporates grasp taxonomy, contact structure, and functional affordance semantics, enabling fine grained control over grasp synthesis from natural language instructions. Extensive experiments in simulation and real world object grasping and ablation studies demonstrate that our method substantially outperforms state of the art approaches in terms of grasp diversity, contact semantic diversity, functional affordance diversity, and semantic consistency.",
+  "tasks": [
+   "grasp"
+  ],
+  "did": "按文字和图像指定的握法类型和用途，生成对应的抓取姿势。"
+ },
+ {
+  "id": "2509.23075",
+  "short": "Articulated Tools",
+  "title": "In-Hand Manipulation of Articulated Tools with Dexterous Robot Hands with Sim-to-Real Transfer",
+  "authors": [
+   "Soofiyan Atar",
+   "Daniel Huang",
+   "Florian Richter",
+   "Michael Yip"
+  ],
+  "date": "2025-09-27",
+  "cat": "rl",
+  "star": false,
+  "zh": "剪刀、钳子等铰接工具的手内操作：仿真中用特权观测训练，再蒸馏并迁移到真机。",
+  "abstract": "Reinforcement learning (RL) and sim-to-real transfer have advanced rigid-object manipulation. However, policies remain brittle for articulated mechanisms due to contact-rich dynamics that require both stable grasping and simultaneous free in-hand articulation. Furthermore, articulated objects and robot hands exhibit under-modeled joint phenomena such as friction, stiction, and backlash in real life that can increase the sim-to-real gap, and robot hands still fall short of idealized tactile sensing, both in terms of coverage, sensitivity, and specificity. In this paper, we present an original approach to learning dexterous in-hand manipulation of articulated tools that has reduced articulation and kinematic redundancy relative to the human hand. Our approach augments a simulation-trained base policy with a sensor-driven refinement learned from hardware demonstrations. This refinement conditions on proprioception and target articulation states while fusing whole-hand tactile and force-torque feedback with the policy's action intent through cross-attention. The resulting controller adapts online to instance-specific articulation properties, stabilizes contact interactions, and regulates internal forces under perturbations. We validate our method across diverse real-world tools, including scissors, pliers, minimally invasive surgical instruments, and staplers, demonstrating robust sim-to-real transfer, improved disturbance resilience, and generalization across structurally related articulated tools without precise physical modeling.",
+  "tasks": [
+   "tool"
+  ],
+  "did": "在手里开合带关节的工具：剪刀、钳子、微创手术器械、订书机。真机。"
+ },
+ {
+  "id": "2507.15597",
+  "short": "Being-H0",
+  "title": "Being-H0: Vision-Language-Action Pretraining from Large-Scale Human Videos",
+  "authors": [
+   "Hao Luo",
+   "Yicheng Feng",
+   "Wanpeng Zhang",
+   "Sipeng Zheng",
+   "Ye Wang",
+   "Haoqi Yuan",
+   "Jiazheng Liu",
+   "Chaoyi Xu",
+   "Qin Jin",
+   "Zongqing Lu"
+  ],
+  "date": "2025-07-21",
+  "cat": "human",
+  "star": false,
+  "zh": "在大规模人类视频上做 VLA 预训练，把人手动作离散为 token，实现从人到灵巧手的迁移。",
+  "abstract": "We introduce Being-H0, a dexterous Vision-Language-Action model (VLA) trained on large-scale human videos. Existing VLAs struggle with complex manipulation tasks requiring high dexterity and generalize poorly to novel scenarios and tasks, primarily due to their reliance on synthetic data with significant sim-to-real gaps or teleoperated demonstrations lacking scale and diversity. To address this data bottleneck, we propose leveraging human hands as a foundation manipulator, capitalizing on the rich dexterity and scalability present in web data. Our approach centers on physical instruction tuning, a novel training paradigm that combines large-scale VLA pretraining from human videos, physical space alignment for 3D reasoning, and post-training adaptation for robotic tasks. Additionally, we introduce a part-level motion tokenization method which achieves millimeter-level reconstruction accuracy to model precise hand trajectories for action learning. To support our proposed paradigm, we further develop a comprehensive data curation pipeline that integrates heterogeneous sources -- including motion capture, VR, and RGB-only videos -- into a large-scale dataset with millions of motion-based instructional instances. We empirically show the excellence of Being-H0 in hand motion generation and instruction following, and it also scales well with model and data sizes. Importantly, we observe the expected gains of Being-H0 in real-world robotic manipulation as physical instruction tuning is applied. More details are available at https://beingbeyond.github.io/Being-H0.",
+  "tasks": [
+   "daily"
+  ],
+  "did": "先在海量人类视频上学“手怎么动”，再迁移到真手上做需要灵巧度的操作。具体任务摘要里没列。"
+ },
+ {
+  "id": "2507.11840",
+  "short": "具身灵巧操作综述",
+  "title": "The Developments and Challenges towards Dexterous and Embodied Robotic Manipulation: A Survey",
+  "authors": [
+   "Gaofeng Li",
+   "Ruize Wang",
+   "Peisen Xu",
+   "Qi Ye",
+   "Jiming Chen"
+  ],
+  "date": "2025-07-16",
+  "cat": "survey",
+  "star": false,
+  "zh": "从夹爪到多指手、从机械编程到具身智能的发展脉络，重点讨论数据采集（仿真/人类演示/遥操作）与技能学习框架。",
+  "abstract": "Achieving human-like dexterous robotic manipulation remains a central goal and a pivotal challenge in robotics. The development of Artificial Intelligence (AI) has allowed rapid progress in robotic manipulation. This survey summarizes the evolution of robotic manipulation from mechanical programming to embodied intelligence, alongside the transition from simple grippers to multi-fingered dexterous hands, outlining key characteristics and main challenges. Focusing on the current stage of embodied dexterous manipulation, we highlight recent advances in two critical areas: dexterous manipulation data collection (via simulation, human demonstrations, and teleoperation) and skill-learning frameworks (imitation and reinforcement learning). Then, based on the overview of the existing data collection paradigm and learning framework, three key challenges restricting the development of dexterous robotic manipulation are summarized and discussed.",
+  "tasks": [
+   "none"
+  ],
+  "did": "综述，不做具体任务。"
+ },
+ {
+  "id": "2507.12440",
+  "short": "EgoVLA",
+  "title": "EgoVLA: Learning Vision-Language-Action Models from Egocentric Human Videos",
+  "authors": [
+   "Ruihan Yang",
+   "Qinxi Yu",
+   "Yecheng Wu",
+   "Rui Yan",
+   "Borui Li",
+   "An-Chieh Cheng",
+   "Xueyan Zou",
+   "Yunhao Fang",
+   "Xuxin Cheng",
+   "Ri-Zhao Qiu",
+   "Hongxu Yin",
+   "Sifei Liu",
+   "Song Han",
+   "Yao Lu",
+   "Xiaolong Wang"
+  ],
+  "date": "2025-07-16",
+  "cat": "human",
+  "star": false,
+  "zh": "在第一视角人类视频上预训练 VLA，预测腕部与手部动作，再经重定向与少量机器人数据微调。",
+  "abstract": "Real robot data collection for imitation learning has led to significant advancements in robotic manipulation. However, the requirement for robot hardware in the process fundamentally constrains the scale of the data. In this paper, we explore training Vision-Language-Action (VLA) models using egocentric human videos. The benefit of using human videos is not only for their scale but more importantly for the richness of scenes and tasks. With a VLA trained on human video that predicts human wrist and hand actions, we can perform Inverse Kinematics and retargeting to convert the human actions to robot actions. We fine-tune the model using a few robot manipulation demonstrations to obtain the robot policy, namely EgoVLA. We propose a simulation benchmark called Ego Humanoid Manipulation Benchmark, where we design diverse bimanual manipulation tasks with demonstrations. We fine-tune and evaluate EgoVLA with Ego Humanoid Manipulation Benchmark and show significant improvements over baselines and ablate the importance of human data. Videos can be found on our website: https://rchalyang.github.io/EgoVLA",
+  "tasks": [
+   "bimanual",
+   "daily"
+  ],
+  "did": "仿真里的人形机器人双手操作任务（作者自己建的一套测试题）。"
+ },
+ {
+  "id": "2507.02747",
+  "short": "DexVLG",
+  "title": "DexVLG: Dexterous Vision-Language-Grasp Model at Scale",
+  "authors": [
+   "Jiawei He",
+   "Danshi Li",
+   "Xinqiang Yu",
+   "Zekun Qi",
+   "Wenyao Zhang",
+   "Jiayi Chen",
+   "Zhaoxiang Zhang",
+   "Zhizheng Zhang",
+   "Li Yi",
+   "He Wang"
+  ],
+  "date": "2025-07-03",
+  "cat": "grasp",
+  "star": false,
+  "zh": "在仿真中生成 1.7 亿个与语义部位对齐的抓取，训练可按语言指令从单视角 RGB-D 预测抓取位姿的大模型。",
+  "abstract": "As large models gain traction, vision-language-action (VLA) systems are enabling robots to tackle increasingly complex tasks. However, limited by the difficulty of data collection, progress has mainly focused on controlling simple gripper end-effectors. There is little research on functional grasping with large models for human-like dexterous hands. In this paper, we introduce DexVLG, a large Vision-Language-Grasp model for Dexterous grasp pose prediction aligned with language instructions using single-view RGBD input. To accomplish this, we generate a dataset of 170 million dexterous grasp poses mapped to semantic parts across 174,000 objects in simulation, paired with detailed part-level captions. This large-scale dataset, named DexGraspNet 3.0, is used to train a VLM and flow-matching-based pose head capable of producing instruction-aligned grasp poses for tabletop objects. To assess DexVLG's performance, we create benchmarks in physics-based simulations and conduct real-world experiments. Extensive testing demonstrates DexVLG's strong zero-shot generalization capabilities-achieving over 76% zero-shot execution success rate and state-of-the-art part-grasp accuracy in simulation-and successful part-aligned grasps on physical objects in real-world scenarios.",
+  "tasks": [
+   "grasp"
+  ],
+  "did": "按文字指令抓物体的指定部位。桌面上的物体，仿真和真机都做了。"
+ },
+ {
+  "id": "2506.17198",
+  "short": "Dex1B",
+  "title": "Dex1B: Learning with 1B Demonstrations for Dexterous Manipulation",
+  "authors": [
+   "Jianglong Ye",
+   "Keyi Wang",
+   "Chengjing Yuan",
+   "Ruihan Yang",
+   "Yiquan Li",
+   "Jiyue Zhu",
+   "Yuzhe Qin",
+   "Xueyan Zou",
+   "Xiaolong Wang"
+  ],
+  "date": "2025-06-20",
+  "cat": "grasp",
+  "star": false,
+  "zh": "用生成模型结合优化合成 10 亿条灵巧手演示（抓取与铰接物体操作），探索数据规模的作用。",
+  "abstract": "Generating large-scale demonstrations for dexterous hand manipulation remains challenging, and several approaches have been proposed in recent years to address this. Among them, generative models have emerged as a promising paradigm, enabling the efficient creation of diverse and physically plausible demonstrations. In this paper, we introduce Dex1B, a large-scale, diverse, and high-quality demonstration dataset produced with generative models. The dataset contains one billion demonstrations for two fundamental tasks: grasping and articulation. To construct it, we propose a generative model that integrates geometric constraints to improve feasibility and applies additional conditions to enhance diversity. We validate the model on both established and newly introduced simulation benchmarks, where it significantly outperforms prior state-of-the-art methods. Furthermore, we demonstrate its effectiveness and robustness through real-world robot experiments. Our project page is at https://jianglongye.com/dex1b",
+  "tasks": [
+   "grasp",
+   "tool"
+  ],
+  "did": "两个基础任务：抓取、操作带关节的物体。重点是造出 10 亿条示范数据。"
+ },
+ {
+  "id": "2506.00098",
+  "short": "交互式 IL 综述",
+  "title": "Interactive Imitation Learning for Dexterous Robotic Manipulation: Challenges and Perspectives -- A Survey",
+  "authors": [
+   "Edgar Welte",
+   "Rania Rayyes"
+  ],
+  "date": "2025-05-30",
+  "cat": "survey",
+  "star": false,
+  "zh": "面向人形机器人的灵巧操作学习综述，强调训练中引入人类反馈的交互式模仿学习这一尚未充分探索的方向。",
+  "abstract": "Dexterous manipulation is a crucial yet highly complex challenge in humanoid robotics, demanding precise, adaptable, and sample-efficient learning methods. As humanoid robots are usually designed to operate in human-centric environments and interact with everyday objects, mastering dexterous manipulation is critical for real-world deployment. Traditional approaches, such as reinforcement learning and imitation learning, have made significant strides, but they often struggle due to the unique challenges of real-world dexterous manipulation, including high-dimensional control, limited training data, and covariate shift. This survey provides a comprehensive overview of these challenges and reviews existing learning-based methods for real-world dexterous manipulation, spanning imitation learning, reinforcement learning, and hybrid approaches. A promising yet underexplored direction is interactive imitation learning, where human feedback actively refines a robots behavior during training. While interactive imitation learning has shown success in various robotic tasks, its application to dexterous manipulation remains limited. To address this gap, we examine current interactive imitation learning techniques applied to other robotic tasks and discuss how these methods can be adapted to enhance dexterous manipulation. By synthesizing state-of-the-art research, this paper highlights key challenges, identifies gaps in current methodologies, and outlines potential directions for leveraging interactive imitation learning to improve dexterous robotic skills.",
+  "tasks": [
+   "none"
+  ],
+  "did": "综述，不做具体任务。"
+ },
+ {
+  "id": "2505.21864",
+  "short": "DexUMI",
+  "title": "DexUMI: Using Human Hand as the Universal Manipulation Interface for Dexterous Manipulation",
+  "authors": [
+   "Mengda Xu",
+   "Han Zhang",
+   "Yifan Hou",
+   "Zhenjia Xu",
+   "Linxi Fan",
+   "Manuela Veloso",
+   "Shuran Song"
+  ],
+  "date": "2025-05-28",
+  "cat": "teleop",
+  "star": true,
+  "zh": "用可穿戴外骨骼缩小运动学差距、用图像修补缩小视觉差距，把人手当作灵巧手的通用操作接口。",
+  "abstract": "We present DexUMI - a data collection and policy learning framework that uses the human hand as the natural interface to transfer dexterous manipulation skills to various robot hands. DexUMI includes hardware and software adaptations to minimize the embodiment gap between the human hand and various robot hands. The hardware adaptation bridges the kinematics gap using a wearable hand exoskeleton. It allows direct haptic feedback in manipulation data collection and adapts human motion to feasible robot hand motion. The software adaptation bridges the visual gap by replacing the human hand in video data with high-fidelity robot hand inpainting. We demonstrate DexUMI's capabilities through comprehensive real-world experiments on two different dexterous robot hand hardware platforms, achieving an average task success rate of 86%.",
+  "tasks": [
+   "daily"
+  ],
+  "did": "人戴外骨骼直接干活来录数据，再教给两种不同的真手。多个真机任务，具体见原文。"
+ },
+ {
+  "id": "2505.07813",
+  "short": "DexWild",
+  "title": "DexWild: Dexterous Human Interactions for In-the-Wild Robot Policies",
+  "authors": [
+   "Tony Tao",
+   "Mohan Kumar Srirama",
+   "Jason Jingzhou Liu",
+   "Kenneth Shaw",
+   "Deepak Pathak"
+  ],
+  "date": "2025-05-12",
+  "cat": "teleop",
+  "star": false,
+  "zh": "用便携设备在真实生活场景中采集大量人手交互数据，与少量机器人数据联合训练以获得泛化能力。",
+  "abstract": "Large-scale, diverse robot datasets have emerged as a promising path toward enabling dexterous manipulation policies to generalize to novel environments, but acquiring such datasets presents many challenges. While teleoperation provides high-fidelity datasets, its high cost limits its scalability. Instead, what if people could use their own hands, just as they do in everyday life, to collect data? In DexWild, a diverse team of data collectors uses their hands to collect hours of interactions across a multitude of environments and objects. To record this data, we create DexWild-System, a low-cost, mobile, and easy-to-use device. The DexWild learning framework co-trains on both human and robot demonstrations, leading to improved performance compared to training on each dataset individually. This combination results in robust robot policies capable of generalizing to novel environments, tasks, and embodiments with minimal additional robot-specific data. Experimental results demonstrate that DexWild significantly improves performance, achieving a 68.5% success rate in unseen environments-nearly four times higher than policies trained with robot data only-and offering 5.8x better cross-embodiment generalization. Video results, codebases, and instructions at https://dexwild.github.io",
+  "tasks": [
+   "daily"
+  ],
+  "did": "人用自己的手在各种生活场景里录数据，机器人学完后在没见过的环境里做日常操作。"
+ },
+ {
+  "id": "2504.13165",
+  "short": "RUKA",
+  "title": "RUKA: Rethinking the Design of Humanoid Hands with Learning",
+  "authors": [
+   "Anya Zorin",
+   "Irmak Guzey",
+   "Billy Yan",
+   "Aadhithya Iyer",
+   "Lisa Kondrich",
+   "Nikhil X. Bhattasali",
+   "Lerrel Pinto"
+  ],
+  "date": "2025-04-17",
+  "cat": "hardware",
+  "star": false,
+  "zh": "开源腱驱动人形手，用数据驱动的学习方法建模腱动力学来完成手指控制。",
+  "abstract": "Dexterous manipulation is a fundamental capability for robotic systems, yet progress has been limited by hardware trade-offs between precision, compactness, strength, and affordability. Existing control methods impose compromises on hand designs and applications. However, learning-based approaches present opportunities to rethink these trade-offs, particularly to address challenges with tendon-driven actuation and low-cost materials. This work presents RUKA, a tendon-driven humanoid hand that is compact, affordable, and capable. Made from 3D-printed parts and off-the-shelf components, RUKA has 5 fingers with 15 underactuated degrees of freedom enabling diverse human-like grasps. Its tendon-driven actuation allows powerful grasping in a compact, human-sized form factor. To address control challenges, we learn joint-to-actuator and fingertip-to-actuator models from motion-capture data collected by the MANUS glove, leveraging the hand's morphological accuracy. Extensive evaluations demonstrate RUKA's superior reachability, durability, and strength compared to other robotic hands. Teleoperation tasks further showcase RUKA's dexterous movements. The open-source design and assembly instructions of RUKA, code, and data are available at https://ruka-hand.github.io/.",
+  "tasks": [
+   "none"
+  ],
+  "did": "主要是造手。用遥操作演示了这只手能做的各种动作。"
+ },
+ {
+  "id": "2504.04259",
+  "short": "ORCA Hand",
+  "title": "ORCA: An Open-Source, Reliable, Cost-Effective, Anthropomorphic Robotic Hand for Uninterrupted Dexterous Task Learning",
+  "authors": [
+   "Clemens C. Christoph",
+   "Maximilian Eberlein",
+   "Filippos Katsimalis",
+   "Arturo Roberti",
+   "Aristotelis Sympetheros",
+   "Michel R. Vogt",
+   "Davide Liconti",
+   "Chenyu Yang",
+   "Barnabas Gavin Cangan",
+   "Ronan J. Hinchet",
+   "Robert K. Katzschmann"
+  ],
+  "date": "2025-04-05",
+  "cat": "hardware",
+  "star": false,
+  "zh": "开源、可靠、低成本的 17 自由度腱驱动拟人手，集成触觉传感，可 3D 打印并在数小时内组装完成。",
+  "abstract": "General-purpose robots should possess human-like dexterity and agility to perform tasks with the same versatility as us. A human-like form factor further enables the use of vast datasets of human-hand interactions. However, the primary bottleneck in dexterous manipulation lies not only in software but arguably even more in hardware. Robotic hands that approach human capabilities are often prohibitively expensive, bulky, or require enterprise-level maintenance, limiting their accessibility for broader research and practical applications. What if the research community could get started with reliable dexterous hands within a day? We present the open-source ORCA hand, a reliable and anthropomorphic 17-DoF tendon-driven robotic hand with integrated tactile sensors, fully assembled in less than eight hours and built for a material cost below 2,000 CHF. We showcase ORCA's key design features such as popping joints, auto-calibration, and tensioning systems that significantly reduce complexity while increasing reliability, accuracy, and robustness. We benchmark the ORCA hand across a variety of tasks, ranging from teleoperation and imitation learning to zero-shot sim-to-real reinforcement learning. Furthermore, we demonstrate its durability, withstanding more than 10,000 continuous operation cycles - equivalent to approximately 20 hours - without hardware failure, the only constraint being the duration of the experiment itself. Video is here: https://youtu.be/kUbPSYMmOds. Design files, source code, and documentation are available at https://srl.ethz.ch/orcahand.",
+  "tasks": [
+   "none"
+  ],
+  "did": "主要是造手。用遥操作、模仿学习、仿真训练再上真机这三种方式都试了任务，证明这只手够用、够耐用。"
+ },
+ {
+  "id": "2504.03515",
+  "short": "IL 综述",
+  "title": "Dexterous Manipulation through Imitation Learning: A Survey",
+  "authors": [
+   "Shan An",
+   "Ziyu Meng",
+   "Chao Tang",
+   "Yuning Zhou",
+   "Tengyu Liu",
+   "Fangqiang Ding",
+   "Shufang Zhang",
+   "Yao Mu",
+   "Ran Song",
+   "Wei Zhang",
+   "Zeng-Guang Hou",
+   "Hong Zhang"
+  ],
+  "date": "2025-04-04",
+  "cat": "survey",
+  "star": true,
+  "zh": "系统梳理基于模仿学习的多指灵巧操作：数据采集、策略结构与开放问题，适合作为入门地图。",
+  "abstract": "Dexterous manipulation, which refers to the ability of a robotic hand or multi-fingered end-effector to skillfully control, reorient, and manipulate objects through precise, coordinated finger movements and adaptive force modulation, enables complex interactions similar to human hand dexterity. With recent advances in robotics and machine learning, there is a growing demand for these systems to operate in complex and unstructured environments. Traditional model-based approaches struggle to generalize across tasks and object variations due to the high dimensionality and complex contact dynamics of dexterous manipulation. Although model-free methods such as reinforcement learning (RL) show promise, they require extensive training, large-scale interaction data, and carefully designed rewards for stability and effectiveness. Imitation learning (IL) offers an alternative by allowing robots to acquire dexterous manipulation skills directly from expert demonstrations, capturing fine-grained coordination and contact dynamics while bypassing the need for explicit modeling and large-scale trial-and-error. This survey provides an overview of dexterous manipulation methods based on imitation learning, details recent advances, and addresses key challenges in the field. Additionally, it explores potential research directions to enhance IL-driven dexterous manipulation. Our goal is to offer researchers and practitioners a comprehensive introduction to this rapidly evolving domain.",
+  "tasks": [
+   "none"
+  ],
+  "did": "综述，不做具体任务。"
+ },
+ {
+  "id": "2503.21860",
+  "short": "ManipTrans",
+  "title": "ManipTrans: Efficient Dexterous Bimanual Manipulation Transfer via Residual Learning",
+  "authors": [
+   "Kailin Li",
+   "Puhao Li",
+   "Tengyu Liu",
+   "Yuyang Li",
+   "Siyuan Huang"
+  ],
+  "date": "2025-03-27",
+  "cat": "human",
+  "star": false,
+  "zh": "两阶段残差学习，把人类双手技能高效迁移到灵巧手，并构建大规模数据集 DexManipNet。",
+  "abstract": "Human hands play a central role in interacting, motivating increasing research in dexterous robotic manipulation. Data-driven embodied AI algorithms demand precise, large-scale, human-like manipulation sequences, which are challenging to obtain with conventional reinforcement learning or real-world teleoperation. To address this, we introduce ManipTrans, a novel two-stage method for efficiently transferring human bimanual skills to dexterous robotic hands in simulation. ManipTrans first pre-trains a generalist trajectory imitator to mimic hand motion, then fine-tunes a specific residual module under interaction constraints, enabling efficient learning and accurate execution of complex bimanual tasks. Experiments show that ManipTrans surpasses state-of-the-art methods in success rate, fidelity, and efficiency. Leveraging ManipTrans, we transfer multiple hand-object datasets to robotic hands, creating DexManipNet, a large-scale dataset featuring previously unexplored tasks like pen capping and bottle unscrewing. DexManipNet comprises 3.3K episodes of robotic manipulation and is easily extensible, facilitating further policy training for dexterous hands and enabling real-world deployments.",
+  "tasks": [
+   "bimanual",
+   "tool"
+  ],
+  "did": "把人的双手动作搬到机器人双手上，比如盖笔帽、拧开瓶盖。主要在仿真里。"
+ },
+ {
+  "id": "2503.14734",
+  "short": "GR00T N1",
+  "title": "GR00T N1: An Open Foundation Model for Generalist Humanoid Robots",
+  "authors": [
+   " NVIDIA",
+   " :",
+   "Johan Bjorck",
+   "Fernando Castañeda",
+   "Nikita Cherniadev",
+   "Xingye Da",
+   "Runyu Ding",
+   "Linxi \"Jim\" Fan",
+   "Yu Fang",
+   "Dieter Fox",
+   "Fengyuan Hu",
+   "Spencer Huang",
+   "Joel Jang",
+   "Zhenyu Jiang",
+   "Jan Kautz",
+   "Kaushil Kundalia",
+   "Lawrence Lao",
+   "Zhiqi Li",
+   "Zongyu Lin",
+   "Kevin Lin",
+   "Guilin Liu",
+   "Edith Llontop",
+   "Loic Magne",
+   "Ajay Mandlekar",
+   "Avnish Narayan",
+   "Soroush Nasiriany",
+   "Scott Reed",
+   "You Liang Tan",
+   "Guanzhi Wang",
+   "Zu Wang",
+   "Jing Wang",
+   "Qi Wang",
+   "Jiannan Xiang",
+   "Yuqi Xie",
+   "Yinzhen Xu",
+   "Zhenjia Xu",
+   "Seonghyeon Ye",
+   "Zhiding Yu",
+   "Ao Zhang",
+   "Hao Zhang",
+   "Yizhou Zhao",
+   "Ruijie Zheng",
+   "Yuke Zhu"
+  ],
+  "date": "2025-03-18",
+  "cat": "vla",
+  "star": false,
+  "zh": "面向通用人形机器人的开放基础模型：VLM 推理模块加扩散动作模块的双系统架构。",
+  "abstract": "General-purpose robots need a versatile body and an intelligent mind. Recent advancements in humanoid robots have shown great promise as a hardware platform for building generalist autonomy in the human world. A robot foundation model, trained on massive and diverse data sources, is essential for enabling the robots to reason about novel situations, robustly handle real-world variability, and rapidly learn new tasks. To this end, we introduce GR00T N1, an open foundation model for humanoid robots. GR00T N1 is a Vision-Language-Action (VLA) model with a dual-system architecture. The vision-language module (System 2) interprets the environment through vision and language instructions. The subsequent diffusion transformer module (System 1) generates fluid motor actions in real time. Both modules are tightly coupled and jointly trained end-to-end. We train GR00T N1 with a heterogeneous mixture of real-robot trajectories, human videos, and synthetically generated datasets. We show that our generalist robot model GR00T N1 outperforms the state-of-the-art imitation learning baselines on standard simulation benchmarks across multiple robot embodiments. Furthermore, we deploy our model on the Fourier GR-1 humanoid robot for language-conditioned bimanual manipulation tasks, achieving strong performance with high data efficiency.",
+  "tasks": [
+   "bimanual",
+   "daily"
+  ],
+  "did": "人形机器人听语言指令，用双手做操作任务。仿真多种机器人，真机是 Fourier GR-1。"
+ },
+ {
+  "id": "2503.08257",
+  "short": "DexGrasp Anything",
+  "title": "DexGrasp Anything: Towards Universal Robotic Dexterous Grasping with Physics Awareness",
+  "authors": [
+   "Yiming Zhong",
+   "Qi Jiang",
+   "Jingyi Yu",
+   "Yuexin Ma"
+  ],
+  "date": "2025-03-11",
+  "cat": "grasp",
+  "star": false,
+  "zh": "在扩散模型的训练与采样中引入物理约束，生成物理上更合理的通用灵巧抓取，并发布大规模数据集。",
+  "abstract": "A dexterous hand capable of grasping any object is essential for the development of general-purpose embodied intelligent robots. However, due to the high degree of freedom in dexterous hands and the vast diversity of objects, generating high-quality, usable grasping poses in a robust manner is a significant challenge. In this paper, we introduce DexGrasp Anything, a method that effectively integrates physical constraints into both the training and sampling phases of a diffusion-based generative model, achieving state-of-the-art performance across nearly all open datasets. Additionally, we present a new dexterous grasping dataset containing over 3.4 million diverse grasping poses for more than 15k different objects, demonstrating its potential to advance universal dexterous grasping. The code of our method and our dataset will be publicly released soon.",
+  "tasks": [
+   "grasp"
+  ],
+  "did": "给一个物体，生成稳定的抓取姿势。"
+ },
+ {
+  "id": "2502.20900",
+  "short": "DexGraspVLA",
+  "title": "DexGraspVLA: A Vision-Language-Action Framework Towards General Dexterous Grasping",
+  "authors": [
+   "Yifan Zhong",
+   "Xuchuan Huang",
+   "Ruochong Li",
+   "Ceyao Zhang",
+   "Zhang Chen",
+   "Tianrui Guan",
+   "Fanlian Zeng",
+   "Ka Num Lui",
+   "Yuyao Ye",
+   "Yitao Liang",
+   "Yaodong Yang",
+   "Yuanpei Chen"
+  ],
+  "date": "2025-02-28",
+  "cat": "grasp",
+  "star": false,
+  "zh": "分层 VLA 框架：预训练 VLM 做高层规划，扩散策略做底层控制，面向杂乱场景中的通用灵巧抓取。",
+  "abstract": "Dexterous grasping remains a fundamental yet challenging problem in robotics. A general-purpose robot must be capable of grasping diverse objects in arbitrary scenarios. However, existing research typically relies on restrictive assumptions, such as single-object settings or limited environments, showing constrained generalization. We present DexGraspVLA, a hierarchical framework for robust generalization in language-guided general dexterous grasping and beyond. It utilizes a pre-trained Vision-Language model as the high-level planner and learns a diffusion-based low-level Action controller. The key insight to achieve generalization lies in iteratively transforming diverse language and visual inputs into domain-invariant representations via foundation models, where imitation learning can be effectively applied due to the alleviation of domain shift. Notably, our method achieves a 90+% dexterous grasping success rate under thousands of challenging unseen cluttered scenes. Empirical analysis confirms the consistency of internal model behavior across environmental variations, validating our design. DexGraspVLA also, for the first time, simultaneously demonstrates free-form long-horizon prompt execution, robustness to adversarial objects and human disturbance, and failure recovery. Extended application to nonprehensile grasping further proves its generality. Project website: https://dexgraspvla.github.io.",
+  "tasks": [
+   "grasp"
+  ],
+  "did": "在堆满东西的桌面上，按语言指令把指定的物体抓起来。上千种没见过的场景成功率 90% 以上。"
+ },
+ {
+  "id": "2502.20396",
+  "short": "Humanoid Dex Sim2Real",
+  "title": "Sim-to-Real Reinforcement Learning for Vision-Based Dexterous Manipulation on Humanoids",
+  "authors": [
+   "Toru Lin",
+   "Kartik Sachdev",
+   "Linxi Fan",
+   "Jitendra Malik",
+   "Yuke Zhu"
+  ],
+  "date": "2025-02-27",
+  "cat": "rl",
+  "star": true,
+  "zh": "在人形机器人上做基于视觉的灵巧操作 sim-to-real 的实用配方：real-to-sim 调参、奖励设计、分治蒸馏等。",
+  "abstract": "Learning generalizable robot manipulation policies, especially for complex multi-fingered humanoids, remains a significant challenge. Existing approaches primarily rely on extensive data collection and imitation learning, which are expensive, labor-intensive, and difficult to scale. Sim-to-real reinforcement learning (RL) offers a promising alternative, but has mostly succeeded in simpler state-based or single-hand setups. How to effectively extend this to vision-based, contact-rich bimanual manipulation tasks remains an open question. In this paper, we introduce a practical sim-to-real RL recipe that trains a humanoid robot to perform three challenging dexterous manipulation tasks: grasp-and-reach, box lift and bimanual handover. Our method features an automated real-to-sim tuning module, a generalized reward formulation based on contact and object goals, a divide-and-conquer policy distillation framework, and a hybrid object representation strategy with modality-specific augmentation. We demonstrate high success rates on unseen objects and robust, adaptive policy behaviors -- highlighting that vision-based dexterous manipulation via sim-to-real RL is not only viable, but also scalable and broadly applicable to real-world humanoid manipulation tasks.",
+  "tasks": [
+   "grasp",
+   "bimanual"
+  ],
+  "did": "人形机器人的三个任务：抓起东西移到指定位置、抬箱子、两只手交接物体。看摄像头做，真机。"
+ },
+ {
+  "id": "2502.09614",
+  "short": "DexTrack",
+  "title": "DexTrack: Towards Generalizable Neural Tracking Control for Dexterous Manipulation from Human References",
+  "authors": [
+   "Xueyi Liu",
+   "Jianibieke Adalibieke",
+   "Qianwei Han",
+   "Yuzhe Qin",
+   "Li Yi"
+  ],
+  "date": "2025-02-13",
+  "cat": "human",
+  "star": false,
+  "zh": "学习可泛化的神经跟踪控制器，让灵巧手跟随人类参考轨迹完成多样操作。",
+  "abstract": "We address the challenge of developing a generalizable neural tracking controller for dexterous manipulation from human references. This controller aims to manage a dexterous robot hand to manipulate diverse objects for various purposes defined by kinematic human-object interactions. Developing such a controller is complicated by the intricate contact dynamics of dexterous manipulation and the need for adaptivity, generalizability, and robustness. Current reinforcement learning and trajectory optimization methods often fall short due to their dependence on task-specific rewards or precise system models. We introduce an approach that curates large-scale successful robot tracking demonstrations, comprising pairs of human references and robot actions, to train a neural controller. Utilizing a data flywheel, we iteratively enhance the controller's performance, as well as the number and quality of successful tracking demonstrations. We exploit available tracking demonstrations and carefully integrate reinforcement learning and imitation learning to boost the controller's performance in dynamic environments. At the same time, to obtain high-quality tracking demonstrations, we individually optimize per-trajectory tracking by leveraging the learned tracking controller in a homotopy optimization method. The homotopy optimization, mimicking chain-of-thought, aids in solving challenging trajectory tracking problems to increase demonstration diversity. We showcase our success by training a generalizable neural controller and evaluating it in both simulation and real world. Our method achieves over a 10% improvement in success rates compared to leading baselines. The project website with animated results is available at https://meowuu7.github.io/DexTrack/.",
+  "tasks": [
+   "daily"
+  ],
+  "did": "让手跟着人的参考动作去操作各种物体。目标是一个通用的“跟随控制器”，不是某一个任务。"
+ },
+ {
+  "id": "2502.07730",
+  "short": "DOGlove",
+  "title": "DOGlove: Dexterous Manipulation with a Low-Cost Open-Source Haptic Force Feedback Glove",
+  "authors": [
+   "Han Zhang",
+   "Songbo Hu",
+   "Zhecheng Yuan",
+   "Huazhe Xu"
+  ],
+  "date": "2025-02-11",
+  "cat": "teleop",
+  "star": false,
+  "zh": "低成本开源力反馈手套，提供 21 自由度动作捕捉与力/触觉反馈，用于遥操作与数据采集。",
+  "abstract": "Dexterous hand teleoperation plays a pivotal role in enabling robots to achieve human-level manipulation dexterity. However, current teleoperation systems often rely on expensive equipment and lack multi-modal sensory feedback, restricting human operators' ability to perceive object properties and perform complex manipulation tasks. To address these limitations, we present DOGlove, a low-cost, precise, and haptic force feedback glove system for teleoperation and manipulation. DoGlove can be assembled in hours at a cost under 600 USD. It features a customized joint structure for 21-DoF motion capture, a compact cable-driven torque transmission mechanism for 5-DoF multidirectional force feedback, and a linear resonate actuator for 5-DoF fingertip haptic feedback. Leveraging action and haptic force retargeting, DOGlove enables precise and immersive teleoperation of dexterous robotic hands, achieving high success rates in complex, contact-rich tasks. We further evaluate DOGlove in scenarios without visual feedback, demonstrating the critical role of haptic force feedback in task performance. In addition, we utilize the collected demonstrations to train imitation learning policies, highlighting the potential and effectiveness of DOGlove. DOGlove's hardware and software system will be fully open-sourced at https://do-glove.github.io/.",
+  "tasks": [
+   "daily"
+  ],
+  "did": "做的是带力反馈的遥操作手套。用它遥控手完成接触多的精细任务，还试了不看、只靠手感来做。"
+ },
+ {
+  "id": "2502.04307",
+  "short": "DexterityGen",
+  "title": "DexterityGen: Foundation Controller for Unprecedented Dexterity",
+  "authors": [
+   "Zhao-Heng Yin",
+   "Changhao Wang",
+   "Luis Pineda",
+   "Francois Hogan",
+   "Krishna Bodduluri",
+   "Akash Sharma",
+   "Patrick Lancaster",
+   "Ishita Prasad",
+   "Mrinal Kalakrishnan",
+   "Jitendra Malik",
+   "Mike Lambeta",
+   "Tingfan Wu",
+   "Pieter Abbeel",
+   "Mustafa Mukadam"
+  ],
+  "date": "2025-02-06",
+  "cat": "rl",
+  "star": false,
+  "zh": "用 RL 预训练大量底层灵巧技能原语，再由遥操作给出粗指令，由基础控制器补全精细接触动作。",
+  "abstract": "Teaching robots dexterous manipulation skills, such as tool use, presents a significant challenge. Current approaches can be broadly categorized into two strategies: human teleoperation (for imitation learning) and sim-to-real reinforcement learning. The first approach is difficult as it is hard for humans to produce safe and dexterous motions on a different embodiment without touch feedback. The second RL-based approach struggles with the domain gap and involves highly task-specific reward engineering on complex tasks. Our key insight is that RL is effective at learning low-level motion primitives, while humans excel at providing coarse motion commands for complex, long-horizon tasks. Therefore, the optimal solution might be a combination of both approaches. In this paper, we introduce DexterityGen (DexGen), which uses RL to pretrain large-scale dexterous motion primitives, such as in-hand rotation or translation. We then leverage this learned dataset to train a dexterous foundational controller. In the real world, we use human teleoperation as a prompt to the controller to produce highly dexterous behavior. We evaluate the effectiveness of DexGen in both simulation and real world, demonstrating that it is a general-purpose controller that can realize input dexterous manipulation commands and significantly improves stability by 10-100x measured as duration of holding objects across diverse tasks. Notably, with DexGen we demonstrate unprecedented dexterous skills including diverse object reorientation and dexterous tool use such as pen, syringe, and screwdriver for the first time.",
+  "tasks": [
+   "rotate",
+   "tool"
+  ],
+  "did": "先在仿真里练会大量基本动作（手里转、手里挪）。人粗略遥控，它补全细节，做到了用笔、注射器、螺丝刀。"
+ },
+ {
+  "id": "2412.16490",
+  "short": "BODex",
+  "title": "BODex: Scalable and Efficient Robotic Dexterous Grasp Synthesis Using Bilevel Optimization",
+  "authors": [
+   "Jiayi Chen",
+   "Yubin Ke",
+   "He Wang"
+  ],
+  "date": "2024-12-21",
+  "cat": "grasp",
+  "star": false,
+  "zh": "基于双层优化、GPU 加速的抓取合成管线，能高效生成大规模高质量灵巧抓取数据。",
+  "abstract": "Robotic dexterous grasping is important for interacting with the environment. To unleash the potential of data-driven models for dexterous grasping, a large-scale, high-quality dataset is essential. While gradient-based optimization offers a promising way for constructing such datasets, previous works suffer from limitations, such as inefficiency, strong assumptions in the grasp quality energy, or limited object sets for experiments. Moreover, the lack of a standard benchmark for comparing different methods and datasets hinders progress in this field. To address these challenges, we develop a highly efficient synthesis system and a comprehensive benchmark with MuJoCo for dexterous grasping. We formulate grasp synthesis as a bilevel optimization problem, combining a novel lower-level quadratic programming (QP) with an upper-level gradient descent process. By leveraging recent advances in CUDA-accelerated robotic libraries and GPU-based QP solvers, our system can parallelize thousands of grasps and synthesize over 49 grasps per second on a single 3090 GPU. Our synthesized grasps for Shadow, Allegro, and Leap hands all achieve a success rate above 75% in simulation, with a penetration depth under 1 mm, outperforming existing baselines on nearly all metrics. Compared to the previous large-scale dataset, DexGraspNet, our dataset significantly improves the performance of learning models, with a success rate from around 40% to 80% in simulation. Real-world testing of the trained model on the Shadow Hand achieves an 81% success rate across 20 diverse objects. The codes and datasets are released on our project page: https://pku-epic.github.io/BODex.",
+  "tasks": [
+   "grasp"
+  ],
+  "did": "快速算出大量抓取姿势，支持 Shadow、Allegro、LEAP 三种手。"
+ },
+ {
+  "id": "2411.04005",
+  "short": "Object-Centric HMD",
+  "title": "Object-Centric Dexterous Manipulation from Human Motion Data",
+  "authors": [
+   "Yuanpei Chen",
+   "Chen Wang",
+   "Yaodong Yang",
+   "C. Karen Liu"
+  ],
+  "date": "2024-11-06",
+  "cat": "human",
+  "star": false,
+  "zh": "以物体为中心的分层框架：从人手动捕数据学习腕部规划，再用 RL 控制器驱动双手完成铰接物体操作。",
+  "abstract": "Manipulating objects to achieve desired goal states is a basic but important skill for dexterous manipulation. Human hand motions demonstrate proficient manipulation capability, providing valuable data for training robots with multi-finger hands. Despite this potential, substantial challenges arise due to the embodiment gap between human and robot hands. In this work, we introduce a hierarchical policy learning framework that uses human hand motion data for training object-centric dexterous robot manipulation. At the core of our method is a high-level trajectory generative model, learned with a large-scale human hand motion capture dataset, to synthesize human-like wrist motions conditioned on the desired object goal states. Guided by the generated wrist motions, deep reinforcement learning is further used to train a low-level finger controller that is grounded in the robot's embodiment to physically interact with the object to achieve the goal. Through extensive evaluation across 10 household objects, our approach not only demonstrates superior performance but also showcases generalization capability to novel object geometries and goal states. Furthermore, we transfer the learned policies from simulation to a real-world bimanual dexterous robot system, further demonstrating its applicability in real-world scenarios. Project website: https://cypypccpy.github.io/obj-dex.github.io/.",
+  "tasks": [
+   "bimanual",
+   "tool"
+  ],
+  "did": "双手把 10 种家居物体操作到指定状态，包括带关节的物体。仿真训练后上了真机。"
+ },
+ {
+  "id": "2410.24090",
+  "short": "Sparsh",
+  "title": "Sparsh: Self-supervised touch representations for vision-based tactile sensing",
+  "authors": [
+   "Carolina Higuera",
+   "Akash Sharma",
+   "Chaithanya Krishna Bodduluri",
+   "Taosha Fan",
+   "Patrick Lancaster",
+   "Mrinal Kalakrishnan",
+   "Michael Kaess",
+   "Byron Boots",
+   "Mike Lambeta",
+   "Tingfan Wu",
+   "Mustafa Mukadam"
+  ],
+  "date": "2024-10-31",
+  "cat": "tactile",
+  "star": false,
+  "zh": "面向视觉式触觉传感器的自监督通用触觉表征，并提供评测基准。",
+  "abstract": "In this work, we introduce general purpose touch representations for the increasingly accessible class of vision-based tactile sensors. Such sensors have led to many recent advances in robot manipulation as they markedly complement vision, yet solutions today often rely on task and sensor specific handcrafted perception models. Collecting real data at scale with task centric ground truth labels, like contact forces and slip, is a challenge further compounded by sensors of various form factor differing in aspects like lighting and gel markings. To tackle this we turn to self-supervised learning (SSL) that has demonstrated remarkable performance in computer vision. We present Sparsh, a family of SSL models that can support various vision-based tactile sensors, alleviating the need for custom labels through pre-training on 460k+ tactile images with masking and self-distillation in pixel and latent spaces. We also build TacBench, to facilitate standardized benchmarking across sensors and models, comprising of six tasks ranging from comprehending tactile properties to enabling physical perception and manipulation planning. In evaluations, we find that SSL pre-training for touch representation outperforms task and sensor-specific end-to-end training by 95.1% on average over TacBench, and Sparsh (DINO) and Sparsh (IJEPA) are the most competitive, indicating the merits of learning in latent space for tactile images. Project page: https://sparsh-ssl.github.io/",
+  "tasks": [
+   "none"
+  ],
+  "did": "不做操作任务。做的是让机器“读懂”触觉图像，测试题是估计受力、检测打滑这类感知问题。"
+ },
+ {
+  "id": "2410.24091",
+  "short": "3D-ViTac",
+  "title": "3D-ViTac: Learning Fine-Grained Manipulation with Visuo-Tactile Sensing",
+  "authors": [
+   "Binghao Huang",
+   "Yixuan Wang",
+   "Xinyi Yang",
+   "Yiyue Luo",
+   "Yunzhu Li"
+  ],
+  "date": "2024-10-31",
+  "cat": "tactile",
+  "star": false,
+  "zh": "稠密柔性触觉阵列与视觉统一到 3D 表征中，用于精细、接触丰富的操作。",
+  "abstract": "Tactile and visual perception are both crucial for humans to perform fine-grained interactions with their environment. Developing similar multi-modal sensing capabilities for robots can significantly enhance and expand their manipulation skills. This paper introduces \\textbf{3D-ViTac}, a multi-modal sensing and learning system designed for dexterous bimanual manipulation. Our system features tactile sensors equipped with dense sensing units, each covering an area of 3$mm^2$. These sensors are low-cost and flexible, providing detailed and extensive coverage of physical contacts, effectively complementing visual information. To integrate tactile and visual data, we fuse them into a unified 3D representation space that preserves their 3D structures and spatial relationships. The multi-modal representation can then be coupled with diffusion policies for imitation learning. Through concrete hardware experiments, we demonstrate that even low-cost robots can perform precise manipulations and significantly outperform vision-only policies, particularly in safe interactions with fragile items and executing long-horizon tasks involving in-hand manipulation. Our project page is available at \\url{https://binghao-huang.github.io/3D-ViTac/}.",
+  "tasks": [
+   "bimanual",
+   "daily"
+  ],
+  "did": "双手做精细任务：安全地拿易碎的东西，以及包含手里调整物体的多步任务。视觉加触觉。"
+ },
+ {
+  "id": "2410.24185",
+  "short": "DexMimicGen",
+  "title": "DexMimicGen: Automated Data Generation for Bimanual Dexterous Manipulation via Imitation Learning",
+  "authors": [
+   "Zhenyu Jiang",
+   "Yuqi Xie",
+   "Kevin Lin",
+   "Zhenjia Xu",
+   "Weikang Wan",
+   "Ajay Mandlekar",
+   "Linxi Fan",
+   "Yuke Zhu"
+  ],
+  "date": "2024-10-31",
+  "cat": "vla",
+  "star": false,
+  "zh": "从少量人类演示自动生成大规模双手灵巧操作数据，用于人形机器人的模仿学习。",
+  "abstract": "Imitation learning from human demonstrations is an effective means to teach robots manipulation skills. But data acquisition is a major bottleneck in applying this paradigm more broadly, due to the amount of cost and human effort involved. There has been significant interest in imitation learning for bimanual dexterous robots, like humanoids. Unfortunately, data collection is even more challenging here due to the challenges of simultaneously controlling multiple arms and multi-fingered hands. Automated data generation in simulation is a compelling, scalable alternative to fuel this need for data. To this end, we introduce DexMimicGen, a large-scale automated data generation system that synthesizes trajectories from a handful of human demonstrations for humanoid robots with dexterous hands. We present a collection of simulation environments in the setting of bimanual dexterous manipulation, spanning a range of manipulation behaviors and different requirements for coordination among the two arms. We generate 21K demos across these tasks from just 60 source human demos and study the effect of several data generation and policy learning decisions on agent performance. Finally, we present a real-to-sim-to-real pipeline and deploy it on a real-world humanoid can sorting task. Generated datasets, simulation environments and additional results are at https://dexmimicgen.github.io/",
+  "tasks": [
+   "bimanual"
+  ],
+  "did": "人形机器人的双手任务。仿真里做了一批，真机做了分拣罐子。重点是从 60 条示范自动造出 2.1 万条。"
+ },
+ {
+  "id": "2410.23004",
+  "short": "DexGraspNet 2.0",
+  "title": "DexGraspNet 2.0: Learning Generative Dexterous Grasping in Large-scale Synthetic Cluttered Scenes",
+  "authors": [
+   "Jialiang Zhang",
+   "Haoran Liu",
+   "Danshi Li",
+   "Xinqiang Yu",
+   "Haoran Geng",
+   "Yufei Ding",
+   "Jiayi Chen",
+   "He Wang"
+  ],
+  "date": "2024-10-30",
+  "cat": "grasp",
+  "star": false,
+  "zh": "面向杂乱场景的大规模合成抓取数据集与生成式抓取模型，并展示零样本迁移到真机。",
+  "abstract": "Grasping in cluttered scenes remains highly challenging for dexterous hands due to the scarcity of data. To address this problem, we present a large-scale synthetic benchmark, encompassing 1319 objects, 8270 scenes, and 427 million grasps. Beyond benchmarking, we also propose a novel two-stage grasping method that learns efficiently from data by using a diffusion model that conditions on local geometry. Our proposed generative method outperforms all baselines in simulation experiments. Furthermore, with the aid of test-time-depth restoration, our method demonstrates zero-shot sim-to-real transfer, attaining 90.7% real-world dexterous grasping success rate in cluttered scenes.",
+  "tasks": [
+   "grasp"
+  ],
+  "did": "从一堆杂乱的东西里抓。真机成功率 90.7%。"
+ },
+ {
+  "id": "2409.08276",
+  "short": "AnySkin",
+  "title": "AnySkin: Plug-and-play Skin Sensing for Robotic Touch",
+  "authors": [
+   "Raunaq Bhirangi",
+   "Venkatesh Pattabiraman",
+   "Enes Erciyes",
+   "Yifeng Cao",
+   "Tess Hellebrekers",
+   "Lerrel Pinto"
+  ],
+  "date": "2024-09-12",
+  "cat": "tactile",
+  "star": false,
+  "zh": "即插即用、易于更换的磁性触觉皮肤，强调不同传感器实例之间的可互换性。",
+  "abstract": "While tactile sensing is widely accepted as an important and useful sensing modality, its use pales in comparison to other sensory modalities like vision and proprioception. AnySkin addresses the critical challenges that impede the use of tactile sensing -- versatility, replaceability, and data reusability. Building on the simplistic design of ReSkin, and decoupling the sensing electronics from the sensing interface, AnySkin simplifies integration making it as straightforward as putting on a phone case and connecting a charger. Furthermore, AnySkin is the first uncalibrated tactile-sensor with cross-instance generalizability of learned manipulation policies. To summarize, this work makes three key contributions: first, we introduce a streamlined fabrication process and a design tool for creating an adhesive-free, durable and easily replaceable magnetic tactile sensor; second, we characterize slip detection and policy learning with the AnySkin sensor; and third, we demonstrate zero-shot generalization of models trained on one instance of AnySkin to new instances, and compare it with popular existing tactile solutions like DIGIT and ReSkin. Videos of experiments, fabrication details and design files can be found on https://any-skin.github.io/",
+  "tasks": [
+   "none"
+  ],
+  "did": "主要是造触觉皮肤。测试了检测打滑，以及换一块新皮肤后原来学的本事还能不能用。"
+ },
+ {
+  "id": "2407.18902",
+  "short": "Pen Spinning",
+  "title": "Lessons from Learning to Spin \"Pens\"",
+  "authors": [
+   "Jun Wang",
+   "Ying Yuan",
+   "Haichuan Che",
+   "Haozhi Qi",
+   "Yi Ma",
+   "Jitendra Malik",
+   "Xiaolong Wang"
+  ],
+  "date": "2024-07-26",
+  "cat": "rl",
+  "star": false,
+  "zh": "手内转笔类动态任务的经验总结：先用仿真 oracle 策略产生轨迹，再用真实数据微调开环回放。",
+  "abstract": "In-hand manipulation of pen-like objects is an important skill in our daily lives, as many tools such as hammers and screwdrivers are similarly shaped. However, current learning-based methods struggle with this task due to a lack of high-quality demonstrations and the significant gap between simulation and the real world. In this work, we push the boundaries of learning-based in-hand manipulation systems by demonstrating the capability to spin pen-like objects. We first use reinforcement learning to train an oracle policy with privileged information and generate a high-fidelity trajectory dataset in simulation. This serves two purposes: 1) pre-training a sensorimotor policy in simulation; 2) conducting open-loop trajectory replay in the real world. We then fine-tune the sensorimotor policy using these real-world trajectories to adapt it to the real world dynamics. With less than 50 trajectories, our policy learns to rotate more than ten pen-like objects with different physical properties for multiple revolutions. We present a comprehensive analysis of our design choices and share the lessons learned during development.",
+  "tasks": [
+   "rotate"
+  ],
+  "did": "在手里连续转笔一样的细长物体，十多种，能转好几圈。"
+ },
+ {
+  "id": "2407.03162",
+  "short": "Bunny-VisionPro",
+  "title": "Bunny-VisionPro: Real-Time Bimanual Dexterous Teleoperation for Imitation Learning",
+  "authors": [
+   "Runyu Ding",
+   "Yuzhe Qin",
+   "Jiyue Zhu",
+   "Chengzhe Jia",
+   "Shiqi Yang",
+   "Ruihan Yang",
+   "Xiaojuan Qi",
+   "Xiaolong Wang"
+  ],
+  "date": "2024-07-03",
+  "cat": "teleop",
+  "star": false,
+  "zh": "基于 Apple Vision Pro 的实时双手灵巧遥操作，包含避碰与触觉反馈，面向模仿学习的数据采集。",
+  "abstract": "Teleoperation is a crucial tool for collecting human demonstrations, but controlling robots with bimanual dexterous hands remains a challenge. Existing teleoperation systems struggle to handle the complexity of coordinating two hands for intricate manipulations. We introduce Bunny-VisionPro, a real-time bimanual dexterous teleoperation system that leverages a VR headset. Unlike previous vision-based teleoperation systems, we design novel low-cost devices to provide haptic feedback to the operator, enhancing immersion. Our system prioritizes safety by incorporating collision and singularity avoidance while maintaining real-time performance through innovative designs. Bunny-VisionPro outperforms prior systems on a standard task suite, achieving higher success rates and reduced task completion times. Moreover, the high-quality teleoperation demonstrations improve downstream imitation learning performance, leading to better generalizability. Notably, Bunny-VisionPro enables imitation learning with challenging multi-stage, long-horizon dexterous manipulation tasks, which have rarely been addressed in previous work. Our system's ability to handle bimanual manipulations while prioritizing safety and real-time performance makes it a powerful tool for advancing dexterous manipulation and imitation learning.",
+  "tasks": [
+   "bimanual",
+   "daily"
+  ],
+  "did": "做的是双手遥操作系统。用它完成了多阶段的长任务，并拿录下的数据去训练机器人。"
+ },
+ {
+  "id": "2407.01512",
+  "short": "Open-TeleVision",
+  "title": "Open-TeleVision: Teleoperation with Immersive Active Visual Feedback",
+  "authors": [
+   "Xuxin Cheng",
+   "Jialong Li",
+   "Shiqi Yang",
+   "Ge Yang",
+   "Xiaolong Wang"
+  ],
+  "date": "2024-07-01",
+  "cat": "teleop",
+  "star": false,
+  "zh": "VR 头显提供沉浸式主动立体视觉反馈，把操作者的手臂与手部动作映射到人形机器人。",
+  "abstract": "Teleoperation serves as a powerful method for collecting on-robot data essential for robot learning from demonstrations. The intuitiveness and ease of use of the teleoperation system are crucial for ensuring high-quality, diverse, and scalable data. To achieve this, we propose an immersive teleoperation system Open-TeleVision that allows operators to actively perceive the robot's surroundings in a stereoscopic manner. Additionally, the system mirrors the operator's arm and hand movements on the robot, creating an immersive experience as if the operator's mind is transmitted to a robot embodiment. We validate the effectiveness of our system by collecting data and training imitation learning policies on four long-horizon, precise tasks (Can Sorting, Can Insertion, Folding, and Unloading) for 2 different humanoid robots and deploy them in the real world. The system is open-sourced at: https://robot-tv.github.io/",
+  "tasks": [
+   "bimanual",
+   "daily"
+  ],
+  "did": "人形机器人的四个长任务：分拣罐子、把罐子插进槽里、叠毛巾、卸货。先遥操作录数据，再让机器人自己做。"
+ },
+ {
+  "id": "2404.16823",
+  "short": "HATO",
+  "title": "Learning Visuotactile Skills with Two Multifingered Hands",
+  "authors": [
+   "Toru Lin",
+   "Yu Zhang",
+   "Qiyang Li",
+   "Haozhi Qi",
+   "Brent Yi",
+   "Sergey Levine",
+   "Jitendra Malik"
+  ],
+  "date": "2024-04-25",
+  "cat": "tactile",
+  "star": false,
+  "zh": "低成本双手多指遥操作系统，配合视触觉数据学习双手灵巧技能。",
+  "abstract": "Aiming to replicate human-like dexterity, perceptual experiences, and motion patterns, we explore learning from human demonstrations using a bimanual system with multifingered hands and visuotactile data. Two significant challenges exist: the lack of an affordable and accessible teleoperation system suitable for a dual-arm setup with multifingered hands, and the scarcity of multifingered hand hardware equipped with touch sensing. To tackle the first challenge, we develop HATO, a low-cost hands-arms teleoperation system that leverages off-the-shelf electronics, complemented with a software suite that enables efficient data collection; the comprehensive software suite also supports multimodal data processing, scalable policy learning, and smooth policy deployment. To tackle the latter challenge, we introduce a novel hardware adaptation by repurposing two prosthetic hands equipped with touch sensors for research. Using visuotactile data collected from our system, we learn skills to complete long-horizon, high-precision tasks which are difficult to achieve without multifingered dexterity and touch feedback. Furthermore, we empirically investigate the effects of dataset size, sensing modality, and visual input preprocessing on policy learning. Our results mark a promising step forward in bimanual multifingered manipulation from visuotactile data. Videos, code, and datasets can be found at https://toruowo.github.io/hato/ .",
+  "tasks": [
+   "bimanual",
+   "daily"
+  ],
+  "did": "两只带触觉的多指手做步骤多、精度要求高的任务。先遥操作录数据，再学。"
+ },
+ {
+  "id": "2403.07788",
+  "short": "DexCap",
+  "title": "DexCap: Scalable and Portable Mocap Data Collection System for Dexterous Manipulation",
+  "authors": [
+   "Chen Wang",
+   "Haochen Shi",
+   "Weizhuo Wang",
+   "Ruohan Zhang",
+   "Li Fei-Fei",
+   "C. Karen Liu"
+  ],
+  "date": "2024-03-12",
+  "cat": "teleop",
+  "star": true,
+  "zh": "便携式动捕手套 + SLAM 的数据采集系统，可在野外采集人手数据并重定向训练灵巧手策略。",
+  "abstract": "Imitation learning from human hand motion data presents a promising avenue for imbuing robots with human-like dexterity in real-world manipulation tasks. Despite this potential, substantial challenges persist, particularly with the portability of existing hand motion capture (mocap) systems and the complexity of translating mocap data into effective robotic policies. To tackle these issues, we introduce DexCap, a portable hand motion capture system, alongside DexIL, a novel imitation algorithm for training dexterous robot skills directly from human hand mocap data. DexCap offers precise, occlusion-resistant tracking of wrist and finger motions based on SLAM and electromagnetic field together with 3D observations of the environment. Utilizing this rich dataset, DexIL employs inverse kinematics and point cloud-based imitation learning to seamlessly replicate human actions with robot hands. Beyond direct learning from human motion, DexCap also offers an optional human-in-the-loop correction mechanism during policy rollouts to refine and further improve task performance. Through extensive evaluation across six challenging dexterous manipulation tasks, our approach not only demonstrates superior performance but also showcases the system's capability to effectively learn from in-the-wild mocap data, paving the way for future data collection methods in the pursuit of human-level robot dexterity. More details can be found at https://dex-cap.github.io",
+  "tasks": [
+   "daily",
+   "bimanual"
+  ],
+  "did": "人戴便携手套在外面录动作，机器人直接学。共 6 个灵巧操作任务。"
+ },
+ {
+  "id": "2403.03954",
+  "short": "DP3",
+  "title": "3D Diffusion Policy: Generalizable Visuomotor Policy Learning via Simple 3D Representations",
+  "authors": [
+   "Yanjie Ze",
+   "Gu Zhang",
+   "Kangning Zhang",
+   "Chenyuan Hu",
+   "Muhan Wang",
+   "Huazhe Xu"
+  ],
+  "date": "2024-03-06",
+  "cat": "vla",
+  "star": false,
+  "zh": "以紧凑 3D 点云表征为条件的扩散策略，少量演示即可学会包括灵巧手在内的多种技能。",
+  "abstract": "Imitation learning provides an efficient way to teach robots dexterous skills; however, learning complex skills robustly and generalizablely usually consumes large amounts of human demonstrations. To tackle this challenging problem, we present 3D Diffusion Policy (DP3), a novel visual imitation learning approach that incorporates the power of 3D visual representations into diffusion policies, a class of conditional action generative models. The core design of DP3 is the utilization of a compact 3D visual representation, extracted from sparse point clouds with an efficient point encoder. In our experiments involving 72 simulation tasks, DP3 successfully handles most tasks with just 10 demonstrations and surpasses baselines with a 24.2% relative improvement. In 4 real robot tasks, DP3 demonstrates precise control with a high success rate of 85%, given only 40 demonstrations of each task, and shows excellent generalization abilities in diverse aspects, including space, viewpoint, appearance, and instance. Interestingly, in real robot experiments, DP3 rarely violates safety requirements, in contrast to baseline methods which frequently do, necessitating human intervention. Our extensive evaluation highlights the critical importance of 3D representations in real-world robot learning. Videos, code, and data are available on https://3d-diffusion-policy.github.io .",
+  "tasks": [
+   "daily"
+  ],
+  "did": "72 个仿真任务加 4 个真机任务，每个任务只用几十条示范。是通用的学习方法，不专门针对某个任务。"
+ },
+ {
+  "id": "2403.02338",
+  "short": "Twisting Lids",
+  "title": "Twisting Lids Off with Two Hands",
+  "authors": [
+   "Toru Lin",
+   "Zhao-Heng Yin",
+   "Haozhi Qi",
+   "Pieter Abbeel",
+   "Jitendra Malik"
+  ],
+  "date": "2024-03-04",
+  "cat": "rl",
+  "star": false,
+  "zh": "双手拧瓶盖：在仿真中用 RL 训练并迁移到真实双手系统，探讨物理建模与奖励设计的要点。",
+  "abstract": "Manipulating objects with two multi-fingered hands has been a long-standing challenge in robotics, due to the contact-rich nature of many manipulation tasks and the complexity inherent in coordinating a high-dimensional bimanual system. In this work, we share novel insights into physical modeling, real-time perception, and reward design that enable policies trained in simulation using deep reinforcement learning (RL) to be effectively and efficiently transferred to the real world. Specifically, we consider the problem of twisting lids of various bottle-like objects with two hands, demonstrating policies with generalization capabilities across a diverse set of unseen objects as well as dynamic and dexterous behaviors. To the best of our knowledge, this is the first sim-to-real RL system that enables such capabilities on bimanual multi-fingered hands.",
+  "tasks": [
+   "bimanual",
+   "tool"
+  ],
+  "did": "两只手配合拧开各种瓶子的盖子。仿真里训练，直接上真机。"
+ },
+ {
+  "id": "2309.09979",
+  "short": "RotateIt",
+  "title": "General In-Hand Object Rotation with Vision and Touch",
+  "authors": [
+   "Haozhi Qi",
+   "Brent Yi",
+   "Sudharshan Suresh",
+   "Mike Lambeta",
+   "Yi Ma",
+   "Roberto Calandra",
+   "Jitendra Malik"
+  ],
+  "date": "2023-09-18",
+  "cat": "rl",
+  "star": false,
+  "zh": "融合视觉与触觉，实现沿多个轴的通用手内旋转；先用特权信息训练再蒸馏到真实传感输入。",
+  "abstract": "We introduce RotateIt, a system that enables fingertip-based object rotation along multiple axes by leveraging multimodal sensory inputs. Our system is trained in simulation, where it has access to ground-truth object shapes and physical properties. Then we distill it to operate on realistic yet noisy simulated visuotactile and proprioceptive sensory inputs. These multimodal inputs are fused via a visuotactile transformer, enabling online inference of object shapes and physical properties during deployment. We show significant performance improvements over prior methods and the importance of visual and tactile sensing.",
+  "tasks": [
+   "rotate"
+  ],
+  "did": "用指尖让物体绕多个不同方向的轴转。同时用视觉和触觉。"
+ },
+ {
+  "id": "2309.06440",
+  "short": "LEAP Hand",
+  "title": "LEAP Hand: Low-Cost, Efficient, and Anthropomorphic Hand for Robot Learning",
+  "authors": [
+   "Kenneth Shaw",
+   "Ananye Agarwal",
+   "Deepak Pathak"
+  ],
+  "date": "2023-09-12",
+  "cat": "hardware",
+  "star": true,
+  "zh": "低成本、易组装的开源拟人灵巧手，已成为机器人学习研究中最常用的硬件平台之一。",
+  "abstract": "Dexterous manipulation has been a long-standing challenge in robotics. While machine learning techniques have shown some promise, results have largely been currently limited to simulation. This can be mostly attributed to the lack of suitable hardware. In this paper, we present LEAP Hand, a low-cost dexterous and anthropomorphic hand for machine learning research. In contrast to previous hands, LEAP Hand has a novel kinematic structure that allows maximal dexterity regardless of finger pose. LEAP Hand is low-cost and can be assembled in 4 hours at a cost of 2000 USD from readily available parts. It is capable of consistently exerting large torques over long durations of time. We show that LEAP Hand can be used to perform several manipulation tasks in the real world -- from visual teleoperation to learning from passive video data and sim2real. LEAP Hand significantly outperforms its closest competitor Allegro Hand in all our experiments while being 1/8th of the cost. We release detailed assembly instructions, the Sim2Real pipeline and a development platform with useful APIs on our website at https://leap-hand.github.io/",
+  "tasks": [
+   "none"
+  ],
+  "did": "主要是造手。用遥操作、从视频学、仿真训练再上真机这几种方式都演示了任务。"
+ },
+ {
+  "id": "2308.02453",
+  "short": "Faive Hand",
+  "title": "Getting the Ball Rolling: Learning a Dexterous Policy for a Biomimetic Tendon-Driven Hand with Rolling Contact Joints",
+  "authors": [
+   "Yasunori Toshimitsu",
+   "Benedek Forrai",
+   "Barnabas Gavin Cangan",
+   "Ulrich Steger",
+   "Manuel Knecht",
+   "Stefan Weirich",
+   "Robert K. Katzschmann"
+  ],
+  "date": "2023-08-04",
+  "cat": "hardware",
+  "star": false,
+  "zh": "带滚动接触关节的仿生腱驱动手，并展示用 RL 学到的手内球体旋转策略。",
+  "abstract": "Biomimetic, dexterous robotic hands have the potential to replicate much of the tasks that a human can do, and to achieve status as a general manipulation platform. Recent advances in reinforcement learning (RL) frameworks have achieved remarkable performance in quadrupedal locomotion and dexterous manipulation tasks. Combined with GPU-based highly parallelized simulations capable of simulating thousands of robots in parallel, RL-based controllers have become more scalable and approachable. However, in order to bring RL-trained policies to the real world, we require training frameworks that output policies that can work with physical actuators and sensors as well as a hardware platform that can be manufactured with accessible materials yet is robust enough to run interactive policies. This work introduces the biomimetic tendon-driven Faive Hand and its system architecture, which uses tendon-driven rolling contact joints to achieve a 3D printable, robust high-DoF hand design. We model each element of the hand and integrate it into a GPU simulation environment to train a policy with RL, and achieve zero-shot transfer of a dexterous in-hand sphere rotation skill to the physical robot hand.",
+  "tasks": [
+   "rotate"
+  ],
+  "did": "在手里转一个球。同时也是一篇造手的文章。"
+ },
+ {
+  "id": "2307.04577",
+  "short": "AnyTeleop",
+  "title": "AnyTeleop: A General Vision-Based Dexterous Robot Arm-Hand Teleoperation System",
+  "authors": [
+   "Yuzhe Qin",
+   "Wei Yang",
+   "Binghao Huang",
+   "Karl Van Wyk",
+   "Hao Su",
+   "Xiaolong Wang",
+   "Yu-Wei Chao",
+   "Dieter Fox"
+  ],
+  "date": "2023-07-10",
+  "cat": "teleop",
+  "star": true,
+  "zh": "统一的视觉遥操作框架，支持多种机械臂、灵巧手、相机与仿真/真机环境；其重定向库被广泛复用。",
+  "abstract": "Vision-based teleoperation offers the possibility to endow robots with human-level intelligence to physically interact with the environment, while only requiring low-cost camera sensors. However, current vision-based teleoperation systems are designed and engineered towards a particular robot model and deploy environment, which scales poorly as the pool of the robot models expands and the variety of the operating environment increases. In this paper, we propose AnyTeleop, a unified and general teleoperation system to support multiple different arms, hands, realities, and camera configurations within a single system. Although being designed to provide great flexibility to the choice of simulators and real hardware, our system can still achieve great performance. For real-world experiments, AnyTeleop can outperform a previous system that was designed for a specific robot hardware with a higher success rate, using the same robot. For teleoperation in simulation, AnyTeleop leads to better imitation learning performance, compared with a previous system that is particularly designed for that simulator. Project page: https://yzqin.github.io/anyteleop/.",
+  "tasks": [
+   "daily"
+  ],
+  "did": "做的是通用遥操作系统，支持多种机械臂和手。任务只是用来验证系统好不好用。"
+ },
+ {
+  "id": "2304.00464",
+  "short": "UniDexGrasp++",
+  "title": "UniDexGrasp++: Improving Dexterous Grasping Policy Learning via Geometry-aware Curriculum and Iterative Generalist-Specialist Learning",
+  "authors": [
+   "Weikang Wan",
+   "Haoran Geng",
+   "Yun Liu",
+   "Zikang Shan",
+   "Yaodong Yang",
+   "Li Yi",
+   "He Wang"
+  ],
+  "date": "2023-04-02",
+  "cat": "grasp",
+  "star": false,
+  "zh": "几何感知课程学习加迭代式通才-专才学习，大幅提升基于视觉的通用抓取策略成功率。",
+  "abstract": "We propose a novel, object-agnostic method for learning a universal policy for dexterous object grasping from realistic point cloud observations and proprioceptive information under a table-top setting, namely UniDexGrasp++. To address the challenge of learning the vision-based policy across thousands of object instances, we propose Geometry-aware Curriculum Learning (GeoCurriculum) and Geometry-aware iterative Generalist-Specialist Learning (GiGSL) which leverage the geometry feature of the task and significantly improve the generalizability. With our proposed techniques, our final policy shows universal dexterous grasping on thousands of object instances with 85.4% and 78.2% success rate on the train set and test set which outperforms the state-of-the-art baseline UniDexGrasp by 11.7% and 11.3%, respectively.",
+  "tasks": [
+   "grasp"
+  ],
+  "did": "把桌面上的物体抓起来，几千种物体。仿真。"
+ },
+ {
+  "id": "2303.12076",
+  "short": "T-Dex",
+  "title": "Dexterity from Touch: Self-Supervised Pre-Training of Tactile Representations with Robotic Play",
+  "authors": [
+   "Irmak Guzey",
+   "Ben Evans",
+   "Soumith Chintala",
+   "Lerrel Pinto"
+  ],
+  "date": "2023-03-21",
+  "cat": "tactile",
+  "star": false,
+  "zh": "先用机器人自由“玩耍”数据自监督预训练触觉表征，再用少量演示学习灵巧技能。",
+  "abstract": "Teaching dexterity to multi-fingered robots has been a longstanding challenge in robotics. Most prominent work in this area focuses on learning controllers or policies that either operate on visual observations or state estimates derived from vision. However, such methods perform poorly on fine-grained manipulation tasks that require reasoning about contact forces or about objects occluded by the hand itself. In this work, we present T-Dex, a new approach for tactile-based dexterity, that operates in two phases. In the first phase, we collect 2.5 hours of play data, which is used to train self-supervised tactile encoders. This is necessary to bring high-dimensional tactile readings to a lower-dimensional embedding. In the second phase, given a handful of demonstrations for a dexterous task, we learn non-parametric policies that combine the tactile observations with visual ones. Across five challenging dexterous tasks, we show that our tactile-based dexterity models outperform purely vision and torque-based models by an average of 1.7X. Finally, we provide a detailed analysis on factors critical to T-Dex including the importance of play data, architectures, and representation learning.",
+  "tasks": [
+   "daily"
+  ],
+  "did": "5 个只靠眼睛做不好、需要手感的精细任务。每个任务只给少量示范。"
+ },
+ {
+  "id": "2303.10880",
+  "short": "Rotating without Seeing",
+  "title": "Rotating without Seeing: Towards In-hand Dexterity through Touch",
+  "authors": [
+   "Zhao-Heng Yin",
+   "Binghao Huang",
+   "Yuzhe Qin",
+   "Qifeng Chen",
+   "Xiaolong Wang"
+  ],
+  "date": "2023-03-20",
+  "cat": "tactile",
+  "star": false,
+  "zh": "仅依靠覆盖全手的低成本二值触觉传感器，实现不依赖视觉的手内旋转，并从仿真迁移到真机。",
+  "abstract": "Tactile information plays a critical role in human dexterity. It reveals useful contact information that may not be inferred directly from vision. In fact, humans can even perform in-hand dexterous manipulation without using vision. Can we enable the same ability for the multi-finger robot hand? In this paper, we present Touch Dexterity, a new system that can perform in-hand object rotation using only touching without seeing the object. Instead of relying on precise tactile sensing in a small region, we introduce a new system design using dense binary force sensors (touch or no touch) overlaying one side of the whole robot hand (palm, finger links, fingertips). Such a design is low-cost, giving a larger coverage of the object, and minimizing the Sim2Real gap at the same time. We train an in-hand rotation policy using Reinforcement Learning on diverse objects in simulation. Relying on touch-only sensing, we can directly deploy the policy in a real robot hand and rotate novel objects that are not presented in training. Extensive ablations are performed on how tactile information help in-hand manipulation.Our project is available at https://touchdexterity.github.io.",
+  "tasks": [
+   "rotate"
+  ],
+  "did": "不看、只靠触觉，在手里转没见过的物体。真机。"
+ },
+ {
+  "id": "2303.00938",
+  "short": "UniDexGrasp",
+  "title": "UniDexGrasp: Universal Robotic Dexterous Grasping via Learning Diverse Proposal Generation and Goal-Conditioned Policy",
+  "authors": [
+   "Yinzhen Xu",
+   "Weikang Wan",
+   "Jialiang Zhang",
+   "Haoran Liu",
+   "Zikang Shan",
+   "Hao Shen",
+   "Ruicheng Wang",
+   "Haoran Geng",
+   "Yijia Weng",
+   "Jiayi Chen",
+   "Tengyu Liu",
+   "Li Yi",
+   "He Wang"
+  ],
+  "date": "2023-03-02",
+  "cat": "grasp",
+  "star": false,
+  "zh": "两阶段通用灵巧抓取：先生成多样抓取提议，再用目标条件策略执行，可泛化到数千个物体。",
+  "abstract": "In this work, we tackle the problem of learning universal robotic dexterous grasping from a point cloud observation under a table-top setting. The goal is to grasp and lift up objects in high-quality and diverse ways and generalize across hundreds of categories and even the unseen. Inspired by successful pipelines used in parallel gripper grasping, we split the task into two stages: 1) grasp proposal (pose) generation and 2) goal-conditioned grasp execution. For the first stage, we propose a novel probabilistic model of grasp pose conditioned on the point cloud observation that factorizes rotation from translation and articulation. Trained on our synthesized large-scale dexterous grasp dataset, this model enables us to sample diverse and high-quality dexterous grasp poses for the object point cloud.For the second stage, we propose to replace the motion planning used in parallel gripper grasping with a goal-conditioned grasp policy, due to the complexity involved in dexterous grasping execution. Note that it is very challenging to learn this highly generalizable grasp policy that only takes realistic inputs without oracle states. We thus propose several important innovations, including state canonicalization, object curriculum, and teacher-student distillation. Integrating the two stages, our final pipeline becomes the first to achieve universal generalization for dexterous grasping, demonstrating an average success rate of more than 60\\% on thousands of object instances, which significantly outperforms all baselines, meanwhile showing only a minimal generalization gap.",
+  "tasks": [
+   "grasp"
+  ],
+  "did": "把桌面上的物体抓起来并举起，几千种物体。仿真。"
+ },
+ {
+  "id": "2212.04498",
+  "short": "VideoDex",
+  "title": "VideoDex: Learning Dexterity from Internet Videos",
+  "authors": [
+   "Kenneth Shaw",
+   "Shikhar Bahl",
+   "Deepak Pathak"
+  ],
+  "date": "2022-12-08",
+  "cat": "human",
+  "star": false,
+  "zh": "利用互联网人手视频中的视觉、动作与物理先验，辅助真实灵巧手策略学习。",
+  "abstract": "To build general robotic agents that can operate in many environments, it is often imperative for the robot to collect experience in the real world. However, this is often not feasible due to safety, time, and hardware restrictions. We thus propose leveraging the next best thing as real-world experience: internet videos of humans using their hands. Visual priors, such as visual features, are often learned from videos, but we believe that more information from videos can be utilized as a stronger prior. We build a learning algorithm, VideoDex, that leverages visual, action, and physical priors from human video datasets to guide robot behavior. These actions and physical priors in the neural network dictate the typical human behavior for a particular robot task. We test our approach on a robot arm and dexterous hand-based system and show strong results on various manipulation tasks, outperforming various state-of-the-art methods. Videos at https://video-dex.github.io",
+  "tasks": [
+   "daily"
+  ],
+  "did": "利用网上的人手视频，帮真机学多种日常操作任务。"
+ },
+ {
+  "id": "2211.11744",
+  "short": "Visual Dexterity",
+  "title": "Visual Dexterity: In-Hand Reorientation of Novel and Complex Object Shapes",
+  "authors": [
+   "Tao Chen",
+   "Megha Tippur",
+   "Siyang Wu",
+   "Vikash Kumar",
+   "Edward Adelson",
+   "Pulkit Agrawal"
+  ],
+  "date": "2022-11-21",
+  "cat": "rl",
+  "star": false,
+  "zh": "基于深度相机实时重定向新颖复杂形状的物体，手可以朝下，使用教师-学生蒸馏。",
+  "abstract": "In-hand object reorientation is necessary for performing many dexterous manipulation tasks, such as tool use in less structured environments that remain beyond the reach of current robots. Prior works built reorientation systems assuming one or many of the following: reorienting only specific objects with simple shapes, limited range of reorientation, slow or quasistatic manipulation, simulation-only results, the need for specialized and costly sensor suites, and other constraints which make the system infeasible for real-world deployment. We present a general object reorientation controller that does not make these assumptions. It uses readings from a single commodity depth camera to dynamically reorient complex and new object shapes by any rotation in real-time, with the median reorientation time being close to seven seconds. The controller is trained using reinforcement learning in simulation and evaluated in the real world on new object shapes not used for training, including the most challenging scenario of reorienting objects held in the air by a downward-facing hand that must counteract gravity during reorientation. Our hardware platform only uses open-source components that cost less than five thousand dollars. Although we demonstrate the ability to overcome assumptions in prior work, there is ample scope for improving absolute performance. For instance, the challenging duck-shaped object not used for training was dropped in 56 percent of the trials. When it was not dropped, our controller reoriented the object within 0.4 radians (23 degrees) 75 percent of the time. Videos are available at: https://taochenshh.github.io/projects/visual-dexterity.",
+  "tasks": [
+   "rotate"
+  ],
+  "did": "把形状复杂、没见过的物体在手里转到任意指定的朝向。手可以朝下，要一边转一边防止东西掉。"
+ },
+ {
+  "id": "2210.13702",
+  "short": "DeXtreme",
+  "title": "DeXtreme: Transfer of Agile In-hand Manipulation from Simulation to Reality",
+  "authors": [
+   "Ankur Handa",
+   "Arthur Allshire",
+   "Viktor Makoviychuk",
+   "Aleksei Petrenko",
+   "Ritvik Singh",
+   "Jingzhou Liu",
+   "Denys Makoviichuk",
+   "Karl Van Wyk",
+   "Alexander Zhurkevich",
+   "Balakumar Sundaralingam",
+   "Yashraj Narang",
+   "Jean-Francois Lafleche",
+   "Dieter Fox",
+   "Gavriel State"
+  ],
+  "date": "2022-10-25",
+  "cat": "rl",
+  "star": false,
+  "zh": "NVIDIA 用 Isaac Gym 大规模并行仿真加视觉位姿估计，把 Allegro Hand 的方块重定向迁移到真实世界。",
+  "abstract": "Recent work has demonstrated the ability of deep reinforcement learning (RL) algorithms to learn complex robotic behaviours in simulation, including in the domain of multi-fingered manipulation. However, such models can be challenging to transfer to the real world due to the gap between simulation and reality. In this paper, we present our techniques to train a) a policy that can perform robust dexterous manipulation on an anthropomorphic robot hand and b) a robust pose estimator suitable for providing reliable real-time information on the state of the object being manipulated. Our policies are trained to adapt to a wide range of conditions in simulation. Consequently, our vision-based policies significantly outperform the best vision policies in the literature on the same reorientation task and are competitive with policies that are given privileged state information via motion capture systems. Our work reaffirms the possibilities of sim-to-real transfer for dexterous manipulation in diverse kinds of hardware and simulator setups, and in our case, with the Allegro Hand and Isaac Gym GPU-based simulation. Furthermore, it opens up possibilities for researchers to achieve such results with commonly-available, affordable robot hands and cameras. Videos of the resulting policy and supplementary information, including experiments and demos, can be found at https://dextreme.org/",
+  "tasks": [
+   "rotate"
+  ],
+  "did": "在手里把方块转到指定的朝向。用的是 Allegro 手。"
+ },
+ {
+  "id": "2210.04887",
+  "short": "Hora / RMA",
+  "title": "In-Hand Object Rotation via Rapid Motor Adaptation",
+  "authors": [
+   "Haozhi Qi",
+   "Ashish Kumar",
+   "Roberto Calandra",
+   "Yi Ma",
+   "Jitendra Malik"
+  ],
+  "date": "2022-10-10",
+  "cat": "rl",
+  "star": true,
+  "zh": "把快速运动适应（RMA）用于手内旋转：仅靠本体感知，仿真训练的策略即可在真机上旋转多种物体。",
+  "abstract": "Generalized in-hand manipulation has long been an unsolved challenge of robotics. As a small step towards this grand goal, we demonstrate how to design and learn a simple adaptive controller to achieve in-hand object rotation using only fingertips. The controller is trained entirely in simulation on only cylindrical objects, which then - without any fine-tuning - can be directly deployed to a real robot hand to rotate dozens of objects with diverse sizes, shapes, and weights over the z-axis. This is achieved via rapid online adaptation of the controller to the object properties using only proprioception history. Furthermore, natural and stable finger gaits automatically emerge from training the control policy via reinforcement learning. Code and more videos are available at https://haozhi.io/hora",
+  "tasks": [
+   "rotate"
+  ],
+  "did": "用指尖让物体绕竖直方向连续转，几十种大小形状不同的物体。和“入门五步”第五步是同一个任务。"
+ },
+ {
+  "id": "2210.02697",
+  "short": "DexGraspNet",
+  "title": "DexGraspNet: A Large-Scale Robotic Dexterous Grasp Dataset for General Objects Based on Simulation",
+  "authors": [
+   "Ruicheng Wang",
+   "Jialiang Zhang",
+   "Jiayi Chen",
+   "Yinzhen Xu",
+   "Puhao Li",
+   "Tengyu Liu",
+   "He Wang"
+  ],
+  "date": "2022-10-06",
+  "cat": "grasp",
+  "star": true,
+  "zh": "用可微力闭合优化为 5000+ 物体合成百万级 Shadow Hand 抓取，是后续大量抓取工作的数据基础。",
+  "abstract": "Robotic dexterous grasping is the first step to enable human-like dexterous object manipulation and thus a crucial robotic technology. However, dexterous grasping is much more under-explored than object grasping with parallel grippers, partially due to the lack of a large-scale dataset. In this work, we present a large-scale robotic dexterous grasp dataset, DexGraspNet, generated by our proposed highly efficient synthesis method that can be generally applied to any dexterous hand. Our method leverages a deeply accelerated differentiable force closure estimator and thus can efficiently and robustly synthesize stable and diverse grasps on a large scale. We choose ShadowHand and generate 1.32 million grasps for 5355 objects, covering more than 133 object categories and containing more than 200 diverse grasps for each object instance, with all grasps having been validated by the Isaac Gym simulator. Compared to the previous dataset from Liu et al. generated by GraspIt!, our dataset has not only more objects and grasps, but also higher diversity and quality. Via performing cross-dataset experiments, we show that training several algorithms of dexterous grasp synthesis on our dataset significantly outperforms training on the previous one. To access our data and code, including code for human and Allegro grasp synthesis, please visit our project page: https://pku-epic.github.io/DexGraspNet/.",
+  "tasks": [
+   "grasp"
+  ],
+  "did": "为 5355 个物体算出 132 万个抓取姿势，做成数据集。"
+ },
+ {
+  "id": "2206.08686",
+  "short": "Bi-DexHands",
+  "title": "Towards Human-Level Bimanual Dexterous Manipulation with Reinforcement Learning",
+  "authors": [
+   "Yuanpei Chen",
+   "Tianhao Wu",
+   "Shengjie Wang",
+   "Xidong Feng",
+   "Jiechuang Jiang",
+   "Stephen Marcus McAleer",
+   "Yiran Geng",
+   "Hao Dong",
+   "Zongqing Lu",
+   "Song-Chun Zhu",
+   "Yaodong Yang"
+  ],
+  "date": "2022-06-17",
+  "cat": "rl",
+  "star": false,
+  "zh": "基于 Isaac Gym 的双手灵巧操作基准，覆盖多种双手任务与多种 RL/MARL 算法。",
+  "abstract": "Achieving human-level dexterity is an important open problem in robotics. However, tasks of dexterous hand manipulation, even at the baby level, are challenging to solve through reinforcement learning (RL). The difficulty lies in the high degrees of freedom and the required cooperation among heterogeneous agents (e.g., joints of fingers). In this study, we propose the Bimanual Dexterous Hands Benchmark (Bi-DexHands), a simulator that involves two dexterous hands with tens of bimanual manipulation tasks and thousands of target objects. Specifically, tasks in Bi-DexHands are designed to match different levels of human motor skills according to cognitive science literature. We built Bi-DexHands in the Issac Gym; this enables highly efficient RL training, reaching 30,000+ FPS by only one single NVIDIA RTX 3090. We provide a comprehensive benchmark for popular RL algorithms under different settings; this includes Single-agent/Multi-agent RL, Offline RL, Multi-task RL, and Meta RL. Our results show that the PPO type of on-policy algorithms can master simple manipulation tasks that are equivalent up to 48-month human babies (e.g., catching a flying object, opening a bottle), while multi-agent RL can further help to master manipulations that require skilled bimanual cooperation (e.g., lifting a pot, stacking blocks). Despite the success on each single task, when it comes to acquiring multiple manipulation skills, existing RL algorithms fail to work in most of the multi-task and the few-shot learning settings, which calls for more substantial development from the RL community. Our project is open sourced at https://github.com/PKU-MARL/DexterousHands.",
+  "tasks": [
+   "bimanual"
+  ],
+  "did": "仿真里的几十个双手任务，比如接住飞来的东西、开瓶盖、抬锅、叠积木。是一套测试题，没上真机。"
+ },
+ {
+  "id": "2108.05877",
+  "short": "DexMV",
+  "title": "DexMV: Imitation Learning for Dexterous Manipulation from Human Videos",
+  "authors": [
+   "Yuzhe Qin",
+   "Yueh-Hua Wu",
+   "Shaowei Liu",
+   "Hanwen Jiang",
+   "Ruihan Yang",
+   "Yang Fu",
+   "Xiaolong Wang"
+  ],
+  "date": "2021-08-12",
+  "cat": "human",
+  "star": false,
+  "zh": "从人类视频中提取 3D 手-物位姿并转成机器人演示，用于灵巧操作模仿学习的早期代表工作。",
+  "abstract": "While significant progress has been made on understanding hand-object interactions in computer vision, it is still very challenging for robots to perform complex dexterous manipulation. In this paper, we propose a new platform and pipeline DexMV (Dexterous Manipulation from Videos) for imitation learning. We design a platform with: (i) a simulation system for complex dexterous manipulation tasks with a multi-finger robot hand and (ii) a computer vision system to record large-scale demonstrations of a human hand conducting the same tasks. In our novel pipeline, we extract 3D hand and object poses from videos, and propose a novel demonstration translation method to convert human motion to robot demonstrations. We then apply and benchmark multiple imitation learning algorithms with the demonstrations. We show that the demonstrations can indeed improve robot learning by a large margin and solve the complex tasks which reinforcement learning alone cannot solve. More details can be found in the project page: https://yzqin.github.io/dexmv",
+  "tasks": [
+   "daily"
+  ],
+  "did": "仿真里的三个任务：把物体挪到指定位置、倒东西、把物体放进容器。"
+ },
+ {
+  "id": "1910.07113",
+  "short": "Rubik's Cube",
+  "title": "Solving Rubik's Cube with a Robot Hand",
+  "authors": [
+   " OpenAI",
+   "Ilge Akkaya",
+   "Marcin Andrychowicz",
+   "Maciek Chociej",
+   "Mateusz Litwin",
+   "Bob McGrew",
+   "Arthur Petron",
+   "Alex Paino",
+   "Matthias Plappert",
+   "Glenn Powell",
+   "Raphael Ribas",
+   "Jonas Schneider",
+   "Nikolas Tezak",
+   "Jerry Tworek",
+   "Peter Welinder",
+   "Lilian Weng",
+   "Qiming Yuan",
+   "Wojciech Zaremba",
+   "Lei Zhang"
+  ],
+  "date": "2019-10-16",
+  "cat": "rl",
+  "star": false,
+  "zh": "提出自动域随机化（ADR），让单只 Shadow Hand 在真实世界中拧魔方，展示 sim-to-real 的上限。",
+  "abstract": "We demonstrate that models trained only in simulation can be used to solve a manipulation problem of unprecedented complexity on a real robot. This is made possible by two key components: a novel algorithm, which we call automatic domain randomization (ADR) and a robot platform built for machine learning. ADR automatically generates a distribution over randomized environments of ever-increasing difficulty. Control policies and vision state estimators trained with ADR exhibit vastly improved sim2real transfer. For control policies, memory-augmented models trained on an ADR-generated distribution of environments show clear signs of emergent meta-learning at test time. The combination of ADR with our custom robot platform allows us to solve a Rubik's cube with a humanoid robot hand, which involves both control and state estimation problems. Videos summarizing our results are available: https://openai.com/blog/solving-rubiks-cube/",
+  "tasks": [
+   "rotate",
+   "tool"
+  ],
+  "did": "单手拧魔方。"
+ },
+ {
+  "id": "1910.03135",
+  "short": "DexPilot",
+  "title": "DexPilot: Vision Based Teleoperation of Dexterous Robotic Hand-Arm System",
+  "authors": [
+   "Ankur Handa",
+   "Karl Van Wyk",
+   "Wei Yang",
+   "Jacky Liang",
+   "Yu-Wei Chao",
+   "Qian Wan",
+   "Stan Birchfield",
+   "Nathan Ratliff",
+   "Dieter Fox"
+  ],
+  "date": "2019-10-07",
+  "cat": "teleop",
+  "star": false,
+  "zh": "早期的纯视觉、无标记手-臂遥操作系统，用裸手驱动 Allegro Hand 完成精细操作。",
+  "abstract": "Teleoperation offers the possibility of imparting robotic systems with sophisticated reasoning skills, intuition, and creativity to perform tasks. However, current teleoperation solutions for high degree-of-actuation (DoA), multi-fingered robots are generally cost-prohibitive, while low-cost offerings usually provide reduced degrees of control. Herein, a low-cost, vision based teleoperation system, DexPilot, was developed that allows for complete control over the full 23 DoA robotic system by merely observing the bare human hand. DexPilot enables operators to carry out a variety of complex manipulation tasks that go beyond simple pick-and-place operations. This allows for collection of high dimensional, multi-modality, state-action data that can be leveraged in the future to learn sensorimotor policies for challenging manipulation tasks. The system performance was measured through speed and reliability metrics across two human demonstrators on a variety of tasks. The videos of the experiments can be found at https://sites.google.com/view/dex-pilot.",
+  "tasks": [
+   "daily"
+  ],
+  "did": "做的是用摄像头看裸手的遥操作系统。用它做了各种比“拿起放下”更精细的任务。"
+ },
+ {
+  "id": "1808.00177",
+  "short": "OpenAI Dactyl",
+  "title": "Learning Dexterous In-Hand Manipulation",
+  "authors": [
+   " OpenAI",
+   "Marcin Andrychowicz",
+   "Bowen Baker",
+   "Maciek Chociej",
+   "Rafal Jozefowicz",
+   "Bob McGrew",
+   "Jakub Pachocki",
+   "Arthur Petron",
+   "Matthias Plappert",
+   "Glenn Powell",
+   "Alex Ray",
+   "Jonas Schneider",
+   "Szymon Sidor",
+   "Josh Tobin",
+   "Peter Welinder",
+   "Lilian Weng",
+   "Wojciech Zaremba"
+  ],
+  "date": "2018-08-01",
+  "cat": "rl",
+  "star": true,
+  "zh": "里程碑工作：完全在仿真中用 RL + 大规模域随机化训练 Shadow Hand 做方块重定向，并零样本迁移到真机。",
+  "abstract": "We use reinforcement learning (RL) to learn dexterous in-hand manipulation policies which can perform vision-based object reorientation on a physical Shadow Dexterous Hand. The training is performed in a simulated environment in which we randomize many of the physical properties of the system like friction coefficients and an object's appearance. Our policies transfer to the physical robot despite being trained entirely in simulation. Our method does not rely on any human demonstrations, but many behaviors found in human manipulation emerge naturally, including finger gaiting, multi-finger coordination, and the controlled use of gravity. Our results were obtained using the same distributed RL system that was used to train OpenAI Five. We also include a video of our results: https://youtu.be/jwSbzNHGflM",
+  "tasks": [
+   "rotate"
+  ],
+  "did": "在手里把方块转到指定的朝向。用的是 Shadow 手。"
+ },
+ {
+  "id": "1709.10087",
+  "short": "DAPG",
+  "title": "Learning Complex Dexterous Manipulation with Deep Reinforcement Learning and Demonstrations",
+  "authors": [
+   "Aravind Rajeswaran",
+   "Vikash Kumar",
+   "Abhishek Gupta",
+   "Giulia Vezzani",
+   "John Schulman",
+   "Emanuel Todorov",
+   "Sergey Levine"
+  ],
+  "date": "2017-09-28",
+  "cat": "rl",
+  "star": false,
+  "zh": "用少量人类演示增强策略梯度（DAPG），显著降低高自由度手的样本复杂度；Adroit 基准任务的出处。",
+  "abstract": "Dexterous multi-fingered hands are extremely versatile and provide a generic way to perform a multitude of tasks in human-centric environments. However, effectively controlling them remains challenging due to their high dimensionality and large number of potential contacts. Deep reinforcement learning (DRL) provides a model-agnostic approach to control complex dynamical systems, but has not been shown to scale to high-dimensional dexterous manipulation. Furthermore, deployment of DRL on physical systems remains challenging due to sample inefficiency. Consequently, the success of DRL in robotics has thus far been limited to simpler manipulators and tasks. In this work, we show that model-free DRL can effectively scale up to complex manipulation tasks with a high-dimensional 24-DoF hand, and solve them from scratch in simulated experiments. Furthermore, with the use of a small number of human demonstrations, the sample complexity can be significantly reduced, which enables learning with sample sizes equivalent to a few hours of robot experience. The use of demonstrations result in policies that exhibit very natural movements and, surprisingly, are also substantially more robust.",
+  "tasks": [
+   "tool",
+   "rotate",
+   "daily"
+  ],
+  "did": "仿真里的四个任务：开门、用锤子钉钉子、转笔、把球挪到指定位置。"
+ }
+]

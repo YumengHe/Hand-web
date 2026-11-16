@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>灵巧手文献库 · Dexterous Hand Reading List</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top">
+      <span class="kicker">Dexterous Hand · Reading List</span>
+      <button id="theme" class="ghost" type="button" aria-label="切换明暗主题">◐ 主题</button>
+    </div>
+    <h1>灵巧手文献库</h1>
+    <p class="lede">多指灵巧手方向的论文索引：从 OpenAI Dactyl 到 2026 年的人类视频预训练。所有条目的标题、作者、日期均取自 arXiv。</p>
+    <dl class="stats" id="stats"></dl>
+    <div class="navcards">
+      <a class="navcard" href="compare.html"><strong>我们的两只手：无极 2 和 Sharpa Wave 有什么区别 →</strong><span>关节、自由度、触觉、重量，用大白话讲清楚</span></a>
+      <a class="navcard" href="start.html"><strong>只用手的入门五步 →</strong><span>不接机械臂，从让关节动一下到让它自己转东西</span></a>
+      <a class="navcard" href="setup.html"><strong>Sharpa 开箱、固定和接线 →</strong><span>按官方手册整理：怎么装到底座上、线怎么接、怎么连电脑</span></a>
+      <a class="navcard" href="notes.html"><strong>问答记录 →</strong><span>问过的问题和答案，按时间记着，免得忘</span></a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="route" aria-labelledby="route-h">
+    <h2 id="route-h">入门路线</h2>
+    <p class="route-note">如果刚进入这个方向，按下面的顺序读这几篇，能最快建立全貌。</p>
+    <ol id="route"></ol>
+  </section>
+
+  <section aria-labelledby="gloss-h">
+    <h2 id="gloss-h">先搞懂这些词</h2>
+    <p class="route-note">论文里反复出现的术语，用大白话解释。点开看。</p>
+    <div id="gloss" class="gloss"></div>
+  </section>
+
+  <section aria-labelledby="lib-h">
+    <h2 id="lib-h">全部文献</h2>
+    <div class="controls">
+      <input id="q" type="search" placeholder="搜索标题、作者、简称、摘要…" autocomplete="off" aria-label="搜索">
+      <select id="sort" aria-label="排序">
+        <option value="new">最新优先</option>
+        <option value="old">最早优先</option>
+        <option value="title">按标题</option>
+      </select>
+    </div>
+    <p class="filter-label">按任务筛选 <small>这篇文章让手干了什么活。一篇可以属于多类。</small></p>
+    <div class="chips" id="taskchips" role="group" aria-label="按任务筛选"></div>
+    <p id="tasknote" class="catnote" hidden></p>
+    <p class="filter-label">按方法筛选 <small>这篇文章用什么办法做的。两种筛选可以同时用。</small></p>
+    <div class="chips" id="chips" role="group" aria-label="按方法筛选"></div>
+    <p id="catnote" class="catnote" hidden></p>
+    <div class="toggles">
+      <label><input type="checkbox" id="onlyStar"> 只看精选</label>
+      <label><input type="checkbox" id="onlySaved"> 只看我收藏的</label>
+      <label><input type="checkbox" id="hideRead"> 隐藏已读</label>
+      <span id="count" class="count" aria-live="polite"></span>
+    </div>
+    <div id="list" class="list"></div>
+    <p id="empty" class="empty" hidden>没有符合条件的论文，换个关键词或清除筛选试试。</p>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <p>数据来源：arXiv API。中文导读为人工撰写的一句话概括，细节请以原文为准。“做了什么任务”根据摘要和对论文的了解整理，没有逐篇核对全文；写着“具体见原文”的是摘要里没列出任务的。收藏与已读状态只保存在本浏览器。</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

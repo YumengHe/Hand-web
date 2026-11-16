@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>只用手的入门五步 · 灵巧手</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top">
+      <span class="kicker">Getting Started · Hand Only</span>
+      <span class="mast-actions">
+        <a class="ghost" href="index.html">← 文献库</a>
+        <a class="ghost" href="setup.html">Sharpa 开箱和接线</a>
+        <a class="ghost" href="compare.html">两只手的区别</a>
+        <a class="ghost" href="notes.html">问答记录</a>
+        <button id="theme" class="ghost" type="button" aria-label="切换明暗主题">◐ 主题</button>
+      </span>
+    </div>
+    <h1>只用手的入门五步</h1>
+    <p class="lede">不接机械臂，把手固定在桌上，从“让一个关节动一下”做到“让它自己把手心里的东西转起来”。走完这五步，就完整经历了一遍这个领域的标准流程。</p>
+    <div class="progress" aria-live="polite">
+      <div class="bar"><i id="bar"></i></div>
+      <span id="progress-text">已完成 0 / 5</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section>
+    <h2>为什么可以不要机械臂</h2>
+    <div class="explain">
+      <p>机械臂负责“把手送到哪里”，手负责“手指怎么动”。如果东西是你直接放到它手里的，就不需要臂。</p>
+      <p>最常见的摆法是把手固定在支架上、<strong>手心朝上</strong>，像一只摊开等着接东西的手。很多有名的研究就是这么做的，比如文献库里的 OpenAI Dactyl、Hora、Rotating without Seeing、DeXtreme。</p>
+      <p><strong>建议先用 Sharpa。</strong>它有两只，万一弄坏一只还有备份。前四步可以完全不管触觉，把它当普通的手用。等流程熟了，再把同样的东西在无极 2 上做一遍。</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>开始前要准备的</h2>
+    <div class="caveat">
+      <ul>
+        <li><strong>一个固定支架。</strong>手不能直接放桌上，必须牢牢固定住。无极官方模型仓库的 <code>step/adapter</code> 目录里有安装转接件的图纸；Sharpa 的包装里自带桌面底座，不用另外做（见 <a href="setup.html">Sharpa 开箱和接线</a>）。</li>
+        <li><strong>一台 Ubuntu 电脑。</strong>两家的官方工具都以 Linux 为主。前四步普通电脑就行。</li>
+        <li><strong>第五步需要 NVIDIA 显卡。</strong>Sharpa 官方示例写明至少 32 GB 内存、Ubuntu 22.04。</li>
+        <li><strong>第一次上真手要慢。</strong>先把速度和力度限制调低，手边随时能断电。电源别插错：无极 2 是 12 V，Sharpa 是 18–28 V。</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Sharpa 还没装好、没连上电脑？</h2>
+    <p>开箱、装到底座、接线、连电脑、校准、关机，这些单独放在一页：<a href="setup.html"><strong>Sharpa 开箱和接线 →</strong></a>。先把那一页做完，再回来做下面五步。</p>
+  </section>
+
+  <section>
+    <h2>五个步骤</h2>
+    <p class="route-note">做完一步就勾上，进度会记在这个浏览器里。</p>
+    <ol class="steps" id="steps">
+
+      <li class="step" data-step="1">
+        <div class="step-head">
+          <span class="step-n">01</span>
+          <h3>让手动起来</h3>
+          <label class="done"><input type="checkbox"> 做完了</label>
+        </div>
+        <p><strong>做什么：</strong>装好厂商的软件，从电脑发指令让每个关节单独动一下，再读回它实际转到了多少度。</p>
+        <p><strong>为什么：</strong>这是在熟悉“电脑怎么和手说话”。后面所有事情都建立在这上面。</p>
+        <p class="goal"><strong>做到这样算完成：</strong>你能写一小段 Python，让食指弯到 45° 再伸直，并打印出关节的实际角度。</p>
+        <div class="tools">
+          <div><b>Sharpa</b>先用官方桌面软件 Sharpa Pilot 校准和点动，再用 <a href="https://github.com/sharpa-robotics/sharpa-wave-sdk" target="_blank" rel="noopener">sharpa-wave-sdk</a> 写代码控制（支持 Python 3.10–3.12）。</div>
+          <div><b>无极 2</b><a href="https://github.com/wuji-technology/wuji-sdk" target="_blank" rel="noopener">wuji-sdk</a> 写代码控制；<a href="https://github.com/wuji-technology/wuji-studio" target="_blank" rel="noopener">wuji-studio</a> 是带界面的桌面软件，可以先用它看数据。</div>
+        </div>
+      </li>
+
+      <li class="step" data-step="2">
+        <div class="step-head">
+          <span class="step-n">02</span>
+          <h3>回放固定动作</h3>
+          <label class="done"><input type="checkbox"> 做完了</label>
+        </div>
+        <p><strong>做什么：</strong>手动编几个姿势（握拳、比 OK、依次弯手指），让手按顺序、平滑地做出来。</p>
+        <p><strong>为什么：</strong>熟悉怎么编排一串动作，以及动得太快、太猛会发生什么。</p>
+        <p class="goal"><strong>做到这样算完成：</strong>手能循环做一套你设计的动作，中间不卡顿、手指之间不互相撞。</p>
+        <div class="tools">
+          <div><b>两只手都一样</b>用第一步的软件就够了。把每个姿势记成一组关节角度，在两个姿势之间慢慢过渡，不要一步跳过去。</div>
+        </div>
+      </li>
+
+      <li class="step" data-step="3">
+        <div class="step-head">
+          <span class="step-n">03</span>
+          <h3>用自己的手遥控它</h3>
+          <label class="done"><input type="checkbox"> 做完了</label>
+        </div>
+        <p><strong>做什么：</strong>对着摄像头动你的手，机器人手跟着动。</p>
+        <p><strong>为什么：</strong>这一步会碰到“把人手姿势翻译成机器人手姿势”（论文里叫重定向，retargeting）。人手和机器人手的手指长短、关节数量不一样，不能直接照抄。这是后面录示范、用人类数据教机器人的基础。</p>
+        <p class="goal"><strong>做到这样算完成：</strong>你捏拇指和食指，它也捏；你张开五指，它也张开。然后试着遥控它捏起一个放在手心里的小东西。</p>
+        <div class="tools">
+          <div><b>Sharpa</b><a href="https://github.com/sharpa-robotics/sharpa-vision-retargeting-sdk" target="_blank" rel="noopener">sharpa-vision-retargeting-sdk</a>：普通摄像头或 Meta Quest 头显都行，支持单手和双手。</div>
+          <div><b>无极 2</b><a href="https://github.com/wuji-technology/wuji-retargeting" target="_blank" rel="noopener">wuji-retargeting</a> 负责姿势翻译；<a href="https://github.com/wuji-technology/wuji-hand-teleop" target="_blank" rel="noopener">wuji-hand-teleop</a> 是完整的遥控程序。</div>
+        </div>
+      </li>
+
+      <li class="step" data-step="4">
+        <div class="step-head">
+          <span class="step-n">04</span>
+          <h3>在电脑里的虚拟世界跑一遍</h3>
+          <label class="done"><input type="checkbox"> 做完了</label>
+        </div>
+        <p><strong>做什么：</strong>把手的模型加载进仿真软件，让虚拟的手做和第二步一样的动作，和真手并排对比。</p>
+        <p><strong>为什么：</strong>第五步要在虚拟世界里训练。先看清楚虚拟的手和真手差在哪（动得快慢、到位的准不准），心里有数。这个差别就是论文里说的 sim-to-real gap。</p>
+        <p class="goal"><strong>做到这样算完成：</strong>同一组指令，虚拟手和真手做出来的动作大体一致，你能说出哪里不一样。</p>
+        <div class="tools">
+          <div><b>Sharpa</b><a href="https://github.com/sharpa-robotics/sharpa-urdf-usd-xml" target="_blank" rel="noopener">sharpa-urdf-usd-xml</a> 里有左手、右手、双手的模型文件，可以用免费的 MuJoCo 打开。</div>
+          <div><b>无极 2</b><a href="https://github.com/wuji-technology/wuji-hand-description" target="_blank" rel="noopener">wuji-hand-description</a> 是模型文件；<a href="https://github.com/wuji-technology/mujoco-sim" target="_blank" rel="noopener">mujoco-sim</a> 是加载并控制它的最小示例。</div>
+        </div>
+      </li>
+
+      <li class="step" data-step="5">
+        <div class="step-head">
+          <span class="step-n">05</span>
+          <h3>第一个真正的任务：手心朝上转东西</h3>
+          <label class="done"><input type="checkbox"> 做完了</label>
+        </div>
+        <p><strong>做什么：</strong>往手心放一个小圆柱或小方块，让手指自己把它原地转圈。没有人教它具体怎么动：在虚拟世界里让它反复试错（强化学习），练会之后搬到真手上。</p>
+        <p><strong>为什么：</strong>这是这个领域的“入门标准题”。做完它，你就完整走了一遍：虚拟世界里训练 → 搬到真手 → 发现不一样 → 调整。以后加机械臂只是多一个部件，流程是一样的。</p>
+        <p class="goal"><strong>做到这样算完成：</strong>真手能把物体连续转几圈不掉。</p>
+        <div class="tools">
+          <div><b>Sharpa</b><a href="https://github.com/sharpa-robotics/sharpa-rl-lab" target="_blank" rel="noopener">sharpa-rl-lab</a>：官方的“手内旋转”完整示例，从训练、看效果到部署到真手一步步都有。默认用的物体是 3D 打印的圆柱，半径 24 mm、高 60 mm。</div>
+          <div><b>无极 2</b><a href="https://github.com/wuji-technology/wuji-isaaclab" target="_blank" rel="noopener">wuji-isaaclab</a>：无极 2 的“手内转方块”训练；<a href="https://github.com/wuji-technology/wuji-mjlab" target="_blank" rel="noopener">wuji-mjlab</a>：训练加部署到真手。</div>
+        </div>
+        <p class="aside">想了解背后的方法，读文献库里的 <a href="index.html#p-2210.04887">Hora</a>。Sharpa 示例的训练步骤（先训练、再“蒸馏”）和它是同一个思路。</p>
+      </li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>说明</h2>
+    <div class="explain">
+      <p>上面列的工具都是两家厂商在 GitHub 上公开的官方仓库。我读了它们的简介和部分说明文档，但没有实际运行过，具体安装步骤请以各仓库的 README 为准。无极的仓库里有些是为一代手写的，用之前确认一下是否支持无极 2。</p>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <p>工具链接整理于 2026-11-15，来源：<a href="https://github.com/sharpa-robotics" target="_blank" rel="noopener">github.com/sharpa-robotics</a>、<a href="https://github.com/wuji-technology" target="_blank" rel="noopener">github.com/wuji-technology</a>。完成进度只保存在本浏览器。</p>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var root = document.documentElement;
+  function load(k, d) { try { var v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; } catch (e) { return d; } }
+  function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+
+  var t = load('hand.theme', null);
+  if (t) root.dataset.theme = t;
+  document.getElementById('theme').addEventListener('click', function () {
+    var cur = root.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    var next = cur === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    save('hand.theme', next);
+  });
+
+  var done = load('hand.steps', {});
+  var steps = document.querySelectorAll('.step');
+  function refresh() {
+    var n = 0;
+    Array.prototype.forEach.call(steps, function (s) {
+      var on = !!done[s.dataset.step];
+      s.classList.toggle('is-done', on);
+      s.querySelector('input').checked = on;
+      if (on) n++;
+    });
+    document.getElementById('bar').style.width = (n / steps.length * 100) + '%';
+    document.getElementById('progress-text').textContent = '已完成 ' + n + ' / ' + steps.length;
+  }
+  Array.prototype.forEach.call(steps, function (s) {
+    s.querySelector('input').addEventListener('change', function (e) {
+      if (e.target.checked) done[s.dataset.step] = 1; else delete done[s.dataset.step];
+      save('hand.steps', done);
+      refresh();
+    });
+  });
+  refresh();
+})();
+</script>
+</body>
+</html>
