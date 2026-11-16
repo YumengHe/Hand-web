@@ -46,6 +46,22 @@
     none: '综述、造手、造传感器这类文章。它们不解决某个具体任务，文中的任务只是用来展示“这东西能用”。'
   };
 
+  // 按“手怎么装”分类：要不要机械臂
+  var MOUNTS = [
+    { key: 'fixed', name: '不需要机械臂' },
+    { key: 'mixed', name: '有的要、有的不要' },
+    { key: 'arm', name: '需要机械臂或人形机器人' },
+    { key: 'none', name: '没用真手做任务' }
+  ];
+  var MOUNT_NAME = {};
+  MOUNTS.forEach(function (m) { MOUNT_NAME[m.key] = m.name; });
+  var MOUNT_PLAIN = {
+    fixed: '手固定在支架上（或装在不动的臂上），只动手指就能完成。和我们现在把 Sharpa 立在底座上的摆法一样，这些文章里的任务我们现在就能照着做。',
+    mixed: '多是造手的文章：有的演示是手单独固定着做的，有的装在机械臂上做。看原文时挑手固定的那部分。',
+    arm: '手装在机械臂上，或者是人形机器人的手。臂负责把手送到物体旁边，没有臂做不了。',
+    none: '纯仿真、数据集、综述，或者只研究传感器怎么感知。不用真手做任务，也就谈不上要不要臂。'
+  };
+
   // 术语大白话：[中文名, 英文/缩写, 解释]
   var GLOSSARY = [
     ['灵巧手', 'dexterous hand', '像人手一样有好几根手指、每根手指有多个关节的机器人手。对比的是只有两片夹板、只会开合的“夹爪”。'],
@@ -92,7 +108,7 @@
   var papers = [];
   var saved = store.get('hand.saved', {});
   var read = store.get('hand.read', {});
-  var state = { q: '', cat: 'all', task: 'all', sort: 'new', onlyStar: false, onlySaved: false, hideRead: false };
+  var state = { q: '', cat: 'all', task: 'all', mount: 'all', sort: 'new', onlyStar: false, onlySaved: false, hideRead: false };
 
   // ---- theme ----
   var theme = store.get('hand.theme', null);
@@ -146,6 +162,7 @@
     var out = papers.filter(function (p) {
       if (state.cat !== 'all' && p.cat !== state.cat) return false;
       if (state.task !== 'all' && p.tasks.indexOf(state.task) === -1) return false;
+      if (state.mount !== 'all' && p.mount !== state.mount) return false;
       if (state.onlyStar && !p.star) return false;
       if (state.onlySaved && !saved[p.id]) return false;
       if (state.hideRead && read[p.id]) return false;
@@ -184,6 +201,13 @@
     didText.appendChild(highlight(p.did, ts));
     did.appendChild(didText);
 
+    var mount = null;
+    if (p.mount) {
+      var mb = el('button', { type: 'button', class: 'tasktag', text: MOUNT_NAME[p.mount], title: '只看这一类' });
+      mb.addEventListener('click', function () { state.mount = p.mount; render(); });
+      mount = el('p', { class: 'did' }, [el('b', { text: '要不要机械臂' }), mb, p.mount_note ? el('span', { text: p.mount_note }) : null]);
+    }
+
     var absP = el('p');
     absP.appendChild(highlight(p.abstract, ts));
 
@@ -197,6 +221,7 @@
       el('h3', null, [el('span', { class: 'short', text: p.short }), titleLink]),
       el('p', { class: 'authors', text: authorLine(p.authors) }),
       did,
+      mount,
       zh,
       el('details', null, [el('summary', { text: '英文摘要' }), absP]),
       el('div', { class: 'actions' }, [
@@ -233,6 +258,12 @@
     Array.prototype.forEach.call($('taskchips').children, function (c) {
       c.setAttribute('aria-pressed', String(c.dataset.task === state.task));
     });
+    Array.prototype.forEach.call($('mountchips').children, function (c) {
+      c.setAttribute('aria-pressed', String(c.dataset.mount === state.mount));
+    });
+    var mnote = $('mountnote');
+    mnote.hidden = !MOUNT_PLAIN[state.mount];
+    mnote.textContent = MOUNT_PLAIN[state.mount] ? '“' + MOUNT_NAME[state.mount] + '”是什么意思：' + MOUNT_PLAIN[state.mount] : '';
     var tnote = $('tasknote');
     tnote.hidden = !TASK_PLAIN[state.task];
     tnote.textContent = TASK_PLAIN[state.task] ? '“' + TASK_NAME[state.task] + '”是什么：' + TASK_PLAIN[state.task] : '';
@@ -305,7 +336,7 @@
       var a = el('a', { href: '#p-' + p.id, text: p.short });
       a.addEventListener('click', function () {
         // 确保目标卡片没有被当前筛选隐藏
-        state.q = ''; state.cat = 'all'; state.task = 'all'; state.onlyStar = state.onlySaved = state.hideRead = false;
+        state.q = ''; state.cat = 'all'; state.task = 'all'; state.mount = 'all'; state.onlyStar = state.onlySaved = state.hideRead = false;
         $('q').value = '';
         $('onlyStar').checked = $('onlySaved').checked = $('hideRead').checked = false;
         render();
@@ -321,14 +352,28 @@
     $(k).addEventListener('change', function (e) { state[k] = e.target.checked; render(); });
   });
 
+  function renderMountChips() {
+    var counts = { all: papers.length };
+    papers.forEach(function (p) { if (p.mount) counts[p.mount] = (counts[p.mount] || 0) + 1; });
+    var chips = $('mountchips');
+    [{ key: 'all', name: '全部' }].concat(MOUNTS).forEach(function (c) {
+      var b = el('button', { type: 'button', class: 'chip', 'data-mount': c.key, 'aria-pressed': 'false' }, [
+        c.name,
+        el('span', { class: 'n', text: String(counts[c.key] || 0) })
+      ]);
+      b.addEventListener('click', function () { state.mount = c.key; render(); });
+      chips.appendChild(b);
+    });
+  }
+
   fetch('data/papers.json')
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(function (data) {
       papers = data;
       papers.forEach(function (p) {
-        p._hay = [p.title, p.short, p.authors.join(' '), p.zh, p.abstract, p.id, CAT_NAME[p.cat], p.did, p.tasks.map(function (t) { return TASK_NAME[t]; }).join(' ')].join(' ').toLowerCase();
+        p._hay = [p.title, p.short, p.authors.join(' '), p.zh, p.abstract, p.id, CAT_NAME[p.cat], p.did, p.tasks.map(function (t) { return TASK_NAME[t]; }).join(' '), MOUNT_NAME[p.mount] || '', p.mount_note || ''].join(' ').toLowerCase();
       });
-      renderStats(); renderRoute(); renderChips(); renderTaskChips(); render();
+      renderStats(); renderRoute(); renderChips(); renderTaskChips(); renderMountChips(); render();
       // 从别的页面带着 #p-xxxx 跳过来时，卡片是刚渲染出来的，需要手动滚过去
       var target = location.hash && document.getElementById(location.hash.slice(1));
       if (target) target.scrollIntoView();

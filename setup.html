@@ -116,6 +116,9 @@
     <p class="aside">接线盒上有两个电源口（一个圆孔、一个黄色的 XT30 口）。只用圆孔那个配原装适配器，两个不能同时接。</p>
 
     <h3 class="sub">第三部分：通电检查</h3>
+    <div class="pitfall">
+      <strong>踩过的坑：通电前要先给手留出空间。</strong>第一次通电时手离墙太近，大拇指碰到了墙，手记下一条故障，之后校准连续失败了 3 次，还亮了红灯。四周至少空出一个手掌的距离，线别放在手指旁边。<span class="pitfall-src">实测，2026-11-16 · 详见<a href="notes.html#q12">问答记录</a></span>
+    </div>
     <ol class="plain">
       <li>通电后等大约 20 秒。这期间不要碰指尖。</li>
       <li>接线盒上的灯<strong>常亮绿色</strong>，说明供电正常。</li>
@@ -141,22 +144,34 @@
       <p><strong>别看错灯</strong>：这张表说的是<strong>手背上</strong>那个灯。接线盒上的电源灯应该是绿色。网线插口旁边的小灯闪黄色或橙色是正常的，那只是表示网线在传数据。</p>
     </div>
 
-    <h3 class="sub">第四部分：让电脑连上它</h3>
+    <h3 class="sub" id="connect">第四部分：让电脑连上它</h3>
     <div class="pitfall">
-      <strong>踩过的坑：电脑只有一个网口。</strong>手要占一个网口，上网也要占一个。解决办法是买一个“USB 转网口”的转接头（USB 3.0、千兆），原来的网口继续上网，新的专门连手。临时想试的话，可以先下载好软件，再把上网的网线拔下来换成连手的。<span class="pitfall-src">实测，2026-11-15 · 详见<a href="notes.html#q6">问答记录</a></span>
+      <strong>踩过的坑：电脑只有一个网口。</strong>手要占一个网口，上网也要占一个。解决办法是买一个“USB 转网口”的转接头（USB 3.0、千兆），原来的网口继续上网，新的专门连手。临时想试的话，可以先下载好软件，再把上网的网线拔下来换成连手的。<strong>如果电脑有 WiFi，就用 WiFi 上网，网线口专门连手，不用买转接头</strong>（我们的台式机就是这样）。<span class="pitfall-src">实测，2026-11-15 · 详见<a href="notes.html#q6">问答记录</a></span>
+    </div>
+    <div class="pitfall">
+      <strong>踩过的坑：网线插好了，ping 还是不通。</strong>原因是电脑网口没有地址：Ubuntu 默认等对方分配地址，手不会分配，等不到就放弃了。下面第 2 步的手动设地址不能省。<span class="pitfall-src">实测，2026-11-16 · 详见<a href="notes.html#q11">问答记录</a></span>
     </div>
     <ol class="plain">
       <li>电脑装 Ubuntu 22.04，安装官方桌面软件。<strong>这个软件以前叫 Sharpa Pilot，现在改名叫 Sharpa Wave</strong>，是同一个东西。官网下载页上没有直接的下载按钮，要到 GitHub 的<a href="https://github.com/sharpa-robotics/sharpa-wave/releases" target="_blank" rel="noopener">发布页</a>去下。当前最新版是 2.1.0（2026-11-06 发布），<a href="https://github.com/sharpa-robotics/sharpa-wave/releases/download/v2.1.0/sharpa-wave_2.1.0_amd64_linux.deb">点这里直接下载</a>，大约 310 MB。
         <br>下载完在终端里运行：<code>cd ~/Downloads</code>，然后 <code>sudo dpkg -i sharpa-wave_2.1.0_amd64_linux.deb</code>。如果提示缺东西，再运行 <code>sudo apt-get install -f</code>。装好后在应用菜单里找 Sharpa Wave，或者终端运行 <code>sharpa-wave</code>。
         <br><strong>✅ 我们的台式机是 Ubuntu 24.04，已装好 2.1.0（2026-11-15）。</strong>24.04 用这个软件没问题；后面训练用的 sharpa-rl-lab 官方只在 22.04 上测试过，到那一步再处理。确认方法：<code>dpkg -l | grep sharpa</code>，看到 <code>sharpa-wave</code> 一行、开头是 <code>ii</code> 就对了。</li>
-      <li>把电脑插网线的那个网卡手动设置成：地址 <code>192.168.10.240</code>，子网掩码 <code>255.255.255.0</code>。</li>
-      <li>右手的出厂地址是 <code>192.168.10.20</code>（左手是 <code>192.168.10.10</code>）。在终端运行 <code>ping 192.168.10.20</code>，有回应就是连上了。</li>
+      <li>把电脑插网线的那个网卡手动设置成：地址 <code>192.168.10.240</code>，子网掩码 <code>255.255.255.0</code>。
+        <br>在终端里运行这两条（每行一条；<code>Wired connection 1</code> 是 Ubuntu 给网线口起的默认名字，可以用 <code>nmcli con show</code> 查）：
+        <pre><code>nmcli con mod "Wired connection 1" ipv4.method manual ipv4.addresses 192.168.10.240/24 ipv4.never-default yes ipv6.method disabled
+nmcli con up "Wired connection 1"</code></pre>
+        <code>ipv4.never-default yes</code> 让这个网口只连手、不抢着上网，WiFi 照常用。设一次就永久生效。</li>
+      <li>右手的出厂地址是 <code>192.168.10.20</code>（左手是 <code>192.168.10.10</code>）。在终端运行 <code>ping 192.168.10.20</code>，有回应就是连上了。
+        <br><strong>✅ 我们的台式机已连通（2026-11-16）</strong>：3 个包全收到，延迟不到 1 毫秒。</li>
       <li>打开 Sharpa Pilot，等手的卡片出现，点进去。</li>
     </ol>
 
-    <h3 class="sub">第五部分：校准，然后动一动</h3>
+    <h3 class="sub" id="calib">第五部分：校准，然后动一动</h3>
+    <div class="pitfall">
+      <strong>踩过的坑：校准报 <code>[3] Soft limit validation failed</code>。</strong>先别反复重试。把电源从墙上拔掉，等一会儿再插上，等手背变回青蓝色呼吸灯，挪到空旷的地方再校准。我们重启后一次就成功了。<span class="pitfall-src">实测，2026-11-16 · 详见<a href="notes.html#q12">问答记录</a></span>
+    </div>
     <ol class="plain">
-      <li><strong>校准</strong>（让手知道“伸直”是哪个位置，官方建议每次通电都做一次）：进 Calib 面板，点 Start Calibration，等大约 95 秒。校准时手会自己动，人不要碰它，周围不要有东西挡着。</li>
+      <li><strong>校准</strong>（让手知道“伸直”是哪个位置，官方建议每次通电都做一次）：进 Calib 面板，点 Start Calibration，等大约 95 秒。校准时手会自己动，人不要碰它，周围不要有东西挡着。
+        <br>成功后会显示 <code>Calib From Params Success</code> 和一行 <code>dof_limit_diff</code>：22 个关节和出厂位置差了多少度。官方没写多少算正常，我们这只成功时都在 1° 以内，可以作参考。<strong>✅ 我们这只已校准成功（2026-11-16）</strong>，最大差 0.7°。</li>
       <li><strong>拖滑块</strong>：进 Sliders 面板，拖动滑块，对应的关节就会动。</li>
       <li><strong>放一段演示</strong>：进 Replay 面板，选一个预设动作，点 Play。</li>
     </ol>

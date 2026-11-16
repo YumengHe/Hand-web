@@ -39,6 +39,7 @@ nohup ./serve.sh > /tmp/hand-web.log 2>&1 &
   "star": false,
   "zh": "一句话中文导读",
   "tasks": ["rotate"],
+  "mount": "fixed",
   "did": "大白话：这篇让手做了什么任务",
   "abstract": "英文摘要"
 }
@@ -46,4 +47,5 @@ nohup ./serve.sh > /tmp/hand-web.log 2>&1 &
 
 `cat` 取值：`survey` `rl` `grasp` `teleop` `human` `hardware` `tactile` `vla`。
 `tasks` 取值（可多个）：`rotate` `grasp` `tool` `bimanual` `daily` `none`，含义见 `app.js` 里的 `TASKS`。
+`mount`（要不要机械臂）取值：`fixed`（手固定，只动手指）`mixed`（有的实验要臂、有的不要）`arm`（需要机械臂或人形机器人）`none`（没用真手做任务）。可选的 `mount_note` 写一句依据，比如“已核对原文：……”，会显示在卡片上。
 `id` 是 arXiv 编号，链接由它生成。“入门路线”的顺序在 `app.js` 顶部的 `ROUTE` 里。

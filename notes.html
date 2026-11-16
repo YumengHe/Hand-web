@@ -41,6 +41,8 @@
   </section>
 
   <nav class="toc" aria-label="目录">
+    <a href="#q12">校准一直失败（Soft limit validation failed），还亮了红灯</a>
+    <a href="#q11">网线插好了，电脑却连不上手（ping 不通）</a>
     <a href="#q10">每篇文章做了什么任务，按任务分类</a>
     <a href="#q9">Sharpa 的软件在哪里下载</a>
     <a href="#q8">Sharpa 不用的时候怎么关机</a>
@@ -52,6 +54,64 @@
     <a href="#q2">论文里的术语看不懂怎么办</a>
     <a href="#q1">硬件不同会影响该读哪些文章吗</a>
   </nav>
+
+  <article class="note" id="q12">
+    <div class="note-meta"><span>2026-11-16</span><span>问题 12</span></div>
+    <h2>校准一直报 [3] Soft limit validation failed，后来手背还闪红灯，是怎么回事？</h2>
+    <div class="explain">
+      <p><strong>结论：是第一次通电时大拇指碰到墙，留下了一条故障记录。断电重启清掉以后，校准一次就成功了。</strong>手没有坏。</p>
+      <p><strong>报错是什么意思</strong>：校准时手会让每个关节慢慢转到最远的位置（机械极限），把测到的位置和出厂时记下的位置对比。差太多就报 <code>Soft limit validation failed</code>（极限位置检查没通过）。</p>
+      <p><strong>经过</strong>：</p>
+      <ul>
+        <li>第一次通电时手离墙太近，大拇指碰到了墙面。</li>
+        <li>连上电脑后，手报了故障码 <code>834</code>（电机欠压保护），出在 4 号关节（大拇指指尖那节）。我们的推测是：手指顶着墙转不动，电机使劲推，那一瞬间电压被拉低，就记下了这条故障。手册里没有写这一条。</li>
+        <li>之后一直没断电，带着这条故障校准了 3 次，每次都在 98% 失败。第 3 次之后手背开始闪红灯，又多了一个 <code>1283</code>（关节受力太大）。</li>
+        <li>拔掉电源等了一会儿，再插上，手背变回蓝灯，故障清掉了。挪到空旷的地方再校准，一次就成功了。</li>
+      </ul>
+      <p><strong>是不是电源的问题？不是。</strong>如果是电源不够，22 个电机会一起报欠压，还会出现整只手的供电故障（<code>0x0203</code>、<code>0x0240</code>）。实际上只有大拇指一个电机报了，所以和电源适配器无关。</p>
+      <p><strong>校准成功后的结果怎么看</strong>：</p>
+      <pre><code>Calib From Params Success
+dof_limit_diff(in deg): [0.5 0.4 0.2 0.2 -0 -0.1 0.2 0 0 -0 0.2 0 -0.2 0.1 0.7 0 0 0 0.2 0.3 0 0]
+[Backlash Commit] success: Motor calibration data saved successfully</code></pre>
+      <ul>
+        <li><code>dof_limit_diff</code>：22 个关节这次测到的极限位置和出厂时差了多少度。全部不超过 0.7°（最大的是 14 号，无名指根部左右摆）。大拇指的 0–4 号都在 0.5° 以内，<strong>碰墙没有留下损伤</strong>。</li>
+        <li><code>Backlash Commit</code>：齿轮之间有一点点空隙（回程间隙），换方向时会先空转一下。校准顺便把每个关节的空隙量测了出来，存进手里，以后控制时会自动补偿。</li>
+      </ul>
+      <p><strong>关节编号</strong>（0 到 21）：0–4 大拇指（根部弯曲、根部左右摆、中间弯曲、中间左右摆、指尖）；5–8 食指；9–12 中指；13–16 无名指（根部弯曲、根部左右摆、中间、指尖）；17–21 小指（手掌、根部弯曲、根部左右摆、中间、指尖）。来源：SDK 里的 <code>sharpa_wave_example.py</code>。</p>
+      <p><strong>以后怎么避免</strong>：</p>
+      <ul>
+        <li>通电前先把手放到空旷的地方，四周至少空出一个手掌的距离，线别放在手指旁边。</li>
+        <li>出了故障，<strong>先断电重启</strong>，再决定要不要重新校准。不要带着故障反复校准。</li>
+        <li>闪红灯就立刻停下来。</li>
+      </ul>
+      <p><strong>想自己查故障码</strong>：软件的日志在 <code>~/.sharpa-wave/logs/日期/</code>。故障码的含义在 <code>/opt/sharpa-wave-sdk/include/SharpaWaveSDK.h</code> 里，日志里的十进制数要先换成十六进制，比如 834 = 0x0342。</p>
+    </div>
+    <p class="more">相关：<a href="setup.html#calib">Sharpa 开箱和接线 → 校准</a> · <a href="#q7">手上的灯是什么意思</a></p>
+  </article>
+
+  <article class="note" id="q11">
+    <div class="note-meta"><span>2026-11-16</span><span>问题 11</span></div>
+    <h2>网线插好了，手也通电了，电脑却连不上手（ping 不通），为什么？</h2>
+    <div class="explain">
+      <p><strong>结论：电脑的网口没有地址。</strong>线和手都没问题，是电脑这边没设置。</p>
+      <p><strong>怎么查出来的</strong>：</p>
+      <ul>
+        <li>网线是通的：网口显示已连接，千兆。</li>
+        <li>手是开着的：网口每秒能收到约 1000 个从手那边来的数据包。</li>
+        <li>但电脑的网口上<strong>没有 IP 地址</strong>，所以 <code>ping 192.168.10.20</code> 全部丢包。</li>
+      </ul>
+      <p><strong>为什么没有地址</strong>：Ubuntu 插上网线后，默认会向对方“要”一个地址（叫 DHCP，家里路由器就是干这个的）。手不会给电脑发地址，电脑等 45 秒要不到，就放弃，然后一直重试。所以必须<strong>手动</strong>把地址写死成 <code>192.168.10.240</code>。<a href="setup.html#connect">开箱和接线</a>页里本来就有这一步，当时漏做了。</p>
+      <p><strong>怎么修</strong>：终端里运行（每行一条）：</p>
+      <pre><code>nmcli con mod "Wired connection 1" ipv4.method manual ipv4.addresses 192.168.10.240/24 ipv4.never-default yes ipv6.method disabled
+nmcli con up "Wired connection 1"
+ping -c 3 192.168.10.20</code></pre>
+      <p><code>ipv4.never-default yes</code> 的意思是“这个网口只用来连手，不用来上网”。不加的话，电脑可能会想从连手的网线上网，结果上不了网。</p>
+      <p><strong>不用买 USB 转网口了</strong>：这台台式机有无线网（WiFi），WiFi 上网，网线口专门连手，两个同时用没问题（对比<a href="#q6">问题 6</a>）。</p>
+      <p><strong>结果（实测，2026-11-16）</strong>：ping 通了，3 个包全部收到，延迟不到 1 毫秒。设置是永久的，重启电脑后不用再设。</p>
+      <p><strong>下一步</strong>：打开 Sharpa Wave，等手的卡片出现 → 读黄灯的故障代码（补上<a href="#q7">问题 7</a>的结果）→ 校准。</p>
+    </div>
+    <p class="more">完整步骤：<a href="setup.html#connect">Sharpa 开箱和接线 → 让电脑连上它</a></p>
+  </article>
 
   <article class="note" id="q10">
     <div class="note-meta"><span>2026-11-15</span><span>问题 10</span></div>
@@ -75,7 +135,7 @@
       <p><strong>安装</strong>：<code>cd ~/Downloads</code> → <code>sudo dpkg -i sharpa-wave_2.1.0_amd64_linux.deb</code> → 提示缺东西就 <code>sudo apt-get install -f</code>。打开：应用菜单里找 Sharpa Wave，或终端运行 <code>sharpa-wave</code>。</p>
       <p><strong>注意</strong>：发布页上 2.1.0 有两个文件，另一个叫 <code>sharpa-pilot_…</code>。官方说明让装 <code>sharpa-wave</code> 那个。它自带配套的 SDK（装在 <code>/opt/sharpa-wave-sdk/</code>），官方要求不要自己另外装或改这份 SDK。</p>
       <p><strong>前提</strong>：必须切到 Linux（Ubuntu 22.04 最稳，24.04 也支持），这个软件没有 Windows 版。</p>
-      <p><strong>进度（2026-11-15）</strong>：台式机已切到 Linux，Sharpa Wave 2.1.0 已安装（按上面的命令装的）。想确认是否真的装上：终端运行 <code>dpkg -l | grep sharpa</code>，能看到 <code>sharpa-wave</code> 一行、开头是 <code>ii</code> 就是装好了。<strong>Ubuntu 版本是 24.04</strong>：官方桌面软件支持，现在这几步都没问题；但后面“训练转东西”用的官方示例 sharpa-rl-lab 只在 22.04 上测试过，到那一步可能要多折腾，到时再处理。下一步：换网线 → 设地址 192.168.10.240 → <code>ping 192.168.10.20</code> → 打开软件读黄灯的故障代码。</p>
+      <p><strong>进度（2026-11-15）</strong>：台式机已切到 Linux，Sharpa Wave 2.1.0 已安装（按上面的命令装的）。想确认是否真的装上：终端运行 <code>dpkg -l | grep sharpa</code>，能看到 <code>sharpa-wave</code> 一行、开头是 <code>ii</code> 就是装好了。<strong>Ubuntu 版本是 24.04</strong>：官方桌面软件支持，现在这几步都没问题；但后面“训练转东西”用的官方示例 sharpa-rl-lab 只在 22.04 上测试过，到那一步可能要多折腾，到时再处理。下一步：换网线 → 设地址 192.168.10.240 → <code>ping 192.168.10.20</code> → 打开软件读黄灯的故障代码。<strong>更新（2026-11-16）</strong>：网线已接、地址已设、ping 已通，见<a href="#q11">问题 11</a>。</p>
     </div>
     <p class="more">完整步骤：<a href="setup.html">Sharpa 开箱和接线 → 让电脑连上它</a></p>
   </article>
