@@ -41,6 +41,7 @@
   </section>
 
   <nav class="toc" aria-label="目录">
+    <a href="#q13">摄像头遥控的工具是不是新的</a>
     <a href="#q12">校准一直失败（Soft limit validation failed），还亮了红灯</a>
     <a href="#q11">网线插好了，电脑却连不上手（ping 不通）</a>
     <a href="#q10">每篇文章做了什么任务，按任务分类</a>
@@ -54,6 +55,20 @@
     <a href="#q2">论文里的术语看不懂怎么办</a>
     <a href="#q1">硬件不同会影响该读哪些文章吗</a>
   </nav>
+
+  <article class="note" id="q13">
+    <div class="note-meta"><span>2026-11-17</span><span>问题 13</span></div>
+    <h2>之前说试一下摄像头遥控，用的工具是新的吗？</h2>
+    <div class="explain">
+      <p><strong>结论：是新的。</strong>Sharpa 官方的摄像头遥控工具叫 sharpa-vision-retargeting-sdk，2026-08-27 第一次发布，最新版 v1.0.3 是 2026-09-29 发布的，之后没再更新。</p>
+      <p><strong>它做什么</strong>：普通 USB 摄像头拍你的手 → 找出手上 21 个关键点 → 换算成机器人手的关节角度（重定向）→ 发给 Sharpa。也支持 Meta Quest 头显，支持单手和双手。</p>
+      <p><strong>坑 1：默认是左手。</strong>我们的是右手（Wave SE-R-01），运行时要加 <code>--config-path supplements/sharpa_wave_right.yml</code>。</p>
+      <p><strong>坑 2：没写支持 SE。</strong>它用的是普通版 Wave（W01）的模型文件。桌面软件到 2.0.10 版才加上 SE 支持，这个遥控工具的说明里没提 SE。关节应该是一样的，但要试了才知道。</p>
+      <p><strong>需要</strong>：先装好 Sharpa Wave（已装）、一个 USB 摄像头、电脑能上网装 Python 依赖。</p>
+      <p><strong>追问：桌面软件 Sharpa Wave 里能不能直接切换成摄像头遥控？</strong>不能。按手册，软件里能选的“控制来源”只有 4 个：软件自己（拖滑块、回放）、SDK（写代码控制）、GLOVE（数据手套，手册写“即将推出”）、IDLE（不动）。没有摄像头这一项。摄像头遥控是一个单独的 Python 程序，它通过 SDK 发指令，所以用法是：在软件里把控制来源切到 <strong>SDK</strong>，再在终端运行遥控程序。同一时间只能有一个来源控制手。（依据是手册和 2.1.0 的更新说明，软件界面本身我没见过。）</p>
+    </div>
+    <p class="more">在入门五步里的位置：<a href="start.html">第三步 → 用自己的手遥控它</a></p>
+  </article>
 
   <article class="note" id="q12">
     <div class="note-meta"><span>2026-11-16</span><span>问题 12</span></div>

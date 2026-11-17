@@ -100,7 +100,7 @@
         <p><strong>为什么：</strong>这一步会碰到“把人手姿势翻译成机器人手姿势”（论文里叫重定向，retargeting）。人手和机器人手的手指长短、关节数量不一样，不能直接照抄。这是后面录示范、用人类数据教机器人的基础。</p>
         <p class="goal"><strong>做到这样算完成：</strong>你捏拇指和食指，它也捏；你张开五指，它也张开。然后试着遥控它捏起一个放在手心里的小东西。</p>
         <div class="tools">
-          <div><b>Sharpa</b><a href="https://github.com/sharpa-robotics/sharpa-vision-retargeting-sdk" target="_blank" rel="noopener">sharpa-vision-retargeting-sdk</a>：普通摄像头或 Meta Quest 头显都行，支持单手和双手。</div>
+          <div><b>Sharpa</b><a href="https://github.com/sharpa-robotics/sharpa-vision-retargeting-sdk" target="_blank" rel="noopener">sharpa-vision-retargeting-sdk</a>：普通摄像头或 Meta Quest 头显都行，支持单手和双手。最新版 v1.0.3（2026-09-29），2026-08-27 才首次发布。<strong>注意：它默认控制左手，我们的是右手</strong>，运行时要加 <code>--config-path supplements/sharpa_wave_right.yml</code>。它没写是否支持 Wave SE，用的是普通版 Wave 的模型文件，能不能直接用要试了才知道。桌面软件里没有“摄像头遥控”这个选项：要先在软件里把控制来源切到 SDK，再在终端运行遥控程序。</div>
           <div><b>无极 2</b><a href="https://github.com/wuji-technology/wuji-retargeting" target="_blank" rel="noopener">wuji-retargeting</a> 负责姿势翻译；<a href="https://github.com/wuji-technology/wuji-hand-teleop" target="_blank" rel="noopener">wuji-hand-teleop</a> 是完整的遥控程序。</div>
         </div>
       </li>
