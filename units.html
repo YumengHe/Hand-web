@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>单位和物理限制 · 灵巧手</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .calc { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin: 14px 0; }
+  .calc .inputs { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; font-size: 14.5px; }
+  .calc input[type="number"] { width: 6.5em; font: 14px var(--mono); padding: 5px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); }
+  .calc .out { display: flex; flex-wrap: wrap; gap: 8px 30px; margin: 14px 0 6px; }
+  .calc .out div { min-width: 120px; }
+  .calc .out dt { font-size: 12px; color: var(--muted); letter-spacing: .04em; }
+  .calc .out dd { margin: 0; font: 700 22px/1.3 var(--serif); font-variant-numeric: tabular-nums; }
+  .calc .warn { color: var(--c-rl); font-size: 14px; margin: 6px 0 0; min-height: 1.4em; }
+  .calc canvas { width: 100%; height: 240px; display: block; margin-top: 10px; }
+  .calc .legend i { display: inline-block; width: 18px; height: 3px; border-radius: 2px; vertical-align: middle; margin-right: 6px; }
+  .formula { font: 15px var(--mono); background: var(--accent-soft); border-radius: 8px; padding: 8px 14px; display: inline-block; margin: 6px 0; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .timeline { display: grid; gap: 6px; margin: 14px 0; }
+  .tl { display: grid; grid-template-columns: 11em 1fr 6.5em; gap: 10px; align-items: center; font-size: 14px; }
+  .tl .ticks { height: 16px; background-repeat: repeat-x; background-size: var(--w) 100%; background-image: linear-gradient(to right, var(--c) 0 2px, transparent 2px); border-bottom: 1px solid var(--line); }
+  .tl .lbl { color: var(--ink); }
+  .tl .hz { font: 12.5px var(--mono); color: var(--muted); text-align: right; }
+  @media (max-width: 560px) { .tl { grid-template-columns: 7.5em 1fr 5em; font-size: 13px; } }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top">
+      <span class="kicker">Basics · Units &amp; Physical Limits</span>
+      <span class="mast-actions">
+        <a class="ghost" href="index.html">← 文献库</a>
+        <a class="ghost" href="compare.html">两只手的区别</a>
+        <a class="ghost" href="start.html">入门五步</a>
+        <a class="ghost" href="setup.html">Sharpa 开箱和接线</a>
+        <button id="theme" class="ghost" type="button" aria-label="切换明暗主题">◐ 主题</button>
+      </span>
+    </div>
+    <h1>单位和物理限制</h1>
+    <p class="lede">控制机器人手时，到处都是 Hz、ms、°/s、N·m 这些单位。这一页先讲清楚它们是什么意思，再讲 Sharpa Wave 在物理上能动多远、多快、多有劲，最后说明这些限制在 playstation 和 rl-lab 仿真里是怎么用上的。</p>
+    <dl class="stats">
+      <div><dt>playstation 发指令</dt><dd>100 Hz</dd></div>
+      <div><dt>仿真里的策略</dt><dd>20 Hz</dd></div>
+      <div><dt>摄像头</dt><dd>30 Hz</dd></div>
+      <div><dt>手指最快（URDF）</dt><dd>≈ 670–920 °/s</dd></div>
+    </dl>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <nav class="toc" aria-label="目录">
+    <a href="#time">1. 时间：s 和 ms</a>
+    <a href="#hz">2. 频率：Hz</a>
+    <a href="#ours">3. 我们系统里的各种频率</a>
+    <a href="#angle">4. 角度：度和弧度</a>
+    <a href="#motion">5. 位置、速度、加速度、加加速度</a>
+    <a href="#limits">6. Sharpa Wave 的物理限制</a>
+    <a href="#minjerk">7. 动手算：平滑过渡要多快</a>
+    <a href="#where">8. 这些限制在代码里怎么用</a>
+    <a href="#pitfalls">9. 常见的坑</a>
+  </nav>
+
+  <section id="time">
+    <h2>1. 时间：s 和 ms</h2>
+    <div class="explain">
+      <p><strong>s</strong> 是秒（second）。<strong>ms</strong> 是毫秒（millisecond），1 秒 = 1000 毫秒。再小一级是 <strong>μs</strong>（微秒），1 毫秒 = 1000 微秒。</p>
+      <p>找点直观的感觉：人眨一次眼大约 100–150 ms；人从看到东西到做出反应，大约 200 ms；电影一帧是 42 ms（24 帧每秒）；网线里来回传一次数据，同一个局域网里通常不到 1 ms。</p>
+      <p>在机器人控制里，ms 是最常用的单位，因为大部分要操心的时间都在“几毫秒到几百毫秒”之间：控制循环多久转一圈、指令从电脑到手要多久、摄像头一帧要多久。</p>
+    </div>
+  </section>
+
+  <section id="hz">
+    <h2>2. 频率：Hz</h2>
+    <div class="explain">
+      <p><strong>Hz</strong>（赫兹）是“每秒多少次”。100 Hz 就是每秒 100 次。</p>
+      <p>频率和<strong>周期</strong>（两次之间隔多久）是一回事的两种说法，互为倒数：</p>
+      <p class="formula">周期 = 1 ÷ 频率　　→　　100 Hz ⇔ 每 10 ms 一次</p>
+      <p>心算口诀：<strong>1000 除以 Hz，就是多少 ms。</strong> 30 Hz → 1000 ÷ 30 ≈ 33 ms；240 Hz → 1000 ÷ 240 ≈ 4.2 ms。</p>
+      <p><strong>fps</strong>（frames per second，每秒帧数）用在摄像头和画面上，意思和 Hz 一样，30 fps 就是 30 Hz。</p>
+    </div>
+
+    <div class="calc" id="hzcalc">
+      <div class="inputs">
+        <label>频率 <input id="hzIn" type="number" min="0.1" step="any" value="100"> Hz</label>
+        <span>⇔</span>
+        <label>周期 <input id="msIn" type="number" min="0.001" step="any" value="10"> ms</label>
+      </div>
+      <p class="warn" id="hzNote" style="color: var(--muted)"></p>
+    </div>
+
+    <h3 class="sub">频率越高越好吗？</h3>
+    <div class="explain">
+      <p>不一定。要分清两件事：</p>
+      <p><strong>频率</strong>说的是“多久更新一次”，<strong>延迟</strong>说的是“从发生到被处理要多久”。一个 1000 Hz 的系统，如果每个数据都在路上走了 100 ms，反应照样慢。反过来，频率低但延迟小，也可能够用。</p>
+      <p>判断够不够快，看<strong>你要控制的东西变化得多快</strong>。手指从张开到握拳大约 0.3–0.5 秒。用 100 Hz（每 10 ms 一次）去控制，一个动作里能更新 30–50 次，足够平滑。但想让手稳稳接住掉下来的东西，就可能需要 1000 Hz 级别的力控。</p>
+      <p>还有个经验法则：<strong>采样频率至少要是信号变化频率的 2 倍</strong>，实际工程里常取 5–10 倍。比这低，就会漏掉动作，甚至看到“假”的变化。这叫混叠（aliasing），原理和电影里车轮看起来倒着转一样。</p>
+    </div>
+  </section>
+
+  <section id="ours">
+    <h2>3. 我们系统里的各种频率</h2>
+    <p class="route-note">下面每一行是同样的 0.2 秒（200 ms），每一竖线代表“发生一次”。线越密，频率越高：0.2 秒里，仿真物理算了 48 步，策略只做了 4 次决定。</p>
+    <div class="timeline" id="timeline"></div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>谁</th><th class="num">频率</th><th class="num">周期</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>无极 2 和电脑通信</td><td class="num">1000 Hz</td><td class="num">1 ms</td><td>官方文档写的数字，见“两只手的区别”</td></tr>
+          <tr><td>rl-lab 仿真的物理计算</td><td class="num">240 Hz</td><td class="num">4.2 ms</td><td><code>dt = 1/240</code>：物理引擎每 4.2 ms 往前算一步</td></tr>
+          <tr><td>Sharpa 触觉（高帧率模式）</td><td class="num">180 Hz</td><td class="num">5.6 ms</td><td>rl-lab 部署说明里提到的触觉帧率</td></tr>
+          <tr><td>playstation 给手发指令</td><td class="num">100 Hz</td><td class="num">10 ms</td><td>控制循环：读实际角度 → 算下一步 → 发出去</td></tr>
+          <tr><td>浏览器 3D 画面</td><td class="num">≈ 60 Hz</td><td class="num">≈ 17 ms</td><td>跟着屏幕刷新率走</td></tr>
+          <tr><td>摄像头 / MediaPipe</td><td class="num">30 Hz</td><td class="num">33 ms</td><td>遥控时，看你的手的频率</td></tr>
+          <tr><td>playstation 网页状态推送</td><td class="num">30 Hz</td><td class="num">33 ms</td><td>网页上的滑块、3D 实际位置每秒刷新 30 次</td></tr>
+          <tr><td>rl-lab 策略（神经网络）</td><td class="num">20 Hz</td><td class="num">50 ms</td><td><code>decimation = 12</code>：物理算 12 步，网络才做一次决定（240 ÷ 12 = 20）</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="catnote">
+      <strong>为什么摄像头只有 30 Hz，却要以 100 Hz 发指令？</strong> 两者干的不是一件事。摄像头决定的是<em>目标</em>多久更新一次；100 Hz 的控制循环负责在两个目标之间一小步一小步地走过去，并且限住速度。如果直接把 30 Hz 的目标原样发给手，手会一顿一顿的。仿真里也是同样的结构：策略 20 Hz 出目标，底下的控制器 240 Hz 去追。
+    </div>
+  </section>
+
+  <section id="angle">
+    <h2>4. 角度：度和弧度</h2>
+    <div class="explain">
+      <p>日常用<strong>度</strong>（°），转一圈是 360°。数学和物理里常用<strong>弧度</strong>（rad），转一圈是 2π ≈ 6.28 rad。</p>
+      <p class="formula">1 rad ≈ 57.3°　　　1° ≈ 0.01745 rad　　　90° = π/2 ≈ 1.571 rad</p>
+      <p>为什么要有弧度？因为用弧度算，<strong>弧长 = 半径 × 角度</strong>，不用再乘系数。比如手指长 5 cm，转了 0.2 rad，指尖就走了 5 × 0.2 = 1 cm。很多公式（速度、力矩）用弧度写起来最简单，所以 URDF 文件、仿真、大部分 SDK 底层都用弧度。</p>
+      <p>Sharpa SDK 两种都有：<code>set_joint_position_degree</code> 收度，<code>set_joint_position_rad</code> 收弧度。playstation 网页上显示的都是度。</p>
+    </div>
+  </section>
+
+  <section id="motion">
+    <h2>5. 位置、速度、加速度、加加速度</h2>
+    <div class="explain">
+      <p>拿开车打比方，这四个量一级管一级：</p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>量</th><th>意思</th><th>开车的比方</th><th>关节上的单位</th></tr></thead>
+        <tbody>
+          <tr><td><strong>位置</strong>（角度）</td><td>现在在哪</td><td>车在第几公里</td><td>° 或 rad</td></tr>
+          <tr><td><strong>速度</strong></td><td>位置变得多快</td><td>车速表上的数</td><td>°/s 或 rad/s</td></tr>
+          <tr><td><strong>加速度</strong></td><td>速度变得多快</td><td>踩油门、踩刹车有多猛</td><td>°/s² 或 rad/s²</td></tr>
+          <tr><td><strong>加加速度</strong>（jerk）</td><td>加速度变得多快</td><td>是慢慢踩下油门，还是一脚踩到底</td><td>°/s³ 或 rad/s³</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="explain">
+      <p><strong>“°/s²”怎么读？</strong> “度每秒，每秒”：每过 1 秒，速度增加多少 °/s。加速度 300 °/s² 就是从静止开始，1 秒后速度到 300 °/s，0.1 秒后到 30 °/s。</p>
+      <p><strong>为什么要管加速度？</strong> 牛顿第二定律在转动上的版本是</p>
+      <p class="formula">力矩 = 转动惯量 × 角加速度</p>
+      <p>想让关节加速得越猛，电机要出的力矩就越大。超过电机能给的，关节就跟不上指令，还可能触发力矩超限保护（故障码 0x0503）。</p>
+      <p><strong>为什么连加加速度都要管？</strong> 加速度突然跳变，就像一脚把油门踩到底，车里的人会被猛地往后一甩。放在手上，就是关节突然“咯噔”一下，齿轮和线受冲击，手里拿的东西也会被甩掉。所以平滑运动的标准做法，是让加加速度也尽量小。这就是第 7 节的“最小加加速度曲线”（minimum jerk）。</p>
+    </div>
+  </section>
+
+  <section id="limits">
+    <h2>6. Sharpa Wave 的物理限制</h2>
+    <div class="explain">
+      <p>数字来自官方 URDF（<code>right_sharpa_wave.urdf</code>，每个关节的 <code>&lt;limit&gt;</code> 标签）和 SDK 头文件。URDF 是给仿真和规划用的模型参数，<strong>不等于实测</strong>，真手还会受下面说的速度系数、电流系数和保护机制限制。</p>
+    </div>
+
+    <h3 class="sub">① 位置限位：关节能转多大角度</h3>
+    <div class="explain">
+      <p>每个关节都有转动范围，超出去会撞到机械结构，或者拉坏里面的线。限位分两层：</p>
+      <p><strong>硬限位</strong>是机械上的尽头，真撞上了会损伤零件。<strong>软限位</strong>是软件设的边界，比硬限位稍微往里一点，留出安全余量。手接到超出软限位的指令时会拒绝或者截断，实际超出时会报 0x0501（关节超限，警告级）。校准时报 “Soft limit validation failed”，就是校准算出的零点让软限位对不上，见“Sharpa 开箱和接线”页的<a href="setup.html#calib-story">校准失败的完整经过</a>。</p>
+      <p>表里的角度以“手掌张开、手指伸直”为 0°。正数是往手心弯，负数是往手背翘一点点。</p>
+    </div>
+
+    <h3 class="sub">② 速度上限</h3>
+    <div class="explain">
+      <p>URDF 里每个关节写了 <code>velocity</code>（rad/s），下表换算成了 °/s。这些是电机和减速器能做到的理论最快值，数字非常大：近 900 °/s，相当于 0.1 秒弯过 90°。</p>
+      <p>实际不会跑这么快。SDK 有一个<strong>速度系数</strong>（<code>set_speed_coeff</code>，0 到 1 之间的比例），头文件里写明 <strong>SE 型号最高被限制在 0.5</strong>。我们的 Wave SE 在 playstation 里设的是 0.3。头文件没说这个系数具体乘在哪个基准上，可以理解成“允许用最快速度的多少”。</p>
+    </div>
+
+    <h3 class="sub">③ 力矩上限：能使多大劲</h3>
+    <div class="explain">
+      <p>URDF 里的 <code>effort</code>，单位是 <strong>N·m</strong>（牛·米），是关节能输出的最大<strong>力矩</strong>。力矩 = 力 × 力臂，同样的力矩，离转轴越远，能推出的力越小：</p>
+      <p class="formula">指尖能推出的力 ≈ 力矩 ÷ 关节到指尖的距离</p>
+      <p>举个粗略的例子：中间关节（PIP）0.638 N·m，到指尖大约 5 cm，0.638 ÷ 0.05 ≈ 13 N，大概能提起 1.3 kg 的东西。这只是按单个关节、理想情况估的数量级，不是实测值。越靠近指尖的关节力矩越小，指尖关节（DIP）只有 0.19 N·m。</p>
+      <p>SDK 里还有一个<strong>电流系数</strong>（<code>set_current_coeff</code>）。电机力矩和电流成正比，限住电流就限住了力。SE 型号最高 0.6，playstation 设的就是 0.6。超了会触发过流保护（0x0241 整手过流等）。</p>
+    </div>
+
+    <h3 class="sub">④ 加速度上限</h3>
+    <div class="explain">
+      <p>URDF <strong>没有</strong>写加速度上限，ROS 的 URDF 格式本来就没有这一项。加速度是被力矩间接限住的：最大角加速度 ≈ 最大力矩 ÷ 转动惯量。转动惯量取决于手指本身的质量分布，加上手里拿的东西。拿的东西越重，能达到的加速度越小。</p>
+      <p>所以实际做法是：在软件里<strong>自己设一个保守的速度和加速度上限</strong>，规划出平滑的轨迹，而不是去逼近物理极限。</p>
+    </div>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>关节（右手）</th><th class="num">范围</th><th class="num">最快（URDF）</th><th class="num">最大力矩</th></tr></thead>
+        <tbody>
+          <tr><td>拇指 根部弯曲 <code>thumb_CMC_FE</code></td><td class="num">−10° ~ 110°</td><td class="num">678 °/s</td><td class="num">3.30 N·m</td></tr>
+          <tr><td>拇指 根部左右摆 <code>thumb_CMC_AA</code></td><td class="num">−20° ~ 20°</td><td class="num">678 °/s</td><td class="num">3.30 N·m</td></tr>
+          <tr><td>拇指 中间弯曲 <code>thumb_MCP_FE</code></td><td class="num">−30° ~ 80°</td><td class="num">921 °/s</td><td class="num">1.86 N·m</td></tr>
+          <tr><td>拇指 中间左右摆 <code>thumb_MCP_AA</code></td><td class="num">−20° ~ 20°</td><td class="num">921 °/s</td><td class="num">1.86 N·m</td></tr>
+          <tr><td>拇指 指尖 <code>thumb_IP</code></td><td class="num">0° ~ 100°</td><td class="num">666 °/s</td><td class="num">0.64 N·m</td></tr>
+          <tr><td>四指 根部弯曲 <code>*_MCP_FE</code></td><td class="num">−10° ~ 90°</td><td class="num">921 °/s</td><td class="num">1.86 N·m</td></tr>
+          <tr><td>四指 根部左右摆 <code>*_MCP_AA</code></td><td class="num">−20° ~ 20°</td><td class="num">921 °/s</td><td class="num">1.86 N·m</td></tr>
+          <tr><td>四指 中间 <code>*_PIP</code></td><td class="num">0° ~ 100°</td><td class="num">666 °/s</td><td class="num">0.64 N·m</td></tr>
+          <tr><td>四指 指尖 <code>*_DIP</code></td><td class="num">0° ~ 80°</td><td class="num">840 °/s</td><td class="num">0.19 N·m</td></tr>
+          <tr><td>小指 手掌 <code>pinky_CMC</code></td><td class="num">0° ~ 15°</td><td class="num">2010 °/s</td><td class="num">0.53 N·m</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="route-note">四指 = 食指、中指、无名指、小指，参数相同。“最快”由 URDF 的 rad/s 乘 57.3 换算得到。</p>
+
+    <h3 class="sub">⑤ 其他会让手停下来的保护</h3>
+    <div class="explain">
+      <p>除了上面这些，手里还有温度、电压、电流、通信等几十种保护，触发时会报故障码。按严重程度分三级：<strong>警告</strong>（Warning，比如 0x0501 关节超限、0x0503 力矩超限，校准时出现是正常的）、<strong>错误</strong>（Error）、<strong>严重</strong>（Critical，比如 0x0280 电源过流，通常要断电重启）。playstation 只在出现错误级以上的新故障时才停下动作。</p>
+    </div>
+  </section>
+
+  <section id="minjerk">
+    <h2>7. 动手算：平滑过渡要多快</h2>
+    <div class="explain">
+      <p>playstation 的“过渡到记录的姿势”用的是<strong>最小加加速度曲线</strong>（minimum jerk）。它是让整段运动的加加速度总量最小的走法：起点和终点的速度、加速度都是 0，中间平滑地加速再减速。人伸手拿东西的轨迹也接近这条曲线。</p>
+      <p>这条曲线有现成的公式。移动距离 D、用时 T，那么：</p>
+      <p class="formula">平均速度 = D ÷ T　　最快速度 = 1.875 × D ÷ T　　最大加速度 ≈ 5.77 × D ÷ T²</p>
+      <p>注意<strong>最大加速度和时间的平方成反比</strong>：时间缩短一半，加速度变成 4 倍。所以“快一点”比直觉上要猛得多。改下面的数试试：</p>
+    </div>
+
+    <div class="calc">
+      <div class="inputs">
+        <label>移动距离 <input id="mjD" type="number" min="1" max="200" step="1" value="90"> °</label>
+        <label>用时 <input id="mjT" type="number" min="0.05" max="30" step="0.05" value="1.5"> s</label>
+      </div>
+      <dl class="out">
+        <div><dt>平均速度</dt><dd id="mjAvg"></dd></div>
+        <div><dt>最快速度（在正中间）</dt><dd id="mjVmax"></dd></div>
+        <div><dt>最大加速度</dt><dd id="mjAmax"></dd></div>
+      </dl>
+      <p class="warn" id="mjWarn"></p>
+      <canvas id="mjPlot" aria-label="位置、速度、加速度随时间变化的曲线"></canvas>
+      <div class="legend" style="margin-top:6px">
+        <span><i style="background: var(--ink)"></i>位置</span>
+        <span><i style="background: var(--accent)"></i>速度</span>
+        <span><i style="background: var(--c-teleop)"></i>加速度</span>
+        <span style="color: var(--muted)">三条线各自按最大值缩放，只看形状</span>
+      </div>
+    </div>
+    <div class="explain">
+      <p>看曲线：位置是一条平滑的 S 形；速度像一座山，正中间最快；加速度前半段为正（加速），后半段为负（减速），起点和终点都是 0，所以开始和停下都不会“咯噔”一下。</p>
+    </div>
+  </section>
+
+  <section id="where">
+    <h2>8. 这些限制在代码里怎么用</h2>
+    <h3 class="sub">playstation</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>做什么</th><th>限制</th><th>为什么</th></tr></thead>
+        <tbody>
+          <tr><td>所有指令</td><td>夹到 URDF 的关节范围里</td><td>不管滑块、遥控还是过渡，发出去之前都先截到范围内，防止撞限位</td></tr>
+          <tr><td>拖滑块</td><td>每个关节最快 90 °/s</td><td>滑块一下拖到头，手也是慢慢走过去，不会猛地一弹</td></tr>
+          <tr><td>摄像头遥控</td><td>最快 150 °/s</td><td>比滑块快，否则跟不上人手；再快就会把识别的抖动也放大</td></tr>
+          <tr><td>过渡到姿势</td><td>最小加加速度曲线，平均最快 60 °/s，最短 0.5 s</td><td>你设的时间太短时自动放慢，比如 90° 至少用 1.5 s，最大加速度约 230 °/s²</td></tr>
+          <tr><td>控制循环</td><td>100 Hz</td><td>每 10 ms 往目标走一小步，限速就是“每步最多走多少度”：90 °/s × 0.01 s = 每步 0.9°</td></tr>
+          <tr><td>SDK 系数</td><td>速度系数 0.3、电流系数 0.6</td><td>手自己内部再加一道限制，SE 型号的上限分别是 0.5 和 0.6</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">rl-lab 仿真（转圆柱）</h3>
+    <div class="explain">
+      <p>仿真也用同样的思路。<code>sharpa_wave_env_cfg.py</code> 里：物理 <code>dt = 1/240</code> 秒，<code>decimation = 12</code>，所以策略每 50 ms（20 Hz）出一次动作。动作的每个分量先截到 ±1（<code>clip_actions = 1.0</code>），再乘 <code>action_scale = 1/24</code>，<strong>加到上一次的目标角度上</strong>。也就是说，每一步目标最多变 1/24 rad ≈ 2.4°：</p>
+      <p class="formula">2.4° ÷ 0.05 s ≈ 48 °/s</p>
+      <p>这就是神经网络能让目标角度变化的最快速度。它和 playstation 过渡用的 60 °/s 在同一个量级，远低于 URDF 的 900 °/s。这样学出来的策略动作温和，搬到真手上（sim2real）不容易出问题。另外仿真训练时会把 PD 增益在 0.5–2 倍之间随机变化，物体质量在 10–250 g 之间随机变化，让策略不依赖某一组精确的物理参数。</p>
+    </div>
+  </section>
+
+  <section id="pitfalls">
+    <h2>9. 常见的坑</h2>
+    <ul class="caveat">
+      <li><strong>度和弧度混用。</strong> 把 90（本意是度）当弧度发出去，就是 5157°，手会冲向限位。看函数名或文档确认单位，变量名里带上 <code>_deg</code> / <code>_rad</code>。</li>
+      <li><strong>只看频率不看延迟。</strong> 遥控觉得“慢半拍”，往往不是频率不够，而是摄像头、识别、网络、滤波每一环都加了几十毫秒。</li>
+      <li><strong>以为把频率调高就更平滑。</strong> 目标本身在跳，更新再快也只是更快地跳。要平滑，靠的是限速、限加速度和滤波。</li>
+      <li><strong>把 URDF 的速度当成实际能跑的速度。</strong> 那是模型参数，真手还要乘速度系数，还受负载和保护机制影响。</li>
+      <li><strong>时间减半，加速度变 4 倍。</strong> 过渡时间别设得太短，尤其是手里拿着东西的时候。</li>
+      <li><strong>周期算错单位。</strong> 1 ÷ 100 = 0.01 是<em>秒</em>，即 10 ms，不是 0.01 ms。</li>
+    </ul>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  数据来源：Sharpa 官方 URDF（sharpa-vision-retargeting-sdk / sharpa-urdf-usd-xml / wave_01）、Sharpa Wave SDK 头文件、sharpa-rl-lab 的 inhand_rotate 配置、playstation 源码。整理于 2026-11-17。
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  try { var t = JSON.parse(localStorage.getItem('hand.theme')); if (t) root.dataset.theme = t; } catch (e) {}
+  document.getElementById('theme').addEventListener('click', function () {
+    var cur = root.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    var next = cur === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('hand.theme', JSON.stringify(next)); } catch (e) {}
+    drawMJ();
+  });
+
+  function fmt(x, d) { return Number(x.toFixed(d)).toLocaleString('zh-CN'); }
+
+  // ---- Hz ⇔ ms ----
+  var hzIn = document.getElementById('hzIn'), msIn = document.getElementById('msIn'), hzNote = document.getElementById('hzNote');
+  function note(hz) {
+    var ms = 1000 / hz;
+    hzNote.textContent = '每秒 ' + fmt(hz, 2) + ' 次，每两次之间隔 ' + fmt(ms, 3) + ' ms' +
+      (hz >= 1000 ? '（' + fmt(ms * 1000, 0) + ' μs）' : '') + '。';
+  }
+  hzIn.addEventListener('input', function () { var v = +hzIn.value; if (v > 0) { msIn.value = +(1000 / v).toFixed(4); note(v); } });
+  msIn.addEventListener('input', function () { var v = +msIn.value; if (v > 0) { hzIn.value = +(1000 / v).toFixed(4); note(1000 / v); } });
+  note(100);
+
+  // ---- 1 秒时间线 ----
+  var rows = [['仿真物理', 240, '--c-rl'], ['触觉', 180, '--c-tactile'], ['playstation 指令', 100, '--accent'],
+              ['摄像头', 30, '--c-teleop'], ['仿真策略', 20, '--c-grasp']];
+  var tl = document.getElementById('timeline');
+  rows.forEach(function (r) {
+    var row = document.createElement('div'); row.className = 'tl';
+    row.innerHTML = '<span class="lbl"></span><div class="ticks"></div><span class="hz"></span>';
+    row.children[0].textContent = r[0];
+    row.children[1].style.setProperty('--w', (100 / (r[1] * 0.2)) + '%');
+    row.children[1].style.setProperty('--c', 'var(' + r[2] + ')');
+    row.children[2].textContent = r[1] + ' Hz';
+    tl.appendChild(row);
+  });
+
+  // ---- 最小加加速度 ----
+  var D = document.getElementById('mjD'), T = document.getElementById('mjT'), cv = document.getElementById('mjPlot');
+  function drawMJ() {
+    var d = Math.max(+D.value || 0, 0), t = Math.max(+T.value || 0.05, 0.05);
+    var vmax = 1.875 * d / t, amax = 10 / Math.sqrt(3) * d / (t * t);
+    document.getElementById('mjAvg').textContent = fmt(d / t, 1) + ' °/s';
+    document.getElementById('mjVmax').textContent = fmt(vmax, 1) + ' °/s';
+    document.getElementById('mjAmax').textContent = fmt(amax, 0) + ' °/s²';
+    var w = document.getElementById('mjWarn');
+    var tmin = Math.max(0.5, d / 60);
+    w.textContent = t < tmin ? 'playstation 会把这次过渡自动放慢到 ' + fmt(tmin, 2) + ' 秒（平均不超过 60 °/s，最短 0.5 秒）。' : '';
+
+    var css = getComputedStyle(root), dpr = window.devicePixelRatio || 1;
+    var W = cv.clientWidth, H = cv.clientHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    var g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, H);
+    var padL = 8, padR = 8, mid = H / 2, amp = H / 2 - 14;
+    g.strokeStyle = css.getPropertyValue('--line'); g.lineWidth = 1;
+    g.beginPath(); g.moveTo(padL, mid); g.lineTo(W - padR, mid); g.stroke();
+    g.fillStyle = css.getPropertyValue('--muted'); g.font = '12px ' + css.getPropertyValue('--mono');
+    g.fillText('0 s', padL, H - 2); var lab = fmt(t, 2) + ' s'; g.fillText(lab, W - padR - g.measureText(lab).width, H - 2);
+    var curves = [
+      [css.getPropertyValue('--ink'), function (s) { return 10 * s * s * s - 15 * Math.pow(s, 4) + 6 * Math.pow(s, 5); }],
+      [css.getPropertyValue('--accent'), function (s) { return (30 * s * s - 60 * s * s * s + 30 * Math.pow(s, 4)) / 1.875; }],
+      [css.getPropertyValue('--c-teleop'), function (s) { return (60 * s - 180 * s * s + 120 * s * s * s) / (10 / Math.sqrt(3)); }]
+    ];
+    curves.forEach(function (c) {
+      g.strokeStyle = c[0].trim(); g.lineWidth = 2.5; g.beginPath();
+      for (var i = 0; i <= 200; i++) {
+        var s = i / 200, x = padL + s * (W - padL - padR), y = mid - c[1](s) * amp;
+        i ? g.lineTo(x, y) : g.moveTo(x, y);
+      }
+      g.stroke();
+    });
+  }
+  D.addEventListener('input', drawMJ); T.addEventListener('input', drawMJ);
+  window.addEventListener('resize', drawMJ);
+  drawMJ();
+})();
+</script>
+</body>
+</html>

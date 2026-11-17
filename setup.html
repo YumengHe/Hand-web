@@ -15,7 +15,7 @@
         <a class="ghost" href="index.html">← 文献库</a>
         <a class="ghost" href="start.html">入门五步</a>
         <a class="ghost" href="compare.html">两只手的区别</a>
-        <a class="ghost" href="notes.html">问答记录</a>
+        <a class="ghost" href="units.html">单位和限制</a>
         <button id="theme" class="ghost" type="button" aria-label="切换明暗主题">◐ 主题</button>
       </span>
     </div>
@@ -117,7 +117,7 @@
 
     <h3 class="sub">第三部分：通电检查</h3>
     <div class="pitfall">
-      <strong>踩过的坑：通电前要先给手留出空间。</strong>第一次通电时手离墙太近，大拇指碰到了墙，手记下一条故障，之后校准连续失败了 3 次，还亮了红灯。四周至少空出一个手掌的距离，线别放在手指旁边。<span class="pitfall-src">实测，2026-11-16 · 详见<a href="notes.html#q12">问答记录</a></span>
+      <strong>踩过的坑：通电前要先给手留出空间。</strong>第一次通电时手离墙太近，大拇指碰到了墙，手记下一条故障，之后校准连续失败了 3 次，还亮了红灯。四周至少空出一个手掌的距离，线别放在手指旁边。<span class="pitfall-src">实测，2026-11-16 · 完整经过见“校准”部分的<a href="#calib-story">校准失败的完整经过</a></span>
     </div>
     <ol class="plain">
       <li>通电后等大约 20 秒。这期间不要碰指尖。</li>
@@ -146,14 +146,14 @@
 
     <h3 class="sub" id="connect">第四部分：让电脑连上它</h3>
     <div class="pitfall">
-      <strong>踩过的坑：电脑只有一个网口。</strong>手要占一个网口，上网也要占一个。解决办法是买一个“USB 转网口”的转接头（USB 3.0、千兆），原来的网口继续上网，新的专门连手。临时想试的话，可以先下载好软件，再把上网的网线拔下来换成连手的。<strong>如果电脑有 WiFi，就用 WiFi 上网，网线口专门连手，不用买转接头</strong>（我们的台式机就是这样）。<span class="pitfall-src">实测，2026-11-15 · 详见<a href="notes.html#q6">问答记录</a></span>
+      <strong>踩过的坑：电脑只有一个网口。</strong>手要占一个网口，上网也要占一个。解决办法是买一个“USB 转网口”的转接头（USB 3.0、千兆），原来的网口继续上网，新的专门连手。临时想试的话，可以先下载好软件，再把上网的网线拔下来换成连手的。<strong>如果电脑有 WiFi，就用 WiFi 上网，网线口专门连手，不用买转接头</strong>（我们的台式机就是这样）。<span class="pitfall-src">实测，2026-11-15</span>
     </div>
     <div class="pitfall">
-      <strong>踩过的坑：网线插好了，ping 还是不通。</strong>原因是电脑网口没有地址：Ubuntu 默认等对方分配地址，手不会分配，等不到就放弃了。下面第 2 步的手动设地址不能省。<span class="pitfall-src">实测，2026-11-16 · 详见<a href="notes.html#q11">问答记录</a></span>
+      <strong>踩过的坑：网线插好了，ping 还是不通。</strong>原因是电脑网口没有地址：Ubuntu 插上网线后，默认会向对方“要”一个地址（叫 DHCP，家里路由器就是干这个的）。手不会给电脑发地址，电脑等 45 秒要不到就放弃，然后一直重试。我们查的时候：网口显示已连接千兆，每秒也能收到约 1000 个从手那边来的数据包，就是没有 IP 地址。下面第 2 步的手动设地址不能省。<span class="pitfall-src">实测，2026-11-16</span>
     </div>
     <ol class="plain">
       <li>电脑装 Ubuntu 22.04，安装官方桌面软件。<strong>这个软件以前叫 Sharpa Pilot，现在改名叫 Sharpa Wave</strong>，是同一个东西。官网下载页上没有直接的下载按钮，要到 GitHub 的<a href="https://github.com/sharpa-robotics/sharpa-wave/releases" target="_blank" rel="noopener">发布页</a>去下。当前最新版是 2.1.0（2026-11-06 发布），<a href="https://github.com/sharpa-robotics/sharpa-wave/releases/download/v2.1.0/sharpa-wave_2.1.0_amd64_linux.deb">点这里直接下载</a>，大约 310 MB。
-        <br>下载完在终端里运行：<code>cd ~/Downloads</code>，然后 <code>sudo dpkg -i sharpa-wave_2.1.0_amd64_linux.deb</code>。如果提示缺东西，再运行 <code>sudo apt-get install -f</code>。装好后在应用菜单里找 Sharpa Wave，或者终端运行 <code>sharpa-wave</code>。
+        <br>下载完在终端里运行：<code>cd ~/Downloads</code>，然后 <code>sudo dpkg -i sharpa-wave_2.1.0_amd64_linux.deb</code>。如果提示缺东西，再运行 <code>sudo apt-get install -f</code>。发布页上 2.1.0 有两个文件，另一个叫 <code>sharpa-pilot_…</code>，官方说明让装 <code>sharpa-wave</code> 这个。它自带配套的 SDK（装在 <code>/opt/sharpa-wave-sdk/</code>），官方要求不要自己另外装或改这份 SDK。装好后在应用菜单里找 Sharpa Wave，或者终端运行 <code>sharpa-wave</code>。
         <br><strong>✅ 我们的台式机是 Ubuntu 24.04，已装好 2.1.0（2026-11-15）。</strong>24.04 用这个软件没问题；后面训练用的 sharpa-rl-lab 官方只在 22.04 上测试过，到那一步再处理。确认方法：<code>dpkg -l | grep sharpa</code>，看到 <code>sharpa-wave</code> 一行、开头是 <code>ii</code> 就对了。</li>
       <li>把电脑插网线的那个网卡手动设置成：地址 <code>192.168.10.240</code>，子网掩码 <code>255.255.255.0</code>。
         <br>在终端里运行这两条（每行一条；<code>Wired connection 1</code> 是 Ubuntu 给网线口起的默认名字，可以用 <code>nmcli con show</code> 查）：
@@ -167,7 +167,7 @@ nmcli con up "Wired connection 1"</code></pre>
 
     <h3 class="sub" id="calib">第五部分：校准，然后动一动</h3>
     <div class="pitfall">
-      <strong>踩过的坑：校准报 <code>[3] Soft limit validation failed</code>。</strong>先别反复重试。把电源从墙上拔掉，等一会儿再插上，等手背变回青蓝色呼吸灯，挪到空旷的地方再校准。我们重启后一次就成功了。<span class="pitfall-src">实测，2026-11-16 · 详见<a href="notes.html#q12">问答记录</a></span>
+      <strong>踩过的坑：校准报 <code>[3] Soft limit validation failed</code>。</strong>先别反复重试。把电源从墙上拔掉，等一会儿再插上，等手背变回青蓝色呼吸灯，挪到空旷的地方再校准。我们重启后一次就成功了。<span class="pitfall-src">实测，2026-11-16 · 完整经过见“校准”部分的<a href="#calib-story">校准失败的完整经过</a></span>
     </div>
     <ol class="plain">
       <li><strong>校准</strong>（让手知道“伸直”是哪个位置，官方建议每次通电都做一次）：进 Calib 面板，点 Start Calibration，等大约 95 秒。校准时手会自己动，人不要碰它，周围不要有东西挡着。
@@ -175,6 +175,31 @@ nmcli con up "Wired connection 1"</code></pre>
       <li><strong>拖滑块</strong>：进 Sliders 面板，拖动滑块，对应的关节就会动。</li>
       <li><strong>放一段演示</strong>：进 Replay 面板，选一个预设动作，点 Play。</li>
     </ol>
+
+    <details class="story" id="calib-story">
+      <summary>校准失败的完整经过、怎么读结果、去哪查故障码（实测，2026-11-16）</summary>
+      <p><strong>结论：第一次通电时大拇指碰到了墙，手里留下了一条故障记录。断电重启清掉以后，校准一次就成功了。</strong>手没有坏。</p>
+      <p><strong>报错是什么意思</strong>：校准时手会让每个关节慢慢转到最远的位置（机械极限），把测到的位置和出厂时记下的位置对比。差太多就报 <code>Soft limit validation failed</code>（极限位置检查没通过）。</p>
+      <p><strong>经过</strong>：</p>
+      <ul>
+        <li>第一次通电时手离墙太近，大拇指碰到了墙面。</li>
+        <li>连上电脑后，手报了故障码 <code>834</code>（电机欠压保护），出在 4 号关节（大拇指指尖那节）。我们的推测是：手指顶着墙转不动，电机使劲推，那一瞬间电压被拉低，就记下了这条故障。手册里没有写这一条。</li>
+        <li>之后一直没断电，带着这条故障校准了 3 次，每次都在 98% 失败。第 3 次之后手背开始闪红灯，又多了一个 <code>1283</code>（关节受力太大）。</li>
+        <li>拔掉电源等了一会儿再插上，手背变回蓝灯，故障清掉了。挪到空旷的地方再校准，一次就成功了。</li>
+      </ul>
+      <p><strong>是不是电源的问题？不是。</strong>如果是电源不够，22 个电机会一起报欠压，还会出现整只手的供电故障（<code>0x0203</code>、<code>0x0240</code>）。实际上只有大拇指一个电机报了，所以和电源适配器无关。</p>
+      <p><strong>校准成功后的输出怎么看</strong>：</p>
+      <pre><code>Calib From Params Success
+dof_limit_diff(in deg): [0.5 0.4 0.2 0.2 -0 -0.1 0.2 0 0 -0 0.2 0 -0.2 0.1 0.7 0 0 0 0.2 0.3 0 0]
+[Backlash Commit] success: Motor calibration data saved successfully</code></pre>
+      <ul>
+        <li><code>dof_limit_diff</code>：22 个关节这次测到的极限位置和出厂时差了多少度。全部不超过 0.7°（最大的是 14 号，无名指根部左右摆）。大拇指的 0–4 号都在 0.5° 以内，<strong>碰墙没有留下损伤</strong>。</li>
+        <li><code>Backlash Commit</code>：齿轮之间有一点点空隙（回程间隙），换方向时会先空转一下。校准顺便把每个关节的空隙量测了出来，存进手里，以后控制时会自动补偿。</li>
+      </ul>
+      <p><strong>关节编号</strong>（0 到 21）：0–4 大拇指（根部弯曲、根部左右摆、中间弯曲、中间左右摆、指尖）；5–8 食指；9–12 中指；13–16 无名指（根部弯曲、根部左右摆、中间、指尖）；17–21 小指（手掌、根部弯曲、根部左右摆、中间、指尖）。来源：SDK 里的 <code>sharpa_wave_example.py</code>。</p>
+      <p><strong>以后怎么避免</strong>：通电前先把手放到空旷的地方，四周至少空出一个手掌的距离，线别放在手指旁边；出了故障<strong>先断电重启</strong>，不要带着故障反复校准；闪红灯就立刻停下来。</p>
+      <p><strong>想自己查故障码</strong>：软件的日志在 <code>~/.sharpa-wave/logs/日期/</code>。故障码的含义在 <code>/opt/sharpa-wave-sdk/include/SharpaWaveSDK.h</code> 里，日志里的十进制数要先换成十六进制，比如 834 = 0x0342。</p>
+    </details>
     <p class="aside">做到这里，下面“五个步骤”里的第一步就完成了一大半，剩下的是改用代码而不是界面去控制它。</p>
 
     <h3 class="sub" id="power-off">第六部分：不用的时候怎么关</h3>

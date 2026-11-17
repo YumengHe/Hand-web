@@ -21,7 +21,7 @@ nohup ./serve.sh > /tmp/hand-web.log 2>&1 &
 - `compare.html`：无极 2 和 Sharpa Wave 两只手的区别
 - `setup.html`：Sharpa 开箱、固定、接线、连电脑、关机
 - `start.html`：只用手的入门五步（带打勾进度）
-- `notes.html`：问答记录
+- `units.html`：单位（Hz、ms、度/弧度、速度/加速度）和 Sharpa Wave 的物理限制（关节范围、速度、力矩），带 Hz 换算和平滑过渡计算器
 - `data/papers.json`：全部论文数据，页面唯一的数据来源
 
 ## 添加论文
