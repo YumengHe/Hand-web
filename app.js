@@ -9,7 +9,8 @@
     { key: 'human', name: '从人类数据学习' },
     { key: 'hardware', name: '硬件设计' },
     { key: 'tactile', name: '触觉感知' },
-    { key: 'vla', name: '模仿学习与基础模型' }
+    { key: 'vla', name: '模仿学习与基础模型' },
+    { key: 'model', name: '基于模型的规划和控制' }
   ];
   var CAT_NAME = {};
   CATS.forEach(function (c) { CAT_NAME[c.key] = c.name; });
@@ -23,7 +24,8 @@
     human: '直接拿人手干活的视频或动作捕捉数据来教机器人，省掉遥操作。难点是人手和机器人手长得不一样。',
     hardware: '手本身怎么造：用什么电机、怎么传动、多少个关节、成本多少。你们已经有现成的手，这类可以少看。',
     tactile: '给手装上“触觉”，让它能感觉到碰到了什么、用了多大力，然后研究怎么利用这些感觉把活干得更细。',
-    vla: '让机器人看人示范来学动作，以及训练能“看图、听懂指令、直接输出动作”的大模型。'
+    vla: '让机器人看人示范来学动作，以及训练能“看图、听懂指令、直接输出动作”的大模型。',
+    model: '不靠试错学习，而是写出手和物体的物理模型（接触、摩擦、运动学），再用优化或规划算出手指该怎么动。早年的手内操作大多是这一路。'
   };
 
   // 按“做了什么任务”分类
@@ -35,15 +37,26 @@
     { key: 'daily', name: '日常杂活' },
     { key: 'none', name: '不针对具体任务' }
   ];
-  var TASK_NAME = {};
+  var TASK_NAME = { rubik: '魔方' };
   TASKS.forEach(function (t) { TASK_NAME[t.key] = t.name; });
+  // 细标签从 data/subtasks.json 读：key、name、plain、parent（所属粗任务）
+  var SUBS = [], SUB = {};
+  var RUBIK = ['rubik_hand', 'rubik_robot', 'rubik_algo'];
+  var REL = [
+    { key: 'high', name: '高' },
+    { key: 'mid', name: '中' },
+    { key: 'low', name: '低' },
+    { key: 'none', name: '没标' }
+  ];
+  var REL_PLAIN = '调研时按和我们“手里转圆柱”任务的接近程度标的高 / 中 / 低。较早收录的 68 篇没标，归在“没标”。';
   var TASK_PLAIN = {
     rotate: '不把东西放下，只靠手指把手里的物体转个方向，比如转方块、转笔、转球。只需要一只固定在桌上的手，不用机械臂。我们现在就能做，“入门五步”的第五步就是这个任务。',
     grasp: '看到一个物体，决定手指放在哪、怎么握，然后把它抓起来。多数工作需要机械臂把手送到物体旁边；只算“握法”的那部分可以在电脑里做。',
     tool: '用剪刀、螺丝刀、锤子，拧瓶盖，拧魔方，开合带关节的东西。难在既要握稳，又要让工具的一部分能动。有些只用手就能做，有些要机械臂。',
     bimanual: '一只手做不了、要两只手配合的任务，比如一只手扶着瓶子另一只手拧盖子，或者两只手之间递东西。我们有两只 Sharpa，但第二只是左手还是右手还没确认，两只都是右手的话有些任务做不了。',
     daily: '拿起放下、倒水、开门、叠毛巾这类一连串动作的生活任务。通常一篇文章做好几个，重点是方法通用，而不是某一个任务。基本都需要机械臂。',
-    none: '综述、造手、造传感器这类文章。它们不解决某个具体任务，文中的任务只是用来展示“这东西能用”。'
+    none: '综述、造手、造传感器这类文章。它们不解决某个具体任务，文中的任务只是用来展示“这东西能用”。',
+    rubik: '所有和魔方有关的文章：用灵巧手拧魔方、机器人解魔方系统、只算解法的算法。分属三个粗任务，这里合在一起看。'
   };
 
   // 按“手怎么装”分类：要不要机械臂
@@ -62,43 +75,6 @@
     none: '纯仿真、数据集、综述，或者只研究传感器怎么感知。不用真手做任务，也就谈不上要不要臂。'
   };
 
-  // 术语大白话：[中文名, 英文/缩写, 解释]
-  var GLOSSARY = [
-    ['灵巧手', 'dexterous hand', '像人手一样有好几根手指、每根手指有多个关节的机器人手。对比的是只有两片夹板、只会开合的“夹爪”。'],
-    ['自由度', 'DoF', '能独立活动的关节数量。数字越大手越灵活，也越难控制。人手大约有二十多个。'],
-    ['策略', 'policy', '机器人的“大脑程序”：输入它看到、感觉到的东西，输出下一步每个关节该怎么动。论文里说“训练一个策略”就是训练这个程序。'],
-    ['强化学习', 'RL', '让机器人反复试错。做对了给奖励，做错了没有，试几百万次后它自己摸索出该怎么做。没有人教具体动作。'],
-    ['模仿学习', 'IL', '人先示范很多遍，机器人学着照做。和强化学习相反：有人教，不靠自己试错。'],
-    ['仿真到现实', 'sim-to-real', '先在电脑里的虚拟世界练（又快又不会弄坏机器），再搬到真机上用。虚拟和现实总有差别，这个差别叫 sim-to-real gap，是这个方向的核心难题。'],
-    ['域随机化', 'domain randomization', '在虚拟世界训练时，故意把摩擦力、物体重量、电机力度等随机乱改。机器人见过各种情况后，到了真实世界就不容易出错。'],
-    ['教师-学生蒸馏', 'teacher-student', '先训练一个“开卷考试”的老师：它在虚拟世界里能直接知道物体的精确位置等答案。再让只能用真实传感器的学生去模仿老师的动作。'],
-    ['手内操作', 'in-hand manipulation', '不把东西放下，只靠手指把手里的物体转个方向或挪个位置。比如单手转笔、单手把钥匙调个头。'],
-    ['遥操作', 'teleoperation', '人戴手套或 VR 头显，远程控制机器人手，像操纵木偶。主要用来录示范数据。'],
-    ['重定向', 'retargeting', '把人手的姿势“翻译”成机器人手的姿势。因为两者手指长短、关节数量不一样，不能直接照抄。'],
-    ['构型', 'embodiment', '机器人的身体长什么样。换一只不同的手就是换了构型，“跨构型”就是同一套方法能用在不同的手上。'],
-    ['本体感知', 'proprioception', '机器人对自己身体的感觉：每个关节弯到多少度、电机用了多大力。就像你闭着眼也知道自己手指弯成什么样。'],
-    ['触觉', 'tactile', '指尖或手掌上的传感器，能感觉到有没有碰到东西、碰在哪、用了多大力。'],
-    ['直驱与腱驱动', 'direct-drive / tendon', '直驱是把电机直接装在关节上。腱驱动是电机装在手掌或前臂，用绳子拉动手指，像人的肌腱。你们的两种手都是电机直接驱动关节这一类。'],
-    ['抓取合成', 'grasp synthesis', '用算法算出“这只手握住这个物体时，每根手指该放在哪”。'],
-    ['扩散策略', 'diffusion policy', '一种目前很流行的模仿学习方法，借用了 AI 画图的技术来生成动作。知道它是“模仿学习的一种主流做法”就够了。'],
-    ['视觉-语言-动作模型', 'VLA', '能看图、听懂文字指令、直接输出机器人动作的大模型。可以粗略理解成“会动手的 ChatGPT”。'],
-    ['零样本', 'zero-shot', '练好之后不做任何额外调整就直接用到新情况上。比如“零样本迁移到真机”就是虚拟世界练完直接上真手。']
-  ];
-
-  // 入门路线：id + 为什么读它
-  var ROUTE = [
-    ['2504.03515', '先看综述，建立问题与方法的地图'],
-    ['1808.00177', 'Sim-to-real 强化学习的起点'],
-    ['2210.04887', '现代手内操作的标准做法'],
-    ['2502.20396', '把视觉 sim-to-real 搬上人形机器人的配方'],
-    ['2210.02697', '灵巧抓取的数据基础'],
-    ['2309.06440', '最常用的开源硬件平台'],
-    ['2307.04577', '遥操作与重定向的通用框架'],
-    ['2403.07788', '脱离机器人采集人手数据'],
-    ['2505.21864', '用外骨骼跨越人-机构型差距'],
-    ['2602.16710', '人类视频预训练的规模效应']
-  ];
-
   var $ = function (id) { return document.getElementById(id); };
   var store = {
     get: function (k, d) { try { return JSON.parse(localStorage.getItem(k)) || d; } catch (e) { return d; } },
@@ -108,7 +84,9 @@
   var papers = [];
   var saved = store.get('hand.saved', {});
   var read = store.get('hand.read', {});
-  var state = { q: '', cat: 'all', task: 'all', mount: 'all', sort: 'new', onlyStar: false, onlySaved: false, hideRead: false };
+  var state = { q: '', cat: 'all', task: 'all', sub: 'all', rel: 'all', mount: 'all', sort: 'new', onlyStar: false, onlySaved: false, hideRead: false };
+  var REL_RANK = { high: 0, mid: 1, low: 2 };
+  var isArxiv = function (p) { return /^\d{4}\.\d{4,5}$/.test(p.id); };
 
   // ---- theme ----
   var theme = store.get('hand.theme', null);
@@ -161,7 +139,9 @@
     var ts = terms();
     var out = papers.filter(function (p) {
       if (state.cat !== 'all' && p.cat !== state.cat) return false;
-      if (state.task !== 'all' && p.tasks.indexOf(state.task) === -1) return false;
+      if (state.task !== 'all' && !p._task[state.task]) return false;
+      if (state.sub !== 'all' && p.subtasks.indexOf(state.sub) === -1) return false;
+      if (state.rel !== 'all' && (p.relevance || 'none') !== state.rel) return false;
       if (state.mount !== 'all' && p.mount !== state.mount) return false;
       if (state.onlyStar && !p.star) return false;
       if (state.onlySaved && !saved[p.id]) return false;
@@ -170,6 +150,11 @@
     });
     out.sort(function (a, b) {
       if (state.sort === 'title') return a.title.localeCompare(b.title);
+      if (state.sort === 'rel') {
+        var ra = a.relevance in REL_RANK ? REL_RANK[a.relevance] : 3, rb = b.relevance in REL_RANK ? REL_RANK[b.relevance] : 3;
+        if (ra !== rb) return ra - rb;
+        return a.date < b.date ? 1 : a.date > b.date ? -1 : 0;
+      }
       var d = a.date < b.date ? -1 : a.date > b.date ? 1 : 0;
       return state.sort === 'old' ? d : -d;
     });
@@ -184,7 +169,7 @@
   }
 
   function card(p, ts) {
-    var abs = 'https://arxiv.org/abs/' + p.id;
+    var abs = isArxiv(p) ? 'https://arxiv.org/abs/' + p.id : p.url;
     var titleLink = el('a', { href: abs, target: '_blank', rel: 'noopener' });
     titleLink.appendChild(highlight(p.title, ts));
 
@@ -192,9 +177,10 @@
     zh.appendChild(highlight(p.zh, ts));
 
     var did = el('p', { class: 'did' }, [el('b', { text: '做了什么任务' })]);
-    p.tasks.forEach(function (t) {
-      var b = el('button', { type: 'button', class: 'tasktag', text: TASK_NAME[t], title: '只看这类任务' });
-      b.addEventListener('click', function () { state.task = t; render(); });
+    p.subtasks.forEach(function (k) {
+      var s = SUB[k];
+      var b = el('button', { type: 'button', class: 'tasktag', text: s.name, title: s.plain });
+      b.addEventListener('click', function () { state.task = RUBIK.indexOf(k) !== -1 ? 'rubik' : s.parent; state.sub = k; render(); });
       did.appendChild(b);
     });
     var didText = el('span');
@@ -209,14 +195,17 @@
     }
 
     var absP = el('p');
-    absP.appendChild(highlight(p.abstract, ts));
+    if (p.abstract) absP.appendChild(highlight(p.abstract, ts));
+    else absP.textContent = '数据里没有这篇的英文摘要。';
 
     var node = el('article', { class: 'paper' + (read[p.id] ? ' read' : ''), id: 'p-' + p.id, style: '--c: var(--c-' + p.cat + ')' }, [
       el('div', { class: 'meta' }, [
         el('span', { class: 'tag' }, [el('span', { class: 'dot' }), CAT_NAME[p.cat]]),
         el('span', { class: 'date', text: p.date }),
-        el('span', { class: 'aid', text: 'arXiv:' + p.id }),
-        p.star ? el('span', { class: 'star', text: '精选' }) : null
+        isArxiv(p) ? el('span', { class: 'aid', text: 'arXiv:' + p.id }) : null,
+        p.venue && !/^arxiv/i.test(p.venue) ? el('span', { class: 'aid', text: p.venue }) : null,
+        p.star ? el('span', { class: 'star', text: '精选' }) : null,
+        p.relevance === 'high' ? el('span', { class: 'rel', text: '和转圆柱高度相关', title: REL_PLAIN }) : null
       ]),
       el('h3', null, [el('span', { class: 'short', text: p.short }), titleLink]),
       el('p', { class: 'authors', text: authorLine(p.authors) }),
@@ -225,8 +214,8 @@
       zh,
       el('details', null, [el('summary', { text: '英文摘要' }), absP]),
       el('div', { class: 'actions' }, [
-        el('a', { href: abs, target: '_blank', rel: 'noopener', text: 'arXiv' }),
-        el('a', { href: 'https://arxiv.org/pdf/' + p.id, target: '_blank', rel: 'noopener', text: 'PDF' }),
+        isArxiv(p) ? el('a', { href: abs, target: '_blank', rel: 'noopener', text: 'arXiv' }) : el('a', { href: abs, target: '_blank', rel: 'noopener', text: '原文' }),
+        isArxiv(p) ? el('a', { href: 'https://arxiv.org/pdf/' + p.id, target: '_blank', rel: 'noopener', text: 'PDF' }) : null,
         el('a', { href: 'https://scholar.google.com/scholar?q=' + encodeURIComponent(p.title), target: '_blank', rel: 'noopener', text: 'Scholar' }),
         el('span', { class: 'sp' }),
         toggleBtn(saved[p.id] ? '★ 已收藏' : '☆ 收藏', saved[p.id], function () {
@@ -261,6 +250,16 @@
     Array.prototype.forEach.call($('mountchips').children, function (c) {
       c.setAttribute('aria-pressed', String(c.dataset.mount === state.mount));
     });
+    Array.prototype.forEach.call($('relchips').children, function (c) {
+      c.setAttribute('aria-pressed', String(c.dataset.rel === state.rel));
+    });
+    renderSubChips();
+    var snote = $('subnote');
+    snote.hidden = !SUB[state.sub];
+    snote.textContent = SUB[state.sub] ? '“' + SUB[state.sub].name + '”是什么：' + SUB[state.sub].plain : '';
+    var rnote = $('relnote');
+    rnote.hidden = state.rel === 'all';
+    rnote.textContent = REL_PLAIN;
     var mnote = $('mountnote');
     mnote.hidden = !MOUNT_PLAIN[state.mount];
     mnote.textContent = MOUNT_PLAIN[state.mount] ? '“' + MOUNT_NAME[state.mount] + '”是什么意思：' + MOUNT_PLAIN[state.mount] : '';
@@ -270,16 +269,6 @@
     var note = $('catnote');
     note.hidden = !CAT_PLAIN[state.cat];
     note.textContent = CAT_PLAIN[state.cat] ? CAT_NAME[state.cat] + '是什么：' + CAT_PLAIN[state.cat] : '';
-  }
-
-  function renderGlossary() {
-    var box = $('gloss');
-    GLOSSARY.forEach(function (g) {
-      box.appendChild(el('details', null, [
-        el('summary', null, [g[0], el('small', { text: g[1] })]),
-        el('p', { text: g[2] })
-      ]));
-    });
   }
 
   function renderChips() {
@@ -299,21 +288,55 @@
 
   function renderTaskChips() {
     var counts = { all: papers.length };
-    papers.forEach(function (p) { p.tasks.forEach(function (t) { counts[t] = (counts[t] || 0) + 1; }); });
+    papers.forEach(function (p) { Object.keys(p._task).forEach(function (t) { counts[t] = (counts[t] || 0) + 1; }); });
     var chips = $('taskchips');
-    [{ key: 'all', name: '全部' }].concat(TASKS).forEach(function (c) {
+    [{ key: 'all', name: '全部' }].concat(TASKS, [{ key: 'rubik', name: '魔方' }]).forEach(function (c) {
       var b = el('button', { type: 'button', class: 'chip', 'data-task': c.key, 'aria-pressed': 'false' }, [
         c.name,
         el('span', { class: 'n', text: String(counts[c.key] || 0) })
       ]);
-      b.addEventListener('click', function () { state.task = c.key; render(); });
+      b.addEventListener('click', function () { state.task = c.key; state.sub = 'all'; render(); });
+      chips.appendChild(b);
+    });
+  }
+
+  // 第二级：当前粗任务下的细标签；没选粗任务时显示“在手里转东西”这一族
+  function renderSubChips() {
+    var fam = state.task === 'all' ? 'rotate' : state.task;
+    var keys = fam === 'rubik' ? RUBIK : SUBS.filter(function (s) { return s.parent === fam; }).map(function (s) { return s.key; });
+    $('sublabel').textContent = '“' + TASK_NAME[fam] + '”细分';
+    var chips = $('subchips');
+    chips.textContent = '';
+    var base = papers.filter(function (p) { return state.task === 'all' || p._task[state.task]; });
+    var counts = { all: base.length };
+    base.forEach(function (p) { p.subtasks.forEach(function (k) { counts[k] = (counts[k] || 0) + 1; }); });
+    ['all'].concat(keys).forEach(function (k) {
+      var b = el('button', { type: 'button', class: 'chip', 'aria-pressed': String(state.sub === k), title: SUB[k] ? SUB[k].plain : '' }, [
+        k === 'all' ? '全部' : SUB[k].name,
+        el('span', { class: 'n', text: String(counts[k] || 0) })
+      ]);
+      b.addEventListener('click', function () { state.sub = k; render(); });
+      chips.appendChild(b);
+    });
+  }
+
+  function renderRelChips() {
+    var counts = { all: papers.length };
+    papers.forEach(function (p) { var r = p.relevance || 'none'; counts[r] = (counts[r] || 0) + 1; });
+    var chips = $('relchips');
+    [{ key: 'all', name: '全部' }].concat(REL).forEach(function (c) {
+      var b = el('button', { type: 'button', class: 'chip', 'data-rel': c.key, 'aria-pressed': 'false' }, [
+        c.name,
+        el('span', { class: 'n', text: String(counts[c.key] || 0) })
+      ]);
+      b.addEventListener('click', function () { state.rel = c.key; render(); });
       chips.appendChild(b);
     });
   }
 
   function renderStats() {
     var years = papers.map(function (p) { return +p.date.slice(0, 4); });
-    var recent = papers.filter(function (p) { return p.date >= '2025-01-01'; }).length;
+    var recent = years.filter(function (y) { return y >= 2025; }).length;
     var rows = [
       ['收录论文', papers.length],
       ['研究方向', CATS.length],
@@ -323,25 +346,6 @@
     var dl = $('stats');
     rows.forEach(function (r) {
       dl.appendChild(el('div', null, [el('dt', { text: r[0] }), el('dd', { text: String(r[1]) })]));
-    });
-  }
-
-  function renderRoute() {
-    var byId = {};
-    papers.forEach(function (p) { byId[p.id] = p; });
-    var ol = $('route');
-    ROUTE.forEach(function (r) {
-      var p = byId[r[0]];
-      if (!p) return;
-      var a = el('a', { href: '#p-' + p.id, text: p.short });
-      a.addEventListener('click', function () {
-        // 确保目标卡片没有被当前筛选隐藏
-        state.q = ''; state.cat = 'all'; state.task = 'all'; state.mount = 'all'; state.onlyStar = state.onlySaved = state.hideRead = false;
-        $('q').value = '';
-        $('onlyStar').checked = $('onlySaved').checked = $('hideRead').checked = false;
-        render();
-      });
-      ol.appendChild(el('li', null, [a, el('small', { text: r[1] + ' · ' + p.date.slice(0, 4) })]));
     });
   }
 
@@ -366,14 +370,24 @@
     });
   }
 
-  fetch('data/papers.json')
-    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-    .then(function (data) {
-      papers = data;
+  function getJSON(url) {
+    return fetch(url).then(function (r) { if (!r.ok) throw new Error(url + ' ' + r.status); return r.json(); });
+  }
+  Promise.all([getJSON('data/papers.json'), getJSON('data/subtasks.json')])
+    .then(function (res) {
+      papers = res[0];
+      SUBS = res[1];
+      SUBS.forEach(function (s) { SUB[s.key] = s; });
       papers.forEach(function (p) {
-        p._hay = [p.title, p.short, p.authors.join(' '), p.zh, p.abstract, p.id, CAT_NAME[p.cat], p.did, p.tasks.map(function (t) { return TASK_NAME[t]; }).join(' '), MOUNT_NAME[p.mount] || '', p.mount_note || ''].join(' ').toLowerCase();
+        // 粗任务：tasks 里写的，加上细标签所属的粗任务；魔方单独一类
+        p._task = {};
+        p.tasks.forEach(function (t) { p._task[t] = 1; });
+        p.subtasks.forEach(function (k) { p._task[SUB[k].parent] = 1; if (RUBIK.indexOf(k) !== -1) p._task.rubik = 1; });
+        p._hay = [p.title, p.short, p.authors.join(' '), p.zh, p.abstract || '', p.id, p.venue || '', p.hand || '', CAT_NAME[p.cat], p.did,
+          Object.keys(p._task).map(function (t) { return TASK_NAME[t]; }).join(' '), p.subtasks.map(function (k) { return SUB[k].name; }).join(' '),
+          MOUNT_NAME[p.mount] || '', p.mount_note || ''].join(' ').toLowerCase();
       });
-      renderStats(); renderRoute(); renderChips(); renderTaskChips(); renderMountChips(); render();
+      renderStats(); renderChips(); renderTaskChips(); renderMountChips(); renderRelChips(); render();
       // 从别的页面带着 #p-xxxx 跳过来时，卡片是刚渲染出来的，需要手动滚过去
       var target = location.hash && document.getElementById(location.hash.slice(1));
       if (target) target.scrollIntoView();
@@ -383,5 +397,4 @@
       $('empty').textContent = '论文数据加载失败（' + err.message + '）。请确认是通过 serve.sh 启动的服务访问本页。';
     });
 
-  renderGlossary();
 })();

@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>任务 1：手里转圆柱 · 灵巧手</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .gifs { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin: 18px 0 4px; }
+  .gifs figure { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .gifs img { width: 100%; display: block; aspect-ratio: 16 / 10; object-fit: cover; background: var(--line); }
+  .gifs figcaption { font-size: 13px; color: var(--muted); padding: 6px 12px; }
+  .flow { list-style: none; padding: 0; margin: 14px 0; display: grid; gap: 8px; counter-reset: f; }
+  .flow li { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--c); border-radius: 10px; padding: 10px 16px; counter-increment: f; }
+  .flow li::before { content: counter(f, decimal-leading-zero); font: 600 13px var(--mono); color: var(--c); margin-right: 10px; }
+  .flow li b { font-family: var(--serif); font-size: 16.5px; }
+  .flow li p { margin: 6px 0 0; font-size: 14.5px; }
+  .flow li code { font-size: 12.5px; }
+  .obsbar { display: flex; height: 30px; border-radius: 6px; overflow: hidden; margin: 10px 0 4px; font: 12px var(--mono); }
+  .obsbar span { display: flex; align-items: center; justify-content: center; color: #fff; white-space: nowrap; overflow: hidden; }
+  .status { list-style: none; padding: 0; margin: 12px 0; display: grid; gap: 6px; }
+  .status li { display: grid; grid-template-columns: 2em 1fr; gap: 6px; align-items: baseline; }
+  .status .s { font-size: 16px; }
+  pre.cmd { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; overflow-x: auto; font-size: 13px; }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top">
+      <span class="kicker">Task 01 · In-hand Rotation · sharpa-rl-lab</span>
+      <span class="mast-actions">
+        <a class="ghost" href="index.html">← 首页</a>
+        <a class="ghost" href="papers.html">文献库</a>
+        <a class="ghost" href="compare.html">两只手的区别</a>
+        <a class="ghost" href="start.html">入门五步</a>
+        <a class="ghost" href="setup.html">Sharpa 开箱和接线</a>
+        <a class="ghost" href="units.html">单位和限制</a>
+        <button id="theme" class="ghost" type="button" aria-label="切换明暗主题">◐ 主题</button>
+      </span>
+    </div>
+    <h1>任务 1：手里转圆柱</h1>
+    <p class="lede">让 Sharpa Wave 把手里的圆柱绕竖直轴一直转下去。用的是 Sharpa 官方的 <a href="https://github.com/sharpa-robotics/sharpa-rl-lab" target="_blank" rel="noopener">sharpa-rl-lab</a>：仿真里用强化学习训练，再部署到真手。</p>
+    <dl class="stats">
+      <div><dt>物体</dt><dd>圆柱 r20 × h32 mm</dd></div>
+      <div><dt>并行环境</dt><dd>16384</dd></div>
+      <div><dt>策略频率</dt><dd>20 Hz</dd></div>
+      <div><dt>训练总步数</dt><dd>3 亿</dd></div>
+    </dl>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="gifs">
+    <figure>
+      <img loading="lazy" src="https://raw.githubusercontent.com/sharpa-robotics/sharpa-rl-lab/main/resources/sim.gif" alt="仿真里很多只 Sharpa 手同时转圆柱">
+      <figcaption>仿真（官方 GIF，约 11 MB）</figcaption>
+    </figure>
+    <figure>
+      <img loading="lazy" src="https://raw.githubusercontent.com/sharpa-robotics/sharpa-rl-lab/main/resources/real.gif" alt="真的 Sharpa Wave 在转圆柱">
+      <figcaption>真手（官方 GIF，约 21 MB）</figcaption>
+    </figure>
+  </div>
+
+  <nav class="toc" aria-label="目录">
+    <a href="#pieces">1. 用到的东西：Isaac Sim、Isaac Lab、sharpa-rl-lab</a>
+    <a href="#flow">2. 完整流程：从训练到真手</a>
+    <a href="#io">3. 物体、随机变化和输入输出</a>
+    <a href="#reward">4. 怎么打分（奖励）</a>
+    <a href="#tricks">5. 让它能从仿真搬到真手的几个设计</a>
+    <a href="#ckpt">6. 模型和仿真结果</a>
+    <a href="#print">7. 3D 打印</a>
+    <a href="#real">8. 真手要准备什么</a>
+    <a href="#cmds">9. 常用命令</a>
+    <a href="#tune">10. 想改任务，改哪里</a>
+  </nav>
+
+  <section id="pieces">
+    <h2>1. 用到的东西</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>名字</th><th>是什么</th><th>比方</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Isaac Sim</strong></td><td>NVIDIA 的机器人仿真器：物理引擎（PhysX）+ 3D 渲染</td><td>游戏引擎，但物理更准</td></tr>
+          <tr><td><strong>Isaac Lab</strong></td><td>建在 Isaac Sim 上的机器人学习框架，能在一块 GPU 上同时跑上万个环境</td><td>把游戏引擎改造成训练场</td></tr>
+          <tr><td><strong>sharpa-rl-lab</strong></td><td>Sharpa 官方的“手内转圆柱”任务：训练、可视化、部署到真手的全部代码</td><td>训练场里的一门具体课程</td></tr>
+          <tr><td><strong>强化学习（RL）</strong></td><td>每一步看状态、做动作、拿一个分数（奖励），反复试错。人只定义什么叫做得好，不教具体动作</td><td>训狗：做对了给零食</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="flow">
+    <h2>2. 完整流程：从训练到真手</h2>
+    <ol class="flow">
+      <li style="--c: var(--c-hardware)"><b>生成抓取缓存</b>
+        <p>先找出很多个“圆柱稳稳握在手里”的初始姿势存起来，每一局从其中一个开始。仓库自带（<code>cache/</code>），可以跳过。</p>
+        <p><code>gen_grasp.py --task Isaac-Inhand-Rotate-Grasp-Sharpa-Wave-v0</code></p></li>
+      <li style="--c: var(--c-rl)"><b>训练“老师”（PPO）</b>
+        <p>老师除了关节角和触觉，还能直接看到物体的位置偏移、摩擦、质量、重心（8 个数，叫“特权信息”）。真手上拿不到这些，所以老师不能部署。默认 3 亿步。</p>
+        <p><code>train.py --task Isaac-Inhand-Rotate-Sharpa-Wave-v0 --headless</code></p></li>
+      <li style="--c: var(--c-teleop)"><b>蒸馏出“学生”（ProprioAdapt）</b>
+        <p>学生只看最近 30 帧（1.5 秒）的关节和触觉历史，从中猜出那 8 个数。能部署的是它。</p>
+        <p><code>train.py ... --algorithm ProprioAdapt --load_path 老师的.pth</code></p></li>
+      <li style="--c: var(--c-grasp)"><b>在仿真里看效果</b>
+                <p><code>play.py --task Isaac-Inhand-Rotate-Sharpa-Wave-v0 --num_envs 16 --load_path 模型.pth</code></p></li>
+      <li style="--c: var(--c-tactile)"><b>部署到真手</b>
+        <p>键盘：<kbd>e</kbd> 开始、<kbd>w</kbd> 定住、<kbd>q</kbd> 回到初始姿势。也可以用 playstation 的“转柱子”面板。</p>
+        <p><code>deploy.py --task Isaac-Inhand-Rotate-Deploy-Sharpa-Wave-v0 --hand_side 1 --load_path 模型.pth</code>（右手是 1）</p></li>
+    </ol>
+  </section>
+
+  <section id="io">
+    <h2>3. 物体、随机变化和输入输出</h2>
+    <div class="explain">
+      <p>下面是仓库的默认配置。官方没有公布训练那两个模型时的实际配置，除了尺寸，其余是否一样没法确认。</p>
+    </div>
+
+    <h3 class="sub" id="object">物体：只有一种形状</h3>
+    <div class="explain">
+      <p>只有一个圆柱模型，整体按比例缩放：<strong>高永远是直径的 0.8 倍</strong>，变的只有大小。</p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>模型</th><th>缩放比例</th><th>练过的尺寸</th></tr></thead>
+        <tbody>
+          <tr><td><code>0.5-0.5-1</code></td><td>只有 0.5</td><td>只有 r20 × h32 mm 这一个</td></tr>
+          <tr><td><code>0.4-0.6-8</code></td><td>0.4 到 0.6，等间隔 8 档</td><td>半径 16–24 mm，高 25.6–38.4 mm</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <figure style="margin:14px 0 6px">
+      <svg viewBox="0 0 606 170" role="img" aria-label="0.4-0.6-8 模型训练用的 8 个圆柱尺寸，按同一比例的侧视图，从半径 16 毫米到 24 毫米" style="display:block;width:100%;max-width:606px;height:auto;font-family:var(--sans)">
+        <line x1="6" y1="120" x2="600" y2="120" stroke="var(--line)" stroke-width="1.5"/>
+        <path d="M14.0,81.6 L14.0,120 A24.0,4.8 0 0 0 62.0,120 L62.0,81.6" fill="var(--surface)" stroke="var(--c-teleop)" stroke-width="1.5"/><ellipse cx="38.0" cy="81.6" rx="24.0" ry="4.8" fill="var(--surface)" stroke="var(--c-teleop)" stroke-width="1.5"/><text x="38.0" y="146" text-anchor="middle" font-size="12" fill="var(--ink)">r16.0</text><text x="38.0" y="161" text-anchor="middle" font-size="12" fill="var(--muted)">h25.6</text><path d="M76.0,78.9 L76.0,120 A25.7,5.1 0 0 0 127.4,120 L127.4,78.9" fill="var(--surface)" stroke="var(--c-teleop)" stroke-width="1.5"/><ellipse cx="101.7" cy="78.9" rx="25.7" ry="5.1" fill="var(--surface)" stroke="var(--c-teleop)" stroke-width="1.5"/><text x="101.7" y="146" text-anchor="middle" font-size="12" fill="var(--ink)">r17.1</text><text x="101.7" y="161" text-anchor="middle" font-size="12" fill="var(--muted)">h27.4</text><path d="M141.4,76.1 L141.4,120 A27.4,5.5 0 0 0 196.3,120 L196.3,76.1" fill="var(--surface)" stroke="var(--c-teleop)" stroke-width="1.5"/><ellipse cx="168.9" cy="76.1" rx="27.4" ry="5.5" fill="var(--surface)" stroke="var(--c-teleop)" stroke-width="1.5"/><text x="168.9" y="146" text-anchor="middle" font-size="12" fill="var(--ink)">r18.3</text><text x="168.9" y="161" text-anchor="middle" font-size="12" fill="var(--muted)">h29.3</text><path d="M210.3,73.4 L210.3,120 A29.1,5.8 0 0 0 268.6,120 L268.6,73.4" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.5"/><ellipse cx="239.4" cy="73.4" rx="29.1" ry="5.8" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/><text x="239.4" y="146" text-anchor="middle" font-size="12" fill="var(--ink)">r19.4</text><text x="239.4" y="161" text-anchor="middle" font-size="12" fill="var(--muted)">h31.1</text><path d="M282.6,70.6 L282.6,120 A30.9,6.2 0 0 0 344.3,120 L344.3,70.6" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.5"/><ellipse cx="313.4" cy="70.6" rx="30.9" ry="6.2" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/><text x="313.4" y="146" text-anchor="middle" font-size="12" fill="var(--ink)">r20.6</text><text x="313.4" y="161" text-anchor="middle" font-size="12" fill="var(--muted)">h32.9</text><path d="M358.3,67.9 L358.3,120 A32.6,6.5 0 0 0 423.4,120 L423.4,67.9" fill="var(--surface)" stroke="var(--c-teleop)" stroke-width="1.5"/><ellipse cx="390.9" cy="67.9" rx="32.6" ry="6.5" fill="var(--surface)" stroke="var(--c-teleop)" stroke-width="1.5"/><text x="390.9" y="146" text-anchor="middle" font-size="12" fill="var(--ink)">r21.7</text><text x="390.9" y="161" text-anchor="middle" font-size="12" fill="var(--muted)">h34.7</text><path d="M437.4,65.1 L437.4,120 A34.3,6.9 0 0 0 506.0,120 L506.0,65.1" fill="var(--surface)" stroke="var(--c-teleop)" stroke-width="1.5"/><ellipse cx="471.7" cy="65.1" rx="34.3" ry="6.9" fill="var(--surface)" stroke="var(--c-teleop)" stroke-width="1.5"/><text x="471.7" y="146" text-anchor="middle" font-size="12" fill="var(--ink)">r22.9</text><text x="471.7" y="161" text-anchor="middle" font-size="12" fill="var(--muted)">h36.6</text><path d="M520.0,62.4 L520.0,120 A36.0,7.2 0 0 0 592.0,120 L592.0,62.4" fill="var(--surface)" stroke="var(--c-teleop)" stroke-width="1.5"/><ellipse cx="556.0" cy="62.4" rx="36.0" ry="7.2" fill="var(--surface)" stroke="var(--c-teleop)" stroke-width="1.5"/><text x="556.0" y="146" text-anchor="middle" font-size="12" fill="var(--ink)">r24.0</text><text x="556.0" y="161" text-anchor="middle" font-size="12" fill="var(--muted)">h38.4</text>
+      </svg>
+      <figcaption style="color:var(--muted);font-size:13px"><code>0.4-0.6-8</code> 模型练过的 8 个尺寸（单位 mm）。橙色两个最接近我们用的 r20 × h32。</figcaption>
+    </figure>
+
+    <h3 class="sub">会变化的量</h3>
+    <div class="tablewrap">
+      <table style="table-layout:fixed;min-width:860px">
+        <colgroup><col style="width:13%"><col style="width:6%"><col style="width:33%"><col style="width:18%"><col style="width:9%"><col style="width:11%"><col style="width:10%"></colgroup>
+        <thead><tr><th>量</th><th>个数</th><th>范围</th><th>什么时候换</th><th>老师</th><th>学生</th><th>真手上有吗</th></tr></thead>
+        <tbody>
+          <tr><td><strong>圆柱尺寸</strong></td><td></td><td>见上表</td><td></td><td>❌</td><td>❌</td><td>❌</td></tr>
+          <tr><td><strong>初始握姿</strong></td><td></td><td>每个尺寸 6250 个预先生成的握姿。圆柱中心相对标准握持位置：水平方向 90% 在 ±9 mm 以内、99% 在 ±14 mm 以内，最远约 24 mm；上下 ±5 mm；轴线最多歪 30°</td><td>每次重置随机抽一个</td><td></td><td></td><td></td></tr>
+          <tr><td><strong>圆柱位置</strong></td><td>3</td><td>圆柱中心离“标准握持位置”有多远（x、y、z 三个方向）。标准握持位置是掌心上方一个固定的点，每个环境、每一局都一样。开局时就是抽到的握姿的偏移（见上一行）；转起来后水平方向 90% 的时间在 ±2.5 mm 以内，学生的圆柱通常下沉 2–3 mm，上下 90% 的时间在 ±7 mm 以内</td><td>随圆柱移动</td><td>✅ 当前值</td><td>❌ 要自己猜</td><td>❌</td></tr>
+          <tr><td><strong>圆柱质量</strong></td><td>1</td><td>10–250 g，均匀随机（标准值 50 g）</td><td>每个环境固定一个值，整个训练不变</td><td>✅ 当前值</td><td>❌ 要自己猜</td><td>❌</td></tr>
+          <tr><td><strong>圆柱重心</strong></td><td>3</td><td>相对圆柱中心的偏移，三个方向各 ±10 mm</td><td>同上</td><td>✅ 当前值</td><td>❌ 要自己猜</td><td>❌</td></tr>
+          <tr><td><strong>摩擦倍数</strong></td><td>1</td><td>乘在基准摩擦系数上的倍数，0.5–2，圆柱和手用同一个倍数。折算后圆柱 0.25–1.0，指尖胶皮 0.4–1.6，金属部分 0.05–0.2</td><td>同上</td><td>✅ 当前值</td><td>❌ 要自己猜</td><td>❌</td></tr>
+          <tr><td><strong>关节刚度、阻尼</strong></td><td></td><td>各自是标准值的 0.5–2 倍</td><td>每次重置都重新抽，22 个关节各抽各的</td><td>❌</td><td>❌</td><td>❌</td></tr>
+          <tr><td><strong>随机外力</strong></td><td></td><td>约为重力的五分之一</td><td>每 50 ms 有 25% 的概率换一个</td><td>❌</td><td>❌</td><td>❌</td></tr>
+          <tr><td><strong>重力大小</strong></td><td></td><td>从 0.05 m/s² 逐步加到 10 m/s²（课程，不是随机）</td><td>掉落很少时每次加 0.05</td><td></td><td></td><td></td></tr>
+          <tr><td><strong>关节角读数噪声</strong></td><td></td><td>±0.02 rad（约 ±1.1°）</td><td>每一步</td><td colspan="3">加在关节角输入上</td></tr>
+          <tr><td><strong>触觉力</strong></td><td></td><td>前后两帧各取一半做平滑；每一步有 0.5% 的概率沿用上一步的值。<strong>力的大小没有任何随机</strong></td><td>每一步</td><td colspan="3">加在触觉输入上</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="explain">
+      <p>圆柱位置、质量、重心、摩擦倍数共 8 个数，是老师独有的“特权信息”，只有仿真里才有。</p>
+    </div>
+
+    <h3 class="sub">和我们真手上的情况对比</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>项目</th><th>训练范围</th><th>我们的真手</th><th>在范围内吗</th></tr></thead>
+        <tbody>
+          <tr><td>圆柱尺寸</td><td>r16–24，高 25.6–38.4 mm</td><td>圆柱 2 r20 × h32；圆柱 1、3 r24 × h60</td><td>圆柱 2 在；圆柱 1、3 半径在、高超出一半多</td></tr>
+          <tr><td>圆柱质量</td><td>10–250 g</td><td>圆柱 1 29 g、圆柱 2 26 g、圆柱 3 65 g</td><td>在</td></tr>
+          <tr><td>指尖力读数</td><td>约 1–1.6 N，大小不随机</td><td>拇指约 10 N</td><td><strong>不在</strong>。部署时乘 0.2 拉回来，但各指之间的比例对不上</td></tr>
+          <tr><td>关节软硬</td><td>标准值的 0.5–2 倍</td><td>没法直接量。真手夹得明显更紧</td><td><strong>看起来不在</strong>，这是推断</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="explain">
+      <p>差距集中在两处：指尖力的大小，和关节的软硬。v1 加宽的就是这两项。</p>
+    </div>
+
+    <h3 class="sub">手的状态：每 50 ms 读一次，每次 64 个数</h3>
+    <div class="tablewrap">
+      <table style="table-layout:fixed">
+        <colgroup><col style="width:17%"><col style="width:7%"><col style="width:32%"><col style="width:13%"><col style="width:19%"><col style="width:12%"></colgroup>
+        <thead><tr><th>量</th><th>个数</th><th>说明</th><th>老师</th><th>学生</th><th>真手上有吗</th></tr></thead>
+        <tbody>
+          <tr><td><strong>关节角</strong></td><td>22</td><td>归一化到 −1 ~ 1，带读数噪声</td><td>✅ 最近 3 步</td><td>✅ 最近 30 步</td><td>✅</td></tr>
+          <tr><td><strong>上一步的目标角</strong></td><td>22</td><td>策略自己上一次发出的目标</td><td>✅ 最近 3 步</td><td>✅ 最近 30 步</td><td>✅</td></tr>
+          <tr><td><strong>指尖触觉力</strong></td><td>5</td><td>拇、食、中、无名、小指各一个合力大小（N）</td><td>✅ 最近 3 步</td><td>✅ 最近 30 步</td><td>✅</td></tr>
+          <tr><td><strong>接触位置</strong></td><td>15</td><td>5 指 × 3 维。<strong>默认关闭，全是 0</strong></td><td>✅ 最近 3 步</td><td>✅ 最近 30 步</td><td>✅</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="explain">
+      <p><strong>不进输入的：</strong>圆柱的朝向和转速只用来算奖励；关节速度、力矩只用来算扣分（真手上没用到）。</p>
+      <p><strong>“最近 N 步”包含当前这一步：</strong>最近 3 步 = 现在这次读数 + 之前 2 次；最近 30 步 = 现在这次 + 之前 29 次（共 1.5 秒）。</p>
+      <p><strong>合计：</strong>老师的输入是 3 × 64 + 8 = 200 个数，学生是 30 × 64 = 1920 个数。</p>
+      <p><strong>学生的 30 步分两路用：</strong>最近 3 步直接送进主网络，和老师一样；全部 30 步（1.5 秒）送进另一个小网络，压成 8 个数，顶替老师的特权信息。</p>
+      <p><strong>老师</strong>把 8 个特权信息压成 8 个数，和最近 3 步的观测一起决定动作。学生的主网络和老师是同一个。训练时的评分网络（critic）和老师看到的完全相同。</p>
+    </div>
+    <h3 class="sub">做的（动作）：22 个数</h3>
+    <div class="explain">
+      <p>每个关节一个 −1 ~ 1 的数，乘以 1/24 rad（约 2.4°），<strong>加到上一次的目标角上</strong>。每 50 ms 一次（20 Hz），所以目标角最快每秒变 48°。详见<a href="units.html#where">单位和物理限制</a>。</p>
+    </div>
+  </section>
+
+  <section id="reward">
+    <h2>4. 怎么打分（奖励）</h2>
+    <div class="explain">
+      <p>每一步的总分 = 一项奖励 + 五项扣分。</p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>项</th><th>怎么算</th><th>权重</th><th>意思</th></tr></thead>
+        <tbody>
+          <tr><td><strong>转动奖励</strong></td><td>圆柱绕竖直轴（z）的角速度，截到 ±0.5 rad/s</td><td><strong>+2.5</strong></td><td>超过 0.5 rad/s（约 29°/s）不再加分</td></tr>
+          <tr><td>圆柱乱跑</td><td>圆柱位置的移动速度</td><td>−0.3</td><td>要原地转，别推来推去</td></tr>
+          <tr><td>姿势偏离</td><td>关节角离默认握姿的差（平方和）</td><td>−0.4</td><td>别把手指扭成奇怪的姿势</td></tr>
+          <tr><td>力矩</td><td>电机力矩的平方和</td><td>−0.1</td><td>别使蛮劲</td></tr>
+          <tr><td>做功</td><td>（力矩 × 速度）的平方</td><td>−0.5</td><td>省电，动作柔和</td></tr>
+          <tr><td>位置保持</td><td>1 ÷（离初始位置的距离 + 0.001）</td><td>+0.003</td><td>离初始位置越近，越加一点分</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="explain">
+      <p><strong>一局何时结束</strong>：圆柱离初始高度超过 ±20 mm，或者到了 20 秒。</p>
+    </div>
+  </section>
+
+  <section id="tricks">
+    <h2>5. 让它能从仿真搬到真手的几个设计</h2>
+    <ul class="caveat">
+      <li><strong>重力从小到大（课程学习）</strong>：从 0.05 m/s² 开始，掉落很少时每次加 0.05，一直加到 10。</li>
+      <li><strong>物理参数随机化</strong>：质量、摩擦、重心、关节刚度。范围见<a href="#io">第 3 节</a>。</li>
+      <li><strong>随机推一把</strong>：给圆柱加随机外力。</li>
+      <li><strong>传感器加噪声和延迟</strong>：关节角加噪声，触觉随机延迟。</li>
+      <li><strong>关节范围收紧</strong>：只用关节范围的 90%。</li>
+    </ul>
+  </section>
+
+  <section id="ckpt">
+    <h2>6. 模型和仿真结果</h2>
+
+    <h3 class="sub">训练配置</h3>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>模型</th><th>类型</th><th>重力</th><th>步数<br>用时</th><th>分数</th><th>圆柱尺寸</th><th>关节刚度<br>随机</th><th>触觉力<br>大小随机</th></tr></thead>
+        <tbody>
+          <tr><td><strong>官方 0.4-0.6-8</strong></td><td>学生</td><td>0.05 m/s²<br><span style="color:var(--muted)">（推断）</span></td><td>没有公布<br>—</td><td>—</td><td>8 档<br>半径 16–24 mm</td><td>0.5–2 倍<br><span style="color:var(--muted)">（推断）</span></td><td>没有 <span style="color:var(--muted)">（推断）</span></td></tr>
+          <tr><td><strong>官方 0.5-0.5-1</strong></td><td>学生</td><td>0.05 m/s²<br><span style="color:var(--muted)">（推断）</span></td><td>没有公布<br>—</td><td>—</td><td>只有<br>r20 × h32 mm</td><td>0.5–2 倍<br><span style="color:var(--muted)">（推断）</span></td><td>没有 <span style="color:var(--muted)">（推断）</span></td></tr>
+          <tr><td><strong>v1 老师</strong></td><td>老师</td><td>0.05 → 10 m/s²<br>（3300 万步时到 10）</td><td>3 亿<br>123 分钟</td><td>6500 万步 505<br>1.31 亿步 719<br>1.96 亿步 775<br>2.62 亿步 792</td><td>8 档<br>半径 16–24 mm</td><td><strong>0.3–3 倍</strong></td><td><strong>每指 0.4–2.5 倍，<br>每步再 ±10%</strong></td></tr>
+          <tr><td><strong>v1 学生</strong></td><td>学生</td><td><strong>9.81 m/s²</strong></td><td>1.5 亿<br>64 分钟</td><td>542<br>平均一局 307 步</td><td>8 档<br>半径 16–24 mm</td><td><strong>0.3–3 倍</strong></td><td><strong>每指 0.4–2.5 倍，<br>每步再 ±10%</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="explain">
+      <p>我们训练了 1 个老师、1 个学生，都在 2026-11-19、Isaac Lab 3.0 上跑（Isaac Sim 5.1 时期没训练过），RTX 5090，16384 个环境，每秒约 4 万步。</p>
+      <p>所有行的质量、摩擦、重心、外力都是默认（官方两行是推断），阻尼都是 0.5–2 倍。</p>
+      <p>官方模型的重力是按代码推断的：重力初始值是 0.05 m/s²（<code>sharpa_wave_env_cfg.py</code> 第 58 行），训练老师时逐步加到 10；官方 <code>train.py</code> 训练学生时会关掉这个逐步增加（第 73–74 行），重力就一直停在 0.05。</p>
+    </div>
+
+    <h3 class="sub">结果</h3>
+    <div class="explain">
+      <p>真手的指尖力读数和仿真不一样大（拇指真手约 10 N，仿真约 1.3 N）。“乘 3”“乘 0.33”是在仿真里把 5 个指尖的触觉读数统一乘 3 或乘 0.33 再喂给策略，看它受多大影响，其余条件不变。</p>
+    </div>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>模型</th><th>平均转速</th><th>从不掉落<br>（共 512）</th><th>轻圆柱<br>从不掉落<br>（共 83）</th><th>轻圆柱<br>转速</th><th>重圆柱<br>从不掉落<br>（共 106）</th><th>手竖着摆：转速<br>（放倒 → 竖着，r20）</th><th>真手：<br>能不能部署</th><th>真手：效果</th></tr></thead>
+        <tbody>
+          <tr><td><strong>官方 0.4-0.6-8</strong></td><td>原样 0.63 rad/s<br>乘 3 0.48 rad/s</td><td>原样 192<br>乘 3 <strong>34</strong><br>乘 0.33 228</td><td>原样 66<br>乘 3 <strong>26</strong><br>乘 0.33 47</td><td>0.73 rad/s</td><td>7</td><td>0.65 → 0.61 rad/s</td><td>能</td><td class="w"><strong>目前最好</strong>：约 15–20 秒一圈。触觉系数 0.2、电流系数 0.4、多合 0 格</td></tr>
+          <tr><td><strong>官方 0.5-0.5-1</strong></td><td>原样 0.33 rad/s<br>乘 3 没测</td><td>原样 390<br>乘 3 没测<br>乘 0.33 没测</td><td>原样 81<br>乘 3 没测<br>乘 0.33 没测</td><td>0.35 rad/s</td><td>没有统计</td><td>0.33 → 0.36 rad/s</td><td>能</td><td>基本不转</td></tr>
+          <tr><td><strong>v1 学生</strong></td><td>原样 0.39 rad/s<br>乘 3 0.35 rad/s</td><td>原样 372<br>乘 3 <strong>346</strong><br>乘 0.33 317</td><td>原样 65<br>乘 3 <strong>57</strong><br>乘 0.33 58</td><td>0.46 rad/s</td><td>67</td><td>没测</td><td>能</td><td class="w"><strong>很差</strong>（11-20，各试 1 次）：圆柱 1、3 上手指越动越小，约 7、8 秒后完全不动；圆柱 2 上约 16 秒后指尖全部离开圆柱</td></tr>
+          <tr><td><strong>v1 老师</strong></td><td>原样 0.42 rad/s<br>乘 3 没测</td><td>原样 481<br>乘 3 没测<br>乘 0.33 没测</td><td>原样 77<br>乘 3 没测<br>乘 0.33 没测</td><td>0.50 rad/s</td><td>91</td><td>没测</td><td>不能</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="explain">
+      <p><strong>测法：</strong>512 个环境跑 60 秒，训练时的随机化全部打开，正常重力。<code>0.5-0.5-1</code> 只在 r20 上测，其余在 8 个尺寸上测。0.63 rad/s 约等于 10 秒一圈。“从不掉落”是 60 秒内一次都没掉的环境数。轻圆柱指 50 g 以下（圆柱 1、2 属于这一类），重圆柱指 200 g 以上；圆柱 3（65 g）两类都不属于。“推断”指官方没有公布训练配置，按仓库的默认配置和代码写的。</p>
+    </div>
+    <ul class="caveat">
+      <li><strong>官方 <code>0.4-0.6-8</code> 快但容易掉。</strong>掉落主要发生在重的、滑的圆柱上。</li>
+      <li><strong>我们的 v1 慢四成，但稳得多。</strong>但在轻圆柱上（圆柱 1、2 属于这一类），两者掉落差不多（65 对 66），v1 只是更慢。</li>
+      <li><strong>v1 慢，主要是老师就慢</strong>（0.42）。原因还不清楚：可能是刚度随机加宽，也可能是 3 亿步不够。</li>
+      <li><strong>触觉读数偏大对官方模型伤害很大</strong>（192 → 34），v1 基本不受影响（372 → 346）。真手拇指的读数约 10 N，仿真里约 1.3 N。但 v1 在真手上实测比官方模型差（见上表）：真手和仿真的差别不只是读数整体放大。</li>
+      <li><strong>手竖着摆没有影响</strong>，真手不用改摆法。</li>
+    </ul>
+
+    <h3 class="sub">按圆柱尺寸分</h3>
+    <div class="explain">
+      <p>每档 64 个环境，“从不掉落数 / 转速”，圆柱越小转得越快、也越容易掉：</p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>半径 mm</th><th>16.0</th><th>17.1</th><th>18.3</th><th>19.4</th><th>20.6</th><th>21.7</th><th>22.9</th><th>24.0</th></tr></thead>
+        <tbody>
+          <tr><td>官方 <code>0.4-0.6-8</code></td><td>2 / 0.81</td><td>8 / 0.73</td><td>17 / 0.78</td><td>28 / 0.68</td><td>32 / 0.62</td><td>39 / 0.58</td><td>29 / 0.44</td><td>37 / 0.41</td></tr>
+          <tr><td>我们的 v1 学生</td><td>20 / 0.53</td><td>26 / 0.46</td><td>44 / 0.46</td><td>48 / 0.40</td><td>54 / 0.39</td><td>57 / 0.38</td><td>62 / 0.31</td><td>61 / 0.22</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">视频</h3>
+    <div class="explain">
+      <p>每段 15 秒，单个环境，r20 × h32 mm、50 g 的标准圆柱，没开随机化。四段都没掉：<strong>视频只能看出转法和快慢</strong>，掉落情况要看上面的表。</p>
+    </div>
+    <div class="vids">
+      <figure><video src="media/rotate_sim_official.mp4" poster="media/rotate_sim_official.jpg" controls loop muted playsinline preload="metadata"></video><figcaption><strong>官方 <code>0.4-0.6-8</code>，读数原样。</strong>约 2.5 圈（1.04 rad/s）</figcaption></figure>
+      <figure><video src="media/rotate_sim_v1.mp4" poster="media/rotate_sim_v1.jpg" controls loop muted playsinline preload="metadata"></video><figcaption><strong>我们的 v1，读数原样。</strong>约 1.4 圈（0.58 rad/s）</figcaption></figure>
+      <figure><video src="media/rotate_sim_official_tg3.mp4" poster="media/rotate_sim_official_tg3.jpg" controls loop muted playsinline preload="metadata"></video><figcaption><strong>官方 <code>0.4-0.6-8</code>，触觉读数乘 3。</strong>约 2.3 圈（0.97 rad/s）</figcaption></figure>
+      <figure><video src="media/rotate_sim_v1_tg3.mp4" poster="media/rotate_sim_v1_tg3.jpg" controls loop muted playsinline preload="metadata"></video><figcaption><strong>我们的 v1，触觉读数乘 3。</strong>约 1.2 圈（0.50 rad/s）</figcaption></figure>
+    </div>
+    <div class="explain">
+      <p>脚本：<code>sharpa-rl-lab-il3/rl_isaaclab/scripts/sim_diag.py</code>；数据：<code>logs/baseline_*.npz</code>。</p>
+    </div>
+
+    <h3 class="sub">v1 是怎么训练的</h3>
+    <div class="explain">
+      <p>文件名的规则：官方的是 <code>最小缩放-最大缩放-档数</code>，我们的是 <code>圆柱缩放_改了什么_日期.pth</code>。</p>
+      <p>老师和学生都用 <code>last.pth</code>。老师的 <code>best.pth</code> 不可靠：早期重力小，分数虚高。</p>
+      <p><strong>改掉的三处官方代码问题：</strong></p>
+    </div>
+    <ul class="caveat">
+      <li><strong>学生是在几乎没有重力的环境里训练的。</strong>原版学生全程在 0.05 m/s² 下训练。v1 学生改成了 9.81。</li>
+      <li><strong>老师结束时不存 <code>last.pth</code>。</strong>改成结束时一定存。</li>
+      <li><strong>学生的定期保存永远不会触发。</strong>改成每 5000 万步存一次，并可以指定总步数（原版固定 10 亿）。</li>
+    </ul>
+  </section>
+
+  <section id="print">
+    <h2>7. 3D 打印</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>代称</th><th>尺寸</th><th>重量</th><th>填充率</th><th>STL 文件</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td style="white-space:nowrap"><strong>圆柱 1</strong></td><td style="white-space:nowrap">r24 × h60 mm（直径 48）</td><td style="white-space:nowrap">29 g</td><td style="white-space:nowrap">15%</td><td><code>Hand/prints/sharpa_rl_lab_cylinder_r24_h60.stl</code></td><td>按官方 README 的尺寸打的。README 的尺寸是错的，高度超出训练范围</td></tr>
+          <tr><td style="white-space:nowrap"><strong>圆柱 2</strong></td><td style="white-space:nowrap">r20 × h32 mm（直径 40）</td><td style="white-space:nowrap">26 g</td><td style="white-space:nowrap">50%</td><td><code>Hand/prints/sharpa_rl_lab_cylinder_r20_h32_sim.stl</code></td><td>和仿真一致</td></tr>
+          <tr><td style="white-space:nowrap"><strong>圆柱 3</strong></td><td style="white-space:nowrap">r24 × h60 mm（直径 48）</td><td style="white-space:nowrap">65 g</td><td style="white-space:nowrap">50%</td><td><code>Hand/prints/sharpa_rl_lab_cylinder_r24_h60.stl</code></td><td>和圆柱 1 同尺寸、同一个 STL，填充更高，更重</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="explain">
+      <p>README 写的 r24 × h60 是错的，仿真里实际是 r20 × h32。重量 20–50 g 都行。</p>
+    </div>
+    <figure class="cylfig" style="margin:14px 0 6px">
+      <svg viewBox="0 0 640 340" role="img" aria-label="两个圆柱按同一比例的侧视图：左边是圆柱 1 和圆柱 3（r24 × h60），右边是圆柱 2（r20 × h32），虚线是 0.4-0.6-8 模型训练过的尺寸范围" style="display:block;width:100%;max-width:640px;height:auto;font-family:var(--sans)">
+        <defs>
+          <marker id="tick" viewBox="0 0 2 10" refX="1" refY="5" markerWidth="2" markerHeight="10" orient="auto"><rect width="2" height="10" fill="var(--muted)"/></marker>
+        </defs>
+        <!-- 比例：1 mm = 3 px，底线 y=270 -->
+        <line x1="20" y1="270" x2="620" y2="270" stroke="var(--line)" stroke-width="1.5"/>
+        <!-- 圆柱 1、3：r24 h60 → 宽 144 高 180 -->
+        <text x="170" y="24" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">圆柱 1、3（按 README）</text>
+        <text x="170" y="44" text-anchor="middle" font-size="13" fill="var(--muted)">圆柱 1：29 g · 填充 15%</text>
+        <text x="170" y="60" text-anchor="middle" font-size="13" fill="var(--muted)">圆柱 3：65 g · 填充 50%</text>
+        <path d="M98,90 L98,270 A72,14 0 0 0 242,270 L242,90" fill="var(--line)" stroke="var(--muted)" stroke-width="1.5"/>
+        <ellipse cx="170" cy="90" rx="72" ry="14" fill="var(--surface)" stroke="var(--muted)" stroke-width="1.5"/>
+        <line x1="170" y1="70" x2="170" y2="290" stroke="var(--muted)" stroke-dasharray="8 3 2 3" stroke-width="1"/>
+        <line x1="78" y1="90" x2="78" y2="270" stroke="var(--muted)" marker-start="url(#tick)" marker-end="url(#tick)"/>
+        <text x="70" y="184" text-anchor="end" font-size="13" fill="var(--ink)">高 60</text>
+        <line x1="98" y1="300" x2="242" y2="300" stroke="var(--muted)" marker-start="url(#tick)" marker-end="url(#tick)"/>
+        <text x="170" y="320" text-anchor="middle" font-size="13" fill="var(--ink)">直径 48</text>
+        <!-- 圆柱 2：r20 h32 → 宽 120 高 96 -->
+        <text x="460" y="28" text-anchor="middle" font-size="15" font-weight="700" fill="var(--accent)">圆柱 2（和仿真一致）</text>
+        <text x="460" y="48" text-anchor="middle" font-size="13" fill="var(--muted)">r20 × h32 mm · 建议填充 40–50%</text>
+        <!-- 0.4-0.6-8 范围：最大 r24 h38.4（宽 144 高 115），最小 r16 h25.6（宽 96 高 77） -->
+        <path d="M400,174 L400,270 A60,12 0 0 0 520,270 L520,174" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+        <ellipse cx="460" cy="174" rx="60" ry="12" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
+        <rect x="388" y="155" width="144" height="115" fill="none" stroke="var(--c-teleop)" stroke-dasharray="4 4" stroke-width="1.2"/>
+        <rect x="412" y="193" width="96" height="77" fill="none" stroke="var(--c-teleop)" stroke-dasharray="4 4" stroke-width="1.2"/>
+        <line x1="460" y1="140" x2="460" y2="290" stroke="var(--accent)" stroke-dasharray="8 3 2 3" stroke-width="1"/>
+        <line x1="560" y1="174" x2="560" y2="270" stroke="var(--muted)" marker-start="url(#tick)" marker-end="url(#tick)"/>
+        <text x="568" y="226" font-size="13" fill="var(--ink)">高 32</text>
+        <line x1="400" y1="300" x2="520" y2="300" stroke="var(--muted)" marker-start="url(#tick)" marker-end="url(#tick)"/>
+        <text x="460" y="320" text-anchor="middle" font-size="13" fill="var(--ink)">直径 40</text>
+        <text x="630" y="118" text-anchor="end" font-size="12" fill="var(--c-teleop)">虚线：0.4-0.6-8 模型</text>
+        <text x="630" y="133" text-anchor="end" font-size="12" fill="var(--c-teleop)">练过的最大 / 最小尺寸</text>
+      </svg>
+      <figcaption style="color:var(--muted);font-size:13px">同一比例。点划线是圆柱的轴：装进手里时，轴从手心往外指。</figcaption>
+    </figure>
+  </section>
+
+  <section id="real">
+    <h2>8. 真手要准备什么</h2>
+    <ol class="plain">
+      <li><strong>校准</strong>：用官方软件 Sharpa Wave 或 playstation 的校准。</li>
+      <li><strong>手的朝向：立着装就行</strong>，和官方真手视频一样。仿真里验证过没有影响（<a href="#ckpt">第 6 节</a>）。</li>
+      <li><strong>选一种触觉方式</strong>：
+        <ul>
+          <li><strong>板载触觉</strong>（我们用的）：加 <code>--enable_on_board</code>。</li>
+          <li><strong>电脑端 180 Hz 触觉</strong>：官方推荐，要装 docker 和 nvidia-ctk。</li>
+        </ul></li>
+      <li><strong>同一时间只能有一个程序控制手</strong>。</li>
+    </ol>
+  </section>
+
+  <section id="cmds">
+    <h2>9. 常用命令</h2>
+    <div class="explain">
+      <p>仿真和训练在 <code>Hand/external/sharpa-rl-lab-il3</code>，真手部署在 <code>Hand/external/sharpa-rl-lab</code>，都用 conda 环境 <code>env_isaaclab3</code>。</p>
+    </div>
+    <pre class="cmd"><code>cd ~/Desktop/Yumeng/Hand/external/sharpa-rl-lab-il3 && conda activate env_isaaclab3
+
+# 训练老师（默认无界面，16384 个环境、3 亿步，结果在 logs/）
+OMNI_KIT_ACCEPT_EULA=YES python rl_isaaclab/scripts/train.py --task Isaac-Inhand-Rotate-Sharpa-Wave-v0
+
+# 蒸馏学生
+OMNI_KIT_ACCEPT_EULA=YES python rl_isaaclab/scripts/train.py --task Isaac-Inhand-Rotate-Sharpa-Wave-v0 --algorithm ProprioAdapt --load_path logs/.../last.pth
+
+# 看效果（开窗口）
+OMNI_KIT_ACCEPT_EULA=YES python rl_isaaclab/scripts/play.py --task Isaac-Inhand-Rotate-Sharpa-Wave-v0 --num_envs 16 --algorithm ProprioAdapt --load_path pretrained/0.4-0.6-8.pth --viz kit
+
+# 部署到真手（板载触觉，右手）。也可以直接用 playstation 的“转柱子”面板
+cd ~/Desktop/Yumeng/Hand/external/sharpa-rl-lab
+PYTHONPATH=. LD_LIBRARY_PATH=/opt/sharpa-wave-sdk/lib python rl_isaaclab/scripts/deploy.py --task Isaac-Inhand-Rotate-Deploy-Sharpa-Wave-v0 --enable_on_board --hand_side 1 --load_path 模型.pth</code></pre>
+  </section>
+
+  <section id="tune">
+    <h2>10. 想改任务，改哪里</h2>
+    <div class="explain">
+      <p>在 <code>rl_isaaclab/tasks/inhand_rotate/sharpa_wave_env_cfg.py</code>，改完要重新训练：</p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>想做什么</th><th>改哪个</th></tr></thead>
+        <tbody>
+          <tr><td>反着转、绕别的轴转</td><td><code>rot_axis = (0, 0, 1)</code>，比如 <code>(0, 0, -1)</code> 是反着转</td></tr>
+          <tr><td>转得更快</td><td><code>angvel_clip_max = 0.5</code>（rad/s）</td></tr>
+          <tr><td>换物体大小</td><td><code>scale_range = [下限, 上限, 个数]</code>，要先重新生成抓取缓存</td></tr>
+          <tr><td>调各项奖励的比重</td><td><code>rotate_reward_scale</code>、<code>*_penalty_scale</code></td></tr>
+          <tr><td>不用触觉试试（对照实验）</td><td><code>enable_tactile = False</code></td></tr>
+          <tr><td>改随机化的范围</td><td><code>randomize_mass_*</code>、<code>randomize_p_gain_scale_*</code> 等</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  内容来源：sharpa-rl-lab 仓库（提交 95ccda3）和我们在本机的实测。
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  try { var t = JSON.parse(localStorage.getItem('hand.theme')); if (t) root.dataset.theme = t; } catch (e) {}
+  document.getElementById('theme').addEventListener('click', function () {
+    var cur = root.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    var next = cur === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('hand.theme', JSON.stringify(next)); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

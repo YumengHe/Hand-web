@@ -12,10 +12,12 @@
     <div class="mast-top">
       <span class="kicker">Getting Started · Hand Only</span>
       <span class="mast-actions">
-        <a class="ghost" href="index.html">← 文献库</a>
+        <a class="ghost" href="index.html">← 首页</a>
+        <a class="ghost" href="papers.html">文献库</a>
         <a class="ghost" href="setup.html">Sharpa 开箱和接线</a>
         <a class="ghost" href="compare.html">两只手的区别</a>
         <a class="ghost" href="units.html">单位和限制</a>
+        <a class="ghost" href="task-rotate.html">任务 1：转圆柱</a>
         <button id="theme" class="ghost" type="button" aria-label="切换明暗主题">◐ 主题</button>
       </span>
     </div>
@@ -130,10 +132,10 @@
         <p><strong>为什么：</strong>这是这个领域的“入门标准题”。做完它，你就完整走了一遍：虚拟世界里训练 → 搬到真手 → 发现不一样 → 调整。以后加机械臂只是多一个部件，流程是一样的。</p>
         <p class="goal"><strong>做到这样算完成：</strong>真手能把物体连续转几圈不掉。</p>
         <div class="tools">
-          <div><b>Sharpa</b><a href="https://github.com/sharpa-robotics/sharpa-rl-lab" target="_blank" rel="noopener">sharpa-rl-lab</a>：官方的“手内旋转”完整示例，从训练、看效果到部署到真手一步步都有。默认用的物体是 3D 打印的圆柱，半径 24 mm、高 60 mm。</div>
+          <div><b>Sharpa</b><a href="https://github.com/sharpa-robotics/sharpa-rl-lab" target="_blank" rel="noopener">sharpa-rl-lab</a>：官方的“手内旋转”完整示例，从训练、看效果到部署到真手一步步都有。默认用的物体是 3D 打印的圆柱。README 写的是半径 24 mm、高 60 mm，但仿真里实际训练的是半径 20 mm、高 32 mm（见<a href="task-rotate.html#print">任务 1 的 3D 打印</a>）。</div>
           <div><b>无极 2</b><a href="https://github.com/wuji-technology/wuji-isaaclab" target="_blank" rel="noopener">wuji-isaaclab</a>：无极 2 的“手内转方块”训练；<a href="https://github.com/wuji-technology/wuji-mjlab" target="_blank" rel="noopener">wuji-mjlab</a>：训练加部署到真手。</div>
         </div>
-        <p class="aside">想了解背后的方法，读文献库里的 <a href="index.html#p-2210.04887">Hora</a>。Sharpa 示例的训练步骤（先训练、再“蒸馏”）和它是同一个思路。</p>
+        <p class="aside">这一步我们单独写了一页：<a href="task-rotate.html">任务 1：手里转圆柱</a>（流程、奖励、我们的进度）。想了解背后的方法，读文献库里的 <a href="index.html#p-2210.04887">Hora</a>。Sharpa 示例的训练步骤（先训练、再“蒸馏”）和它是同一个思路。</p>
       </li>
     </ol>
   </section>

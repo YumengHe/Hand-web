@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>灵巧手文献库 · Dexterous Hand Reading List</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top">
+      <span class="kicker">Dexterous Hand · Reading List</span>
+      <span class="mast-actions">
+        <a class="ghost" href="index.html">← 首页</a>
+        <a class="ghost" href="start.html">入门五步</a>
+        <a class="ghost" href="task-rotate.html">任务 1：转圆柱</a>
+        <button id="theme" class="ghost" type="button" aria-label="切换明暗主题">◐ 主题</button>
+      </span>
+    </div>
+    <h1>灵巧手文献库</h1>
+    <p class="lede">多指灵巧手方向的论文索引，重点收录在手里转东西（含魔方）的工作。有 arXiv 编号的条目，标题、作者、日期取自 arXiv；其余取自 Crossref（按 DOI 查）。</p>
+    <dl class="stats" id="stats"></dl>
+  </div>
+</header>
+
+<main class="wrap">
+  <section aria-labelledby="lib-h">
+    <h2 id="lib-h">全部文献</h2>
+    <div class="controls">
+      <input id="q" type="search" placeholder="搜索标题、作者、简称、摘要…" autocomplete="off" aria-label="搜索">
+      <select id="sort" aria-label="排序">
+        <option value="new">最新优先</option>
+        <option value="old">最早优先</option>
+        <option value="rel">和转圆柱相关度高的优先</option>
+        <option value="title">按标题</option>
+      </select>
+    </div>
+    <p class="filter-label">按任务筛选 <small>这篇文章让手干了什么活。一篇可以属于多类。</small></p>
+    <div class="chips" id="taskchips" role="group" aria-label="按任务筛选"></div>
+    <p id="tasknote" class="catnote" hidden></p>
+    <p class="filter-label sub-label"><span id="sublabel"></span> <small>悬停看解释。</small></p>
+    <div class="chips" id="subchips" role="group" aria-label="按细分任务筛选"></div>
+    <p id="subnote" class="catnote" hidden></p>
+    <p class="filter-label">按和我们转圆柱的相关度筛选</p>
+    <div class="chips" id="relchips" role="group" aria-label="按相关度筛选"></div>
+    <p id="relnote" class="catnote" hidden></p>
+    <p class="filter-label">按要不要机械臂筛选 <small>只有一只立在桌上的手，能做哪些文章里的任务。</small></p>
+    <div class="chips" id="mountchips" role="group" aria-label="按要不要机械臂筛选"></div>
+    <p id="mountnote" class="catnote" hidden></p>
+    <p class="filter-label">按方法筛选 <small>这篇文章用什么办法做的。几种筛选可以同时用。</small></p>
+    <div class="chips" id="chips" role="group" aria-label="按方法筛选"></div>
+    <p id="catnote" class="catnote" hidden></p>
+    <div class="toggles">
+      <label><input type="checkbox" id="onlyStar"> 只看精选</label>
+      <label><input type="checkbox" id="onlySaved"> 只看我收藏的</label>
+      <label><input type="checkbox" id="hideRead"> 隐藏已读</label>
+      <span id="count" class="count" aria-live="polite"></span>
+    </div>
+    <div id="list" class="list"></div>
+    <p id="empty" class="empty" hidden>没有符合条件的论文，换个关键词或清除筛选试试。</p>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <p>数据来源：arXiv API 和 Crossref。中文导读为人工撰写的一句话概括，细节请以原文为准。“做了什么任务”根据摘要和对论文的了解整理，没有逐篇核对全文；写着“具体见原文”的是摘要里没列出任务的。收藏与已读状态只保存在本浏览器。</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
