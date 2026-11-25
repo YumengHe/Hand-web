@@ -18,7 +18,6 @@
         <a class="ghost" href="setup.html">Sharpa 开箱和接线</a>
         <a class="ghost" href="units.html">单位和限制</a>
         <a class="ghost" href="task-rotate.html">任务 1：转圆柱</a>
-        <button id="theme" class="ghost" type="button" aria-label="切换明暗主题">◐ 主题</button>
       </span>
     </div>
     <h1>两只手的区别</h1>
@@ -221,15 +220,6 @@
 <script>
 (function () {
   'use strict';
-  var root = document.documentElement;
-  try { var t = JSON.parse(localStorage.getItem('hand.theme')); if (t) root.dataset.theme = t; } catch (e) {}
-  document.getElementById('theme').addEventListener('click', function () {
-    var cur = root.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    var next = cur === 'dark' ? 'light' : 'dark';
-    root.dataset.theme = next;
-    try { localStorage.setItem('hand.theme', JSON.stringify(next)); } catch (e) {}
-  });
-
   // 每根手指从指尖到手掌列出关节；每个关节里是它的自由度类型。
   // fe = 弯曲/伸直，aa = 左右侧摆，palm = 手掌拢起；带 ! 的是另一只手没有的。
   var FINGER = [['指尖 DIP', ['fe']], ['中间 PIP', ['fe']], ['指根 MCP', ['fe', 'aa']]];

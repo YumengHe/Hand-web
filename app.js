@@ -48,7 +48,9 @@
     { key: 'low', name: '低' },
     { key: 'none', name: '没标' }
   ];
-  var REL_PLAIN = '调研时按和我们“手里转圆柱”任务的接近程度标的高 / 中 / 低。较早收录的 68 篇没标，归在“没标”。';
+  // 没标的篇数在数据读进来后填
+  var relPlain = function (n) { return '调研时按和我们“手里转圆柱”任务的接近程度标的高 / 中 / 低。较早收录的 ' + n + ' 篇没标，归在“没标”。'; };
+  var REL_PLAIN = '';
   var TASK_PLAIN = {
     rotate: '不把东西放下，只靠手指把手里的物体转个方向，比如转方块、转笔、转球。只需要一只固定在桌上的手，不用机械臂。我们现在就能做，“入门五步”的第五步就是这个任务。',
     grasp: '看到一个物体，决定手指放在哪、怎么握，然后把它抓起来。多数工作需要机械臂把手送到物体旁边；只算“握法”的那部分可以在电脑里做。',
@@ -94,17 +96,6 @@
   // task-rotate.html 的“相关文献”表复用这些；下面是文献库页面自己的逻辑
   window.HandPapers = { el: el, getJSON: getJSON, paperUrl: paperUrl, byDateDesc: byDateDesc, relRank: relRank, REL: REL };
   if (!$('list')) return;
-
-  // ---- theme ----
-  var theme = store.get('hand.theme', null);
-  if (theme) document.documentElement.dataset.theme = theme;
-  $('theme').addEventListener('click', function () {
-    var cur = document.documentElement.dataset.theme ||
-      (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    var next = cur === 'dark' ? 'light' : 'dark';
-    document.documentElement.dataset.theme = next;
-    store.set('hand.theme', next);
-  });
 
   // ---- helpers ----
   function el(tag, attrs, children) {
@@ -392,6 +383,7 @@
           Object.keys(p._task).map(function (t) { return TASK_NAME[t]; }).join(' '), p.subtasks.map(function (k) { return SUB[k].name; }).join(' '),
           MOUNT_NAME[p.mount] || '', p.mount_note || ''].join(' ').toLowerCase();
       });
+      REL_PLAIN = relPlain(papers.filter(function (p) { return !(p.relevance in REL_RANK); }).length);
       renderStats(); renderChips(); renderTaskChips(); renderMountChips(); renderRelChips(); render();
       // 从别的页面带着 #p-xxxx 跳过来时，卡片是刚渲染出来的，需要手动滚过去
       var target = location.hash && document.getElementById(location.hash.slice(1));

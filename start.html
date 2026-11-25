@@ -18,7 +18,6 @@
         <a class="ghost" href="compare.html">两只手的区别</a>
         <a class="ghost" href="units.html">单位和限制</a>
         <a class="ghost" href="task-rotate.html">任务 1：转圆柱</a>
-        <button id="theme" class="ghost" type="button" aria-label="切换明暗主题">◐ 主题</button>
       </span>
     </div>
     <h1>只用手的入门五步</h1>
@@ -155,18 +154,8 @@
 <script>
 (function () {
   'use strict';
-  var root = document.documentElement;
   function load(k, d) { try { var v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; } catch (e) { return d; } }
   function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
-
-  var t = load('hand.theme', null);
-  if (t) root.dataset.theme = t;
-  document.getElementById('theme').addEventListener('click', function () {
-    var cur = root.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    var next = cur === 'dark' ? 'light' : 'dark';
-    root.dataset.theme = next;
-    save('hand.theme', next);
-  });
 
   var done = load('hand.steps', {});
   var steps = document.querySelectorAll('.step');

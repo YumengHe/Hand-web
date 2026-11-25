@@ -38,7 +38,6 @@
         <a class="ghost" href="start.html">入门五步</a>
         <a class="ghost" href="setup.html">Sharpa 开箱和接线</a>
         <a class="ghost" href="task-rotate.html">任务 1：转圆柱</a>
-        <button id="theme" class="ghost" type="button" aria-label="切换明暗主题">◐ 主题</button>
       </span>
     </div>
     <h1>单位和物理限制</h1>
@@ -298,14 +297,6 @@
 <script>
 (function () {
   var root = document.documentElement;
-  try { var t = JSON.parse(localStorage.getItem('hand.theme')); if (t) root.dataset.theme = t; } catch (e) {}
-  document.getElementById('theme').addEventListener('click', function () {
-    var cur = root.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    var next = cur === 'dark' ? 'light' : 'dark';
-    root.dataset.theme = next;
-    try { localStorage.setItem('hand.theme', JSON.stringify(next)); } catch (e) {}
-    drawMJ();
-  });
 
   function fmt(x, d) { return Number(x.toFixed(d)).toLocaleString('zh-CN'); }
 

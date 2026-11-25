@@ -14,10 +14,6 @@
 <body>
 <header class="masthead">
   <div class="wrap">
-    <div class="mast-top">
-      <span class="kicker">Dexterous Hand · Notes</span>
-      <button id="theme" class="ghost" type="button" aria-label="切换明暗主题">◐ 主题</button>
-    </div>
     <h1>灵巧手学习站</h1>
     <p class="lede">我们有两只灵巧手：Sharpa Wave 和无极 2。这里记录怎么把它们用起来：硬件是什么样、怎么接线、单位和限制、第一个任务做到哪了，以及这个方向该读哪些论文。</p>
   </div>
@@ -52,20 +48,5 @@
   </section>
 </main>
 
-<script>
-(function () {
-  var root = document.documentElement;
-  function load(k, d) { try { var v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } }
-  function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
-  var t = load('hand.theme', null);
-  if (t) root.dataset.theme = t;
-  document.getElementById('theme').addEventListener('click', function () {
-    var cur = root.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    var next = cur === 'dark' ? 'light' : 'dark';
-    root.dataset.theme = next;
-    save('hand.theme', next);
-  });
-})();
-</script>
 </body>
 </html>
