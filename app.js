@@ -87,6 +87,13 @@
   var state = { q: '', cat: 'all', task: 'all', sub: 'all', rel: 'all', mount: 'all', sort: 'new', onlyStar: false, onlySaved: false, hideRead: false };
   var REL_RANK = { high: 0, mid: 1, low: 2 };
   var isArxiv = function (p) { return /^\d{4}\.\d{4,5}$/.test(p.id); };
+  var paperUrl = function (p) { return isArxiv(p) ? 'https://arxiv.org/abs/' + p.id : p.url; };
+  var byDateDesc = function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; };
+  var relRank = function (p) { return p.relevance in REL_RANK ? REL_RANK[p.relevance] : 3; };
+
+  // task-rotate.html 的“相关文献”表复用这些；下面是文献库页面自己的逻辑
+  window.HandPapers = { el: el, getJSON: getJSON, paperUrl: paperUrl, byDateDesc: byDateDesc, relRank: relRank, REL: REL };
+  if (!$('list')) return;
 
   // ---- theme ----
   var theme = store.get('hand.theme', null);
@@ -151,9 +158,7 @@
     out.sort(function (a, b) {
       if (state.sort === 'title') return a.title.localeCompare(b.title);
       if (state.sort === 'rel') {
-        var ra = a.relevance in REL_RANK ? REL_RANK[a.relevance] : 3, rb = b.relevance in REL_RANK ? REL_RANK[b.relevance] : 3;
-        if (ra !== rb) return ra - rb;
-        return a.date < b.date ? 1 : a.date > b.date ? -1 : 0;
+        return relRank(a) - relRank(b) || byDateDesc(a, b);
       }
       var d = a.date < b.date ? -1 : a.date > b.date ? 1 : 0;
       return state.sort === 'old' ? d : -d;
@@ -169,7 +174,7 @@
   }
 
   function card(p, ts) {
-    var abs = isArxiv(p) ? 'https://arxiv.org/abs/' + p.id : p.url;
+    var abs = paperUrl(p);
     var titleLink = el('a', { href: abs, target: '_blank', rel: 'noopener' });
     titleLink.appendChild(highlight(p.title, ts));
 

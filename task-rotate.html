@@ -21,6 +21,9 @@
   .status { list-style: none; padding: 0; margin: 12px 0; display: grid; gap: 6px; }
   .status li { display: grid; grid-template-columns: 2em 1fr; gap: 6px; align-items: baseline; }
   .status .s { font-size: 16px; }
+  .explain code { overflow-wrap: anywhere; }
+  #lit-chips { margin: 10px 0; }
+  #lit-table td:nth-child(3) { white-space: pre; }
   pre.cmd { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; overflow-x: auto; font-size: 13px; }
 </style>
 </head>
@@ -74,6 +77,7 @@
     <a href="#real">8. 真手要准备什么</a>
     <a href="#cmds">9. 常用命令</a>
     <a href="#tune">10. 想改任务，改哪里</a>
+    <a href="#lit">11. 相关文献</a>
   </nav>
 
   <section id="pieces">
@@ -433,12 +437,68 @@ PYTHONPATH=. LD_LIBRARY_PATH=/opt/sharpa-wave-sdk/lib python rl_isaaclab/scripts
       </table>
     </div>
   </section>
+
+  <section id="lit">
+    <h2>11. 相关文献</h2>
+    <p id="lit-lead">文献库里带“在手里转东西”细标签的文章。</p>
+    <div class="chips" id="lit-chips" role="group" aria-label="按细标签筛选"></div>
+    <div class="tablewrap">
+      <table class="dense" id="lit-table">
+        <thead><tr><th>简称 / 标题</th><th>年份</th><th>转法</th><th>说明</th><th title="调研时按和我们转圆柱的接近程度标的；较早收录的没标">相关度</th><th>要机械臂</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
 </main>
 
 <footer class="wrap foot">
   内容来源：sharpa-rl-lab 仓库（提交 95ccda3）和我们在本机的实测。
 </footer>
 
+<script src="app.js"></script>
+<script>
+// 第 11 节：从 data/papers.json 现读，筛出 parent 为 rotate 的细标签
+(function () {
+  var H = window.HandPapers, el = H.el;
+  var REL_NAME = {}; H.REL.forEach(function (r) { REL_NAME[r.key] = r.name; });
+  var MOUNT_SHORT = { fixed: '不要', mixed: '部分要', arm: '要', none: '没用真手' };
+  var cur = 'all', rows = [], keys = [], SUB = {};
+  function draw() {
+    var tb = document.querySelector('#lit-table tbody'), frag = document.createDocumentFragment();
+    rows.forEach(function (p) {
+      if (cur !== 'all' && p.subtasks.indexOf(cur) === -1) return;
+      var a = el('a', { href: H.paperUrl(p), target: '_blank', rel: 'noopener', text: p.title });
+      frag.appendChild(el('tr', null, [
+        el('td', { class: 'w' }, [el('strong', { text: p.short }), el('br'), a]),
+        el('td', { text: String(p.date).slice(0, 4) }),
+        el('td', { text: p.subtasks.filter(function (k) { return keys.indexOf(k) !== -1; }).map(function (k) { return SUB[k].name; }).join('\n') }),
+        el('td', { class: 'w', text: p.zh }),
+        el('td', { text: REL_NAME[p.relevance || 'none'] }),
+        el('td', { text: MOUNT_SHORT[p.mount] || '' })
+      ]));
+    });
+    tb.textContent = ''; tb.appendChild(frag);
+    Array.prototype.forEach.call(document.getElementById('lit-chips').children, function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.k === cur));
+    });
+  }
+  Promise.all([H.getJSON('data/papers.json'), H.getJSON('data/subtasks.json')]).then(function (res) {
+    res[1].forEach(function (s) { SUB[s.key] = s; if (s.parent === 'rotate') keys.push(s.key); });
+    rows = res[0].filter(function (p) { return p.subtasks.some(function (k) { return keys.indexOf(k) !== -1; }); });
+    var ax = function (p) { return p.subtasks.indexOf('rot_axis') === -1 ? 1 : 0; };
+    rows.sort(function (a, b) { return H.relRank(a) - H.relRank(b) || ax(a) - ax(b) || H.byDateDesc(a, b); });
+    document.getElementById('lit-lead').innerHTML = '<a href="papers.html">文献库</a>里带“在手里转东西”细标签的文章，共 ' + rows.length + ' 篇，按相关度、再按时间新到旧排。';
+    var chips = document.getElementById('lit-chips');
+    ['all'].concat(keys).forEach(function (k) {
+      var n = k === 'all' ? rows.length : rows.filter(function (p) { return p.subtasks.indexOf(k) !== -1; }).length;
+      var b = el('button', { type: 'button', class: 'chip', 'data-k': k, title: SUB[k] ? SUB[k].plain : '' }, [k === 'all' ? '全部' : SUB[k].name, el('span', { class: 'n', text: String(n) })]);
+      b.addEventListener('click', function () { cur = k; draw(); });
+      chips.appendChild(b);
+    });
+    draw();
+  }).catch(function (e) { document.getElementById('lit-lead').textContent = '论文数据加载失败：' + e.message; });
+})();
+</script>
 <script>
 (function () {
   var root = document.documentElement;
