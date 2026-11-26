@@ -14,6 +14,96 @@
  },
  "runs": [
   {
+   "id": "1126_105441",
+   "start": "2026-11-26 10:54:41",
+   "model": "官方 0.4-0.6-8",
+   "object": "cyl2",
+   "force_scale": 0.667,
+   "current_coef": 0.4,
+   "grasp_offset": 2,
+   "filled": null,
+   "fill_src": null,
+   "auto_stop_s": 60.0,
+   "run_s": 60.0,
+   "end_reason": "到 60 秒自动停",
+   "metrics": {
+    "csv_s": 60.0,
+    "gait_hz": 1.8,
+    "amp_mrad": 17.4,
+    "pinky_low_frac": 0.207,
+    "pinky_low_max_s": 7.2,
+    "contact": [
+     0.89,
+     0.0,
+     0.72,
+     0.41,
+     0.0
+    ],
+    "force_raw": [
+     7.5,
+     0.4,
+     4.0,
+     2.5,
+     null
+    ],
+    "drop_t": null,
+    "stop_t": null
+   },
+   "thumb_middle_mm": null,
+   "auto": "卡住",
+   "verdict": "掉了",
+   "verdict_auto": false,
+   "turns": "—",
+   "note": "正常转到约 52 秒，52.6–55 秒圆柱倒进手心（无名指、拇指先后失去接触）；对照：只换圆柱",
+   "video": "rotate_sharpa_1126_105441.mp4",
+   "video_run_s": 5.998
+  },
+  {
+   "id": "1126_105312",
+   "start": "2026-11-26 10:53:12",
+   "model": "官方 0.4-0.6-8",
+   "object": "cyl1",
+   "force_scale": 0.667,
+   "current_coef": 0.4,
+   "grasp_offset": 0,
+   "filled": null,
+   "fill_src": null,
+   "auto_stop_s": 60.0,
+   "run_s": 60.0,
+   "end_reason": "到 60 秒自动停",
+   "metrics": {
+    "csv_s": 60.0,
+    "gait_hz": 1.68,
+    "amp_mrad": 17.3,
+    "pinky_low_frac": 0.551,
+    "pinky_low_max_s": 30.7,
+    "contact": [
+     1.0,
+     0.0,
+     0.2,
+     0.3,
+     0.0
+    ],
+    "force_raw": [
+     6.8,
+     0.5,
+     3.1,
+     5.6,
+     null
+    ],
+    "drop_t": 28.7,
+    "stop_t": null
+   },
+   "thumb_middle_mm": null,
+   "auto": "掉了",
+   "verdict": "掉了",
+   "verdict_auto": false,
+   "turns": "—",
+   "note": "第 28.7 秒圆柱倒进手心，之后空转；对照：只把多合改回 0",
+   "video": "rotate_sharpa_1126_105312.mp4",
+   "video_run_s": 5.814
+  },
+  {
    "id": "1126_101349",
    "start": "2026-11-26 10:13:49",
    "model": "官方 0.4-0.6-8",
