@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>仿真平台 · 灵巧手</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .diagram { overflow-x: auto; margin: 14px 0; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+  .diagram svg { display: block; width: 100%; min-width: 760px; height: auto; }
+  .diagram .box { fill: var(--bg); stroke: var(--muted); stroke-width: 1.2; }
+  .diagram .ours { stroke: var(--accent); stroke-width: 2.2; }
+  .diagram .old { stroke-dasharray: 5 4; }
+  .diagram .t { font: 700 15px var(--sans); fill: var(--ink); }
+  .diagram .s { font: 12px var(--sans); fill: var(--muted); }
+  .diagram .old-t { fill: var(--muted); }
+  .diagram .ln { stroke: var(--muted); stroke-width: 1.2; fill: none; }
+  .diagram .dash { stroke-dasharray: 4 4; }
+  .diagram .lbl { font: 11.5px var(--sans); fill: var(--ink); }
+  table.cmp th[scope="row"] { white-space: nowrap; color: var(--muted); font-weight: 600; font-size: 13px; }
+  table.cmp td { min-width: 150px; }
+  table.cmp thead th { font-size: 14px; color: var(--ink); }
+  .src { font-size: 13.5px; color: var(--muted); padding-left: 1.4em; }
+  .src li { margin: 4px 0; overflow-wrap: anywhere; }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top">
+      <span class="kicker">Basics · Simulators</span>
+      <span class="mast-actions">
+        <a class="ghost" href="index.html">← 首页</a>
+        <a class="ghost" href="papers.html">文献库</a>
+        <a class="ghost" href="compare.html">两只手的区别</a>
+        <a class="ghost" href="start.html">入门五步</a>
+        <a class="ghost" href="setup.html">Sharpa 开箱和接线</a>
+        <a class="ghost" href="units.html">单位和限制</a>
+        <a class="ghost" href="task-rotate.html">任务 1：转圆柱</a>
+      </span>
+    </div>
+    <h1>仿真平台：Isaac 和 MuJoCo</h1>
+    <p class="lede">Isaac Gym、Isaac Sim、Isaac Lab、Newton、MuJoCo 各是什么，谁建在谁上面，和我们的任务有什么关系。</p>
+    <dl class="stats">
+      <div><dt>本机仿真器</dt><dd>Isaac Sim 6.2</dd></div>
+      <div><dt>本机学习框架</dt><dd>Isaac Lab 3.0</dd></div>
+      <div><dt>物理后端</dt><dd>PhysX</dd></div>
+      <div><dt>显卡</dt><dd>RTX 5090</dd></div>
+    </dl>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <nav class="toc" aria-label="目录">
+    <a href="#tree">1. 谁建在谁上面</a>
+    <a href="#cmp">2. 六个平台对比</a>
+    <a href="#pair">3. Isaac Sim 和 Isaac Lab：版本要配对</a>
+    <a href="#mujoco">4. MuJoCo 是什么</a>
+    <a href="#ours">5. 和我们的关系</a>
+    <a href="#src">6. 出处</a>
+  </nav>
+
+  <section id="tree">
+    <h2>1. 谁建在谁上面</h2>
+    <p>上层调用下层。三列是三条互相独立的路线：左边是停更的老一代，中间是 NVIDIA 现在的路线，右边是 DeepMind 的 MuJoCo。</p>
+    <div class="diagram">
+      <svg viewBox="0 0 1000 480" role="img" aria-label="仿真平台层级图：左列 Isaac Gym（已停更），中列 PhysX、Omniverse Kit 和 USD、Isaac Sim、Isaac Lab、sharpa-rl-lab 自下而上，Newton 可直接接 Isaac Lab；右列 MuJoCo、MJX 和 MuJoCo Warp、MuJoCo Playground。">
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker>
+        </defs>
+
+        <!-- 左列：Isaac Gym（老一代） -->
+        <rect class="box old" x="10" y="20" width="230" height="60" rx="8"/>
+        <text class="t old-t" x="24" y="45">WM-Craftnet 等</text>
+        <text class="s" x="24" y="66">基于 Isaac Gym 的任务代码</text>
+        <rect class="box old" x="10" y="100" width="230" height="60" rx="8"/>
+        <text class="t old-t" x="24" y="125">IsaacGymEnvs</text>
+        <text class="s" x="24" y="146">官方任务库，2026-04 已归档</text>
+        <rect class="box old" x="10" y="180" width="230" height="220" rx="8"/>
+        <text class="t old-t" x="24" y="208">Isaac Gym Preview 4</text>
+        <text class="s" x="24" y="234">仿真器和物理打包在一起</text>
+        <text class="s" x="24" y="254">自带 PhysX，GPU 上并行</text>
+        <text class="s" x="24" y="274">不建在 Omniverse 上</text>
+        <text class="s" x="24" y="294">模型：URDF、MJCF</text>
+        <text class="s" x="24" y="324">已停更，不再出新版</text>
+        <text class="s" x="24" y="344">RTX 50 系跑不了</text>
+        <line class="ln" x1="125" y1="80" x2="125" y2="100"/>
+        <line class="ln" x1="125" y1="160" x2="125" y2="180"/>
+        <text class="s" x="10" y="428">后继：IsaacGymEnvs → OmniIsaacGymEnvs、Orbit</text>
+        <text class="s" x="10" y="446">→ 都并入 Isaac Lab</text>
+        <path class="ln dash" d="M240 130 H286" marker-end="url(#ah)"/>
+        <text class="lbl" x="248" y="122">后继</text>
+
+        <!-- 中列：NVIDIA 现在的路线 -->
+        <rect class="box ours" x="290" y="20" width="250" height="60" rx="8"/>
+        <text class="t" x="304" y="45">sharpa-rl-lab</text>
+        <text class="s" x="304" y="66">任务代码：手里转圆柱（我们在用）</text>
+        <rect class="box ours" x="290" y="100" width="250" height="60" rx="8"/>
+        <text class="t" x="304" y="125">Isaac Lab 3.0</text>
+        <text class="s" x="304" y="146">学习框架：环境、奖励、随机化、训练</text>
+        <rect class="box ours" x="290" y="180" width="250" height="60" rx="8"/>
+        <text class="t" x="304" y="205">Isaac Sim 6.2</text>
+        <text class="s" x="304" y="226">仿真器：物理 + RTX 渲染 + 传感器</text>
+        <rect class="box" x="290" y="260" width="250" height="60" rx="8"/>
+        <text class="t" x="304" y="285">Omniverse Kit + USD</text>
+        <text class="s" x="304" y="306">平台（不开源）和场景文件格式</text>
+        <rect class="box ours" x="290" y="340" width="250" height="60" rx="8"/>
+        <text class="t" x="304" y="365">PhysX</text>
+        <text class="s" x="304" y="386">GPU 物理引擎</text>
+        <line class="ln" x1="415" y1="80" x2="415" y2="100"/>
+        <line class="ln" x1="415" y1="160" x2="415" y2="180"/>
+        <line class="ln" x1="415" y1="240" x2="415" y2="260"/>
+        <line class="ln" x1="415" y1="320" x2="415" y2="340"/>
+
+        <!-- Newton -->
+        <rect class="box" x="565" y="330" width="170" height="70" rx="8"/>
+        <text class="t" x="579" y="353">Newton</text>
+        <text class="s" x="579" y="373">GPU 物理引擎，基于 Warp</text>
+        <text class="s" x="579" y="391">主后端：MuJoCo Warp</text>
+        <path class="ln" d="M620 330 V130 H544" marker-end="url(#ah)"/>
+        <text class="lbl" x="628" y="200">Isaac Lab 3.0 起</text>
+        <text class="lbl" x="628" y="218">可直接用 Newton，</text>
+        <text class="lbl" x="628" y="236">不装 Isaac Sim</text>
+
+        <!-- 右列：MuJoCo -->
+        <rect class="box" x="760" y="100" width="230" height="60" rx="8"/>
+        <text class="t" x="774" y="125">MuJoCo Playground</text>
+        <text class="s" x="774" y="146">训练框架：RL、sim-to-real</text>
+        <rect class="box" x="760" y="180" width="130" height="60" rx="8"/>
+        <text class="t" x="772" y="205">MuJoCo Warp</text>
+        <text class="s" x="772" y="226">Warp，GPU</text>
+        <rect class="box" x="900" y="180" width="90" height="60" rx="8"/>
+        <text class="t" x="912" y="205">MJX</text>
+        <text class="s" x="912" y="226">JAX</text>
+        <rect class="box" x="760" y="320" width="230" height="80" rx="8"/>
+        <text class="t" x="774" y="345">MuJoCo</text>
+        <text class="s" x="774" y="366">物理引擎（C 库 + Python）</text>
+        <text class="s" x="774" y="386">模型格式 MJCF（xml）</text>
+        <line class="ln" x1="825" y1="160" x2="825" y2="180"/>
+        <line class="ln" x1="945" y1="160" x2="945" y2="180"/>
+        <line class="ln" x1="825" y1="240" x2="825" y2="320"/>
+        <line class="ln" x1="945" y1="240" x2="945" y2="320"/>
+        <path class="ln dash" d="M735 365 H747 V210 H758" marker-end="url(#ah)"/>
+
+        <!-- 图例 -->
+        <rect class="box ours" x="290" y="436" width="22" height="14" rx="3"/>
+        <text class="s" x="318" y="448">我们这条链</text>
+        <rect class="box old" x="400" y="436" width="22" height="14" rx="3"/>
+        <text class="s" x="428" y="448">已停更 / 已归档</text>
+        <rect class="box" x="540" y="436" width="22" height="14" rx="3"/>
+        <text class="s" x="568" y="448">在更新</text>
+      </svg>
+    </div>
+    <ul>
+      <li><strong>Isaac Sim 是仿真器本体</strong>：管物理、渲染、传感器、场景。<strong>Isaac Lab 是装在它上面的一层</strong>：把仿真包装成强化学习环境（观测、动作、奖励、随机化、成千上万个环境一起跑）和训练脚本。</li>
+      <li><strong>Isaac Gym 和 Isaac Sim / Lab 不是上下级，是前后两代</strong>。Isaac Gym 是独立程序，官方已标为停更，推荐改用 Isaac Lab；它的任务库 IsaacGymEnvs 和过渡版 OmniIsaacGymEnvs 都已归档。</li>
+      <li><strong>Isaac Lab 3.0 起不再只能跑在 Isaac Sim 上</strong>：物理后端可选 PhysX（经 Isaac Sim）或 Newton（可以不装 Isaac Sim）。我们的移植版仍用 PhysX 后端。</li>
+      <li><strong>MuJoCo 不是 NVIDIA 的</strong>，是另一棵独立的树。两边的交点是 Newton：它的主后端 MuJoCo Warp 由 DeepMind 和 NVIDIA 共同维护。</li>
+    </ul>
+  </section>
+
+  <section id="cmp">
+    <h2>2. 六个平台对比</h2>
+    <div class="tablewrap">
+      <table class="cmp">
+        <thead><tr><th></th><th>Isaac Gym</th><th>Isaac Sim</th><th>Isaac Lab</th><th>Newton</th><th>MuJoCo</th><th>MJX / MuJoCo Warp</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">是什么</th>
+            <td>老一代 GPU 强化学习仿真器</td>
+            <td>机器人仿真器本体</td>
+            <td>建在仿真器上的机器人学习框架</td>
+            <td>GPU 物理引擎</td>
+            <td>通用物理引擎（Multi-Joint dynamics with Contact）</td>
+            <td>MuJoCo 的 GPU 版本：MJX 走 JAX，MuJoCo Warp 走 NVIDIA Warp</td></tr>
+          <tr><th scope="row">谁做的</th>
+            <td>NVIDIA</td>
+            <td>NVIDIA</td>
+            <td>NVIDIA（前身 Orbit）</td>
+            <td>Disney Research、Google DeepMind、NVIDIA 发起；Linux 基金会项目</td>
+            <td>Google DeepMind 维护（2021-10 收购，2022-05 开源）</td>
+            <td>MJX：DeepMind；MuJoCo Warp：DeepMind 和 NVIDIA 共同维护，属于 Newton 项目</td></tr>
+          <tr><th scope="row">建在什么之上</th>
+            <td>独立程序，不用 Omniverse</td>
+            <td>Omniverse Kit；场景用 USD</td>
+            <td>2.x：Isaac Sim；3.0：Isaac Sim 或 Newton</td>
+            <td>NVIDIA Warp</td>
+            <td>独立 C 库</td>
+            <td>JAX / Warp</td></tr>
+          <tr><th scope="row">物理引擎</th>
+            <td>PhysX（打包在里面）</td>
+            <td>PhysX</td>
+            <td>用下层的：PhysX 或 Newton</td>
+            <td>多种求解器可选，主后端是 MuJoCo Warp；另有 Featherstone、XPBD、VBD 等</td>
+            <td>MuJoCo 自己的</td>
+            <td>和 MuJoCo 同一套模型和算法</td></tr>
+          <tr><th scope="row">并行方式</th>
+            <td>物理和训练都在 GPU，物理数据直接变 PyTorch 张量</td>
+            <td>GPU 物理；自身不管训练</td>
+            <td>GPU 上成千上万个环境（我们 16384 个）</td>
+            <td>GPU</td>
+            <td>CPU</td>
+            <td>GPU 批量（MJX 也支持 TPU）</td></tr>
+          <tr><th scope="row">渲染和相机</th>
+            <td>没核实</td>
+            <td>RTX 渲染；相机、激光雷达等传感器</td>
+            <td>用 Isaac Sim 的 RTX 相机；3.0 还可选 OVRTX、Newton Warp 渲染器</td>
+            <td>自带可视化器；Warp 渲染器（在 Isaac Lab 3.0 里可用）</td>
+            <td>自带交互式查看器（viewer）</td>
+            <td>不自带批量渲染；Playground 接 Madrona 批量渲染器做视觉</td></tr>
+          <tr><th scope="row">模型文件</th>
+            <td>URDF、MJCF</td>
+            <td>USD；URDF、MJCF 导入后转成 USD</td>
+            <td>USD</td>
+            <td>URDF、MJCF、USD</td>
+            <td>MJCF（xml）</td>
+            <td>MJCF</td></tr>
+          <tr><th scope="row">现状</th>
+            <td>已停更：官网标 deprecated；Preview 4 后不再出新版</td>
+            <td>在更新；本机 6.2</td>
+            <td>在更新；3.0.0 于 2026-10 打 tag，本机 3.0</td>
+            <td>在更新；1.0 于 2026-03，最新 1.8.0（2026-11）；本机 1.6.1</td>
+            <td>在更新，每月发版；最新 4.0.1（2026-11）；本机 3.12.0</td>
+            <td>在更新；本机 mujoco-warp 3.12.0</td></tr>
+          <tr><th scope="row">许可</th>
+            <td>闭源，下载要同意 NVIDIA 许可协议</td>
+            <td>5.0 起源码 Apache-2.0；依赖的 Omniverse Kit 不开源、另有许可</td>
+            <td>BSD-3-Clause（isaaclab_mimic 为 Apache-2.0）</td>
+            <td>Apache-2.0</td>
+            <td>Apache-2.0</td>
+            <td>Apache-2.0</td></tr>
+          <tr><th scope="row">显卡 / 系统</th>
+            <td>Ubuntu 18.04 / 20.04，Python 3.6–3.8，驱动 ≥ 470；RTX 50 系不支持</td>
+            <td>Ubuntu 22.04 / 24.04 或 Windows 11；Python 3.12；官方工作站最低 RTX 4080</td>
+            <td>跟 Isaac Sim；3.0 用 Python 3.12</td>
+            <td>NVIDIA GPU；CPU 能否跑没核实</td>
+            <td>CPU 即可，<code>pip install mujoco</code></td>
+            <td>MJX：XLA 支持的 GPU / TPU；MuJoCo Warp：NVIDIA GPU</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>“本机”指 conda 环境 <code>env_isaaclab3</code> 里 <code>pip list</code> 的版本（2026-11-25）；mujoco、mujoco-warp、newton 是装 Isaac Lab 3.0 时一起装进来的依赖。</p>
+  </section>
+
+  <section id="pair">
+    <h2>3. Isaac Sim 和 Isaac Lab：版本要配对</h2>
+    <p>Isaac Lab 每个版本只对应特定的 Isaac Sim 版本，换一个就要两个一起换。</p>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>Isaac Lab</th><th>1.0</th><th>2.0</th><th>2.2</th><th>2.3</th><th>3.0 beta</th><th>3.0.0</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Isaac Sim</th><td>4.0（兼容 2023.1.1）</td><td>4.5</td><td>5.0（兼容 4.5）</td><td>5.1</td><td>6.0</td><td>6.2</td></tr>
+          <tr><th scope="row">谁在用</th><td></td><td></td><td colspan="2">官方 sharpa-rl-lab 测过这两版</td><td></td><td>我们的移植版</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>Isaac Lab 3.0 相对 2.x 的主要变化</strong>：</p>
+    <ul>
+      <li>物理后端可以换：PhysX（默认）或 Newton；用 Newton 时可以不装 Isaac Sim。</li>
+      <li>渲染器也可以换：Isaac RTX、OVRTX、Newton Warp。</li>
+      <li>环境里的数据改成 Warp 数组。</li>
+      <li>Python 从 3.11 升到 3.12，推荐用 <code>uv</code> 安装。</li>
+    </ul>
+    <p>我们移植时保留了 PhysX 后端和 2.x 的执行器写法，改动记在 <a href="task-rotate.html">任务 1</a>。</p>
+  </section>
+
+  <section id="mujoco">
+    <h2>4. MuJoCo 是什么</h2>
+    <div class="explain">
+      <p><strong>MuJoCo 只是一个物理引擎</strong>：一个 C 库加 Python 绑定，用一个 xml 文件（MJCF）描述机器人和物体，算关节、接触和摩擦。它不带强化学习框架，也不带照片级渲染。它最早是商业软件，2021 年 10 月被 DeepMind 收购，2022 年 5 月以 Apache-2.0 开源。</p>
+      <p><strong>做灵巧操作研究的人常用它</strong>。原因有三条：</p>
+      <ul>
+        <li>名字里就有 “with Contact”：设计目标就是多关节、多接触的动力学。</li>
+        <li>一个 xml 就能看懂整个模型，<code>pip install mujoco</code> 就能跑，单步调试和可视化方便。</li>
+        <li>不需要特定显卡。</li>
+      </ul>
+      <p><strong>和 Isaac 路线的取舍</strong>（两边都在向对方靠拢，没有谁更好）：</p>
+      <ul>
+        <li>MuJoCo 的强项：单个环境好调、模型好改。原生在 CPU 上跑，要上 GPU 并行得换 MJX 或 MuJoCo Warp。</li>
+        <li>Isaac 的强项：一开始就是 GPU 上几千个环境一起跑，还有 RTX 相机渲染和 USD 场景。代价是安装重，而且要 RTX 显卡。</li>
+        <li>两边的交点：MuJoCo Warp 现在是 Newton 的主后端，Isaac Lab 3.0 又能直接用 Newton。</li>
+        <li><strong>MuJoCo Playground</strong>（DeepMind 等，2025）是 MuJoCo 这边的训练框架：基于 MJX，现在也支持 MuJoCo Warp；带四足、人形、灵巧手和机械臂的环境，相机渲染用 Madrona 批量渲染器。</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="ours">
+    <h2>5. 和我们的关系</h2>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>东西</th><th>用的平台</th><th>本机（RTX 5090）能不能训练</th></tr></thead>
+        <tbody>
+          <tr><td><strong>sharpa-rl-lab</strong>（手里转圆柱）</td>
+            <td class="w">官方测过 Isaac Lab 2.2 / 2.3。我们移植到 Isaac Lab 3.0 + Isaac Sim 6.2，PhysX 后端，conda 环境 <code>env_isaaclab3</code>，16384 个并行环境</td>
+            <td class="w">能，见 <a href="task-rotate.html">任务 1</a></td></tr>
+          <tr><td><strong>WM-Craftnet</strong>（Sharpa 官方另一项工作）</td>
+            <td class="w">Isaac Gym Preview 4 + Python 3.8 + PyTorch 2.1 / CUDA 11.8（据其 README 的安装要求）</td>
+            <td class="w">不能，只能拿它放出的模型做部署。原因有两层：Isaac Gym 自带的 PhysX GPU 库没有 RTX 50 系（sm_120）的代码，NVIDIA 确认不会再更新；PyTorch 要 2.7 起、用 CUDA 12.8 的版本才支持 50 系，2.1 / CUDA 11.8 不行</td></tr>
+          <tr><td><strong>sharpa-urdf-usd-xml</strong>（Sharpa 官方模型文件）</td>
+            <td class="w">Sharpa Wave 左手、右手、双手各给 URDF、USD、MuJoCo xml（MJCF）三种格式，分带手腕和带法兰两种。三条路线都能直接用</td>
+            <td class="w">不涉及训练；许可 GitHub 标为 “Other”，看仓库里的 LICENSE.txt</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="src">
+    <h2>6. 出处</h2>
+    <ol class="src">
+      <li>Isaac Gym 停更、推荐 Isaac Lab：<a href="https://developer.nvidia.com/isaac-gym" target="_blank" rel="noopener">developer.nvidia.com/isaac-gym</a></li>
+      <li>Isaac Gym Preview 4 的系统要求（Ubuntu 18.04/20.04、Python 3.6–3.8、驱动 470）、下载需同意许可：<a href="https://developer.nvidia.com/isaac-gym/download" target="_blank" rel="noopener">developer.nvidia.com/isaac-gym/download</a></li>
+      <li>Isaac Gym 在 RTX 50 系（sm_120）上缺 PhysX GPU 内核、不会更新（NVIDIA 2026-04-27 回复）：<a href="https://forums.developer.nvidia.com/t/isaac-gym-preview-4-incompatible-with-rtx-5080-blackwell-sm-120-libphysxgpu-64-so-missing-sm-120-kernels/367941" target="_blank" rel="noopener">NVIDIA 开发者论坛</a></li>
+      <li>Isaac Gym 物理和训练都在 GPU、数据直接进 PyTorch（2021）：<a href="https://arxiv.org/abs/2108.10470" target="_blank" rel="noopener">arXiv:2108.10470</a></li>
+      <li>Isaac Gym 读 URDF / MJCF：<a href="https://lequn-f.github.io/isaacgym/programming/assets.html" target="_blank" rel="noopener">Isaac Gym 文档（社区镜像）</a></li>
+      <li>IsaacGymEnvs 于 2026-04-14 归档、需要 Preview 4：<a href="https://github.com/isaac-sim/IsaacGymEnvs" target="_blank" rel="noopener">github.com/isaac-sim/IsaacGymEnvs</a></li>
+      <li>OmniIsaacGymEnvs 4.0.0 为最后一版、并入 Isaac Lab：<a href="https://github.com/isaac-sim/OmniIsaacGymEnvs" target="_blank" rel="noopener">github.com/isaac-sim/OmniIsaacGymEnvs</a></li>
+      <li>Isaac Sim 建在 Omniverse Kit 上、场景用 USD、GPU PhysX：<a href="https://docs.isaacsim.omniverse.nvidia.com/5.0.0/overview/overview.html" target="_blank" rel="noopener">Isaac Sim 5.0 文档：What Is Isaac Sim</a></li>
+      <li>Isaac Sim 源码 Apache-2.0、Kit 另有许可、系统和显卡要求、Python 3.12：<a href="https://github.com/isaac-sim/IsaacSim" target="_blank" rel="noopener">github.com/isaac-sim/IsaacSim</a>；5.0 起开源：<a href="https://docs.isaacsim.omniverse.nvidia.com/5.0.0/overview/release_notes.html" target="_blank" rel="noopener">Isaac Sim 5.0 发布说明</a></li>
+      <li>Isaac Sim 的 MJCF 导入器（转成 USD）：<a href="https://docs.isaacsim.omniverse.nvidia.com/6.2.0/importer_exporter/ext_isaacsim_asset_importer_mjcf.html" target="_blank" rel="noopener">Isaac Sim 6.2 文档</a></li>
+      <li>Isaac Lab 各版本对应的 Isaac Sim、3.0 的变化（多后端、Newton、可不装 Isaac Sim、渲染器、Warp 数据）：<a href="https://github.com/isaac-sim/IsaacLab/releases" target="_blank" rel="noopener">Isaac Lab 发布说明</a>（本地 <code>external/IsaacLab3/docs/source/refs/release_notes.rst</code>）；Python 3.12、uv：本地 <code>docs/source/isaaclab/migrating.rst</code></li>
+      <li>Isaac Lab 3.0.0 对应 Isaac Sim 6.2、BSD-3 许可、前身 Orbit：<a href="https://github.com/isaac-sim/IsaacLab" target="_blank" rel="noopener">github.com/isaac-sim/IsaacLab</a>（本地 <code>external/IsaacLab3</code>，tag v3.0.0，2026-10-19）</li>
+      <li>Newton 基于 Warp、主后端 MuJoCo Warp、三家发起、Linux 基金会、Apache-2.0：<a href="https://github.com/newton-physics/newton" target="_blank" rel="noopener">github.com/newton-physics/newton</a>；版本和日期：<a href="https://pypi.org/project/newton/" target="_blank" rel="noopener">pypi.org/project/newton</a>；读 URDF / MJCF / USD 和求解器列表：本机 newton 1.6.1 源码</li>
+      <li>MuJoCo 由 DeepMind 维护、Apache-2.0、每月发版：<a href="https://github.com/google-deepmind/mujoco" target="_blank" rel="noopener">github.com/google-deepmind/mujoco</a>；最新版本：<a href="https://github.com/google-deepmind/mujoco/releases" target="_blank" rel="noopener">releases</a>；2021-10 收购：<a href="https://deepmind.google/blog/announcements/mujoco" target="_blank" rel="noopener">DeepMind 博客</a>；2022-05 开源：<a href="https://www.therobotreport.com/deepmind-open-source-mujoco-on-github/" target="_blank" rel="noopener">The Robot Report</a></li>
+      <li>MJX：<a href="https://mujoco.readthedocs.io/en/stable/mjx.html" target="_blank" rel="noopener">MuJoCo 文档 MJX</a>；MuJoCo Warp（DeepMind 和 NVIDIA 维护、属于 Newton、Apache-2.0）：<a href="https://github.com/google-deepmind/mujoco_warp" target="_blank" rel="noopener">github.com/google-deepmind/mujoco_warp</a></li>
+      <li>MuJoCo Playground：<a href="https://arxiv.org/abs/2502.08844" target="_blank" rel="noopener">arXiv:2502.08844</a>、<a href="https://github.com/google-deepmind/mujoco_playground" target="_blank" rel="noopener">GitHub</a></li>
+      <li>PyTorch 2.7 起支持 Blackwell（RTX 50 系），要用 CUDA 12.8 版本：<a href="https://pytorch.org/blog/pytorch-2-7/" target="_blank" rel="noopener">PyTorch 2.7 发布博客</a></li>
+      <li>Sharpa 模型文件（URDF、USD、MJCF）：<a href="https://github.com/sharpa-robotics/sharpa-urdf-usd-xml" target="_blank" rel="noopener">github.com/sharpa-robotics/sharpa-urdf-usd-xml</a></li>
+      <li>官方 sharpa-rl-lab 测过 Isaac Lab 2.2.0 / 2.3.0：<code>external/sharpa-rl-lab/README.md</code>；WM-Craftnet 的环境要求：<code>external/WM-Craftnet/README.md</code></li>
+    </ol>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  整理于 2026-11-25。
+</footer>
+</body>
+</html>

@@ -24,6 +24,7 @@ nohup ./serve.sh > /tmp/hand-web.log 2>&1 &
 - `setup.html`：Sharpa 开箱、固定、接线、连电脑、关机
 - `start.html`：只用手的入门五步（带打勾进度）
 - `task-rotate.html`：任务 1，手里转圆柱（sharpa-rl-lab）：流程、观测和动作、奖励、真手准备、我们的进度
+- `sims.html`：仿真平台（Isaac Gym / Sim / Lab、Newton、MuJoCo）的上下级和对比，以及和我们任务的关系
 - `units.html`：单位（Hz、ms、度/弧度、速度/加速度）和 Sharpa Wave 的物理限制（关节范围、速度、力矩），带 Hz 换算和平滑过渡计算器
 - `data/papers.json`：全部论文数据，页面唯一的数据来源
 - `data/subtasks.json`：细分任务标签表（`key`、`name`、`plain`、`parent`），卡片上的任务标签和第二级筛选都从这里读
