@@ -338,3 +338,6 @@ table.runs small { color: var(--muted); }
 .cover .cell.todo { border-left: 4px solid var(--line); }
 .cover .cell[aria-pressed="true"] { outline: 2px solid var(--accent); }
 .more code, .explain code, .caveat code { overflow-wrap: anywhere; }
+.m-buy { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 8px; padding: 8px 14px; margin: 12px 0; }
+.m-buy b { display: block; font: 600 12px var(--mono); color: var(--muted); letter-spacing: .06em; }
+.m-buy p { margin: 4px 0; }

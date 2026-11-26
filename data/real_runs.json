@@ -46,11 +46,11 @@
      5.5,
      null
     ],
-    "drop_t": null,
+    "drop_t": 16.9,
     "stop_t": null
    },
    "thumb_middle_mm": null,
-   "auto": "卡住",
+   "auto": "掉了",
    "verdict": "掉了",
    "verdict_auto": false,
    "turns": "—",
@@ -91,11 +91,11 @@
      5.4,
      null
     ],
-    "drop_t": null,
+    "drop_t": 25.2,
     "stop_t": null
    },
    "thumb_middle_mm": null,
-   "auto": "卡住",
+   "auto": "掉了",
    "verdict": "掉了",
    "verdict_auto": false,
    "turns": "—",
@@ -136,11 +136,11 @@
      4.5,
      null
     ],
-    "drop_t": null,
+    "drop_t": 22.0,
     "stop_t": null
    },
    "thumb_middle_mm": null,
-   "auto": "卡住",
+   "auto": "掉了",
    "verdict": "掉了",
    "verdict_auto": false,
    "turns": "—",
@@ -983,7 +983,7 @@
      6.0,
      1.9
     ],
-    "drop_t": 15.7,
+    "drop_t": 14.6,
     "stop_t": null
    },
    "thumb_middle_mm": null,

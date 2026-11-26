@@ -19,7 +19,7 @@
 - pinky_low_frac / pinky_low_max_s：小指掌根（Isaac 第 2 列 q2）< 0.06 rad 的时间占比、最长连续秒数。
 - force_raw：各指原始力，有接触（f > 0）时的中位数，N；触觉系数未知时为 null。
 - contact：各指有接触（f > 0）的时间占比。
-- drop_t：疑似掉落。5 个指尖力全为 0 连续 ≥ 2 秒的第一个时刻。
+- drop_t：疑似掉落，取两条规则里早的那个：① 5 个指尖力全为 0 连续 ≥ 2 秒的第一个时刻；② 中指、无名指力同时归零并一直持续到结束（≥ 2 秒）而拇指还有力（圆柱倒进手心），取归零的时刻。
 - stop_t：疑似停住。从第 2 秒起，3 秒滑窗的动作幅度 < 本次第 2–10 秒中位数的 30%，取第一个时刻。
 - auto：自动判定。run_s < 5 → 太短；有 drop_t → 掉了；pinky_low_max_s ≥ 5 → 卡住；有 stop_t → 停住；否则 一直转。
 """
@@ -107,7 +107,13 @@ def metrics(path, fs):
         out['force_raw'] = None
     # 疑似掉落：5 指全 0 连续 ≥ 2 s
     i = first_run(~on.any(1), int(round(2.0 / dt)))
-    out['drop_t'] = r(t[i], 1) if i is not None else None
+    cand = [t[i]] if i is not None else []
+    # 疑似掉落（倒进手心）：中指、无名指同时归零并一直到结束（≥ 2 s），拇指还有力
+    mr = np.where(on[:, 2] | on[:, 3])[0]
+    k = (mr[-1] + 1) if len(mr) else 0
+    if k < len(t) and t[-1] - t[k] >= 2.0 and on[k:, 0].any():
+        cand.append(t[k])
+    out['drop_t'] = r(min(cand), 1) if cand else None
     # 疑似停住：3 s 滑窗动作幅度 < 第 2–10 s 中位数的 30%
     base = dq[(tt >= 2) & (tt < 10)]
     out['stop_t'] = None
