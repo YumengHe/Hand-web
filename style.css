@@ -341,3 +341,4 @@ table.runs small { color: var(--muted); }
 .m-buy { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 8px; padding: 8px 14px; margin: 12px 0; }
 .m-buy b { display: block; font: 600 12px var(--mono); color: var(--muted); letter-spacing: .06em; }
 .m-buy p { margin: 4px 0; }
+.m-gnote { font-size: 14px; margin: 4px 0 8px; } .m-gnote summary { cursor: pointer; color: var(--accent); } .m-gnote p { color: var(--muted); }

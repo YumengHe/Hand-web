@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 639" width="700" height="639" font-family="'Noto Sans CJK SC','Source Han Sans SC','PingFang SC','Microsoft YaHei','WenQuanYi Micro Hei',sans-serif">
-<rect width="700" height="639" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 661" width="700" height="661" font-family="'Noto Sans CJK SC','Source Han Sans SC','PingFang SC','Microsoft YaHei','WenQuanYi Micro Hei',sans-serif">
+<rect width="700" height="661" fill="#ffffff"/>
 <text x="20.0" y="30.0" font-size="21" fill="#222" text-anchor="start" font-weight="bold">D405：螺孔离机身四条边多远</text>
 <text x="20.0" y="54.0" font-size="15" fill="#555" text-anchor="start" font-weight="normal">从相机背后看。先在一个螺孔里拧一颗 M3 螺丝：只拧 2 圈，别拧到底</text>
 <rect x="20.00" y="70.00" width="14.00" height="14.00" rx="0.00" stroke="#1565c0" stroke-width="1.60" fill="#1565c0"/>
@@ -37,10 +37,11 @@
 <text x="376.0" y="377.0" font-size="13" fill="#888" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">M3 螺丝</text>
 <text x="224.0" y="355.0" font-size="13" fill="#888" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">另一个螺孔</text>
 <text x="300.0" y="444.6" font-size="13" fill="#888" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">三脚架螺孔（在底面）</text>
-<rect x="12.00" y="503.00" width="676.00" height="124.00" rx="6.00" stroke="#ccc" stroke-width="1.00" fill="#fafafa"/>
+<rect x="12.00" y="503.00" width="676.00" height="146.00" rx="6.00" stroke="#ccc" stroke-width="1.00" fill="#fafafa"/>
 <text x="24.0" y="525.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">螺孔的中心量不到：拧一颗螺丝当靶子。一只外爪顶住机身的一条边，另一只顶住螺丝杆“离那</text>
 <text x="24.0" y="547.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">条边远”的一侧。</text>
 <text x="24.0" y="569.0" font-size="15" fill="#c62828" text-anchor="start" font-weight="normal">换算：孔心到边 = 读数 − 螺丝直径的一半（M3 螺丝直径约 2.9，量一下你那颗）。</text>
 <text x="24.0" y="591.0" font-size="15" fill="#c62828" text-anchor="start" font-weight="normal">应约：A = B ≈ 22.45（孔心到上、下边都是 21）；C ≈ 12.45（孔心到近的侧边 11）。</text>
-<text x="24.0" y="613.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">最要紧的是 A 和 B 相等（差 0.5 以内）。不相等就把 A、B、C 三个读数都告诉我。</text>
+<text x="24.0" y="613.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">注意两次都要顶在螺丝“离那条边远”的一侧。支架上是长孔，孔心到上、下边在 17 ~ 25 之</text>
+<text x="24.0" y="635.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">间都能装。</text>
 </svg>

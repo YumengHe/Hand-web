@@ -29,6 +29,6 @@
 <text x="24.0" y="470.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">先用内爪量一个螺孔的内径（约 2.5），再把两只内爪各伸进一个孔、向外撑开，量最远的孔壁</text>
 <text x="24.0" y="492.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">到孔壁。</text>
 <text x="24.0" y="514.0" font-size="15" fill="#c62828" text-anchor="start" font-weight="normal">读数应约 22.5。   换算：孔距 = 读数 − 单孔内径 = 22.5 − 2.5 = 20.0</text>
-<text x="24.0" y="536.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">算出来的孔距在 19.7 ~ 20.3 之间都能装。爪尖轻轻顶住就行，别刮螺纹。超出就把读数告诉</text>
-<text x="24.0" y="558.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">我。</text>
+<text x="24.0" y="536.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">算出来的孔距在 18.9 ~ 22.1 之间都能装（支架上是长孔）。小孔里内爪会读小一点，正常。</text>
+<text x="24.0" y="558.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">别刮螺纹。</text>
 </svg>

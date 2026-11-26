@@ -229,182 +229,21 @@ dof_limit_diff(in deg): [0.5 0.4 0.2 0.2 -0 -0.1 0.2 0 0 -0 0.2 0 -0.2 0.1 0.7 0
   <section id="measure">
     <h2>打印 WM-Craftnet 支架前要量的尺寸</h2>
     <div class="explain">
-      <p>支架是照官方图纸和 D405 规格书画的，有几处要和实物对一下，差多了螺丝拧不进、相机会歪。</p>
-      <p><strong>固定方式</strong>：桌边版用 2 个 G 型夹从桌子前沿夹住底板，先固定、再装手。</p>
-      <p><strong>现在就能量</strong>：D405、桌子、手腕线插头。<strong>要先拆手</strong>：法兰转接件的 6 项；它们来自官方图纸，出错的可能性小，可以先不拆、先打印。铜螺母买到再量。</p>
-      <p>工具：一把游标卡尺（转接件和相机）加一把卷尺（桌子）。单位都是 mm。卡尺有三处能量：下面一对大的“外爪”夹外面的尺寸，上面一对小的“内爪”撑里面的尺寸，尾部伸出来的细杆量深度。卡尺量不到孔的中心，所以孔距都是量孔边、再加减一个孔径换算。</p>
-      <p>图里蓝色、橙色的小块是卡尺两个爪实际顶住的位置；红色箭头是卡尺读数；绿色虚线是换算出来的尺寸。</p>
-      <p>每项下面有输入框，填的内容只存在这台电脑的浏览器里；填完点页面底部“复制结果”，贴给我们。</p>
+      <p>支架是照官方图纸和 D405 规格书画的，有几处要和实物对一下，差多了螺丝拧不进、相机会歪。工具：游标卡尺和卷尺，单位都是 mm。<strong>固定方式</strong>：桌边版用 2 个 G 型夹从桌子前沿夹住底板，先固定、再装手。</p>
     </div>
-    <div class="m-buy"><b>要买的</b><p><strong>G 型夹（C 型夹）× 2</strong>：3 寸：开口 ≥ 75 mm、喉深 ≥ 50 mm。桌面板厚超过 55 mm 就买 4 寸（开口 100）。不要买 F 夹 / 快速夹：导轨伸出桌沿太多，会进相机画面。桌边版不固定必翻。两个夹子从桌子前沿夹住底板，垫块压在底板上立柱两侧的两个浅圆坑里，手拧紧即可。</p></div>
+    <h3 class="sub" id="measure-todo">还没量的（4 项）</h3>
+    <div class="caveat m-note"><p>已量的 12 项都不用重量。还缺 4 项：官方 M6 螺丝露出长度（装转接件之前量一下就行）、桌沿下面的净深 L 和净高 H（买夹子之前量）、M6 和 M4 铜螺母的外径和长度（买到后、打印立柱之前量）。</p></div>
+    <div class="m-buy"><b>要买的</b><p><strong>G 型夹（C 型夹）× 2</strong>：3 寸：开口 ≥ 75 mm、喉深 ≥ 50 mm（桌面板实测厚 25，3 寸够）。不要买 F 夹 / 快速夹：导轨伸出桌沿太多，会进相机画面。桌边版不固定必翻。两个夹子从桌子前沿夹住底板，垫块压在底板上立柱两侧的两个浅圆坑里，手拧紧即可。</p><p><strong>M3 平垫 × 2</strong>：外径 7 左右的普通 M3 平垫相机头上固定 D405 的两个过孔改成了长孔，M3 螺丝头下面要垫平垫。</p></div>
+    <div class="explain">
+      <p>工具：一把游标卡尺（转接件和相机）加一把卷尺（桌子）。单位都是 mm。卡尺有三处能量：下面一对大的“外爪”夹外面的尺寸，上面一对小的“内爪”撑里面的尺寸，尾部伸出来的细杆量深度。卡尺量不到孔的中心，所以孔距都是量孔边、再加减一个孔径换算。</p>
+      <p>图里蓝色、橙色的小块是卡尺两个爪实际顶住的位置；红色箭头是卡尺读数；绿色虚线是换算出来的尺寸。 填的内容只存在这台电脑的浏览器里；填完点本节底部“复制结果”，贴给我们。</p>
+    </div>
     <figure class="m-fig m-over"><div class="m-scroll"><img src="media/measure/overview.svg" width="700" height="814" alt="总览：从拇指一侧看整套支架，各项尺寸和 G 型夹在哪里" loading="lazy"></div></figure>
-    <h3 class="sub" id="measure-d405">D405 相机（现在就能量）</h3>
-    <div class="caveat m-note"><p>相机不用通电。别压镜头玻璃；往螺孔里拧螺丝最多 2 圈。</p></div>
-    <article class="m-card" id="m-d405_body">
-      <figure class="m-fig"><div class="m-scroll"><img src="media/measure/d405_body.svg" width="700" height="560" alt="D405：机身的宽、高、厚：量法示意图" loading="lazy"></div></figure>
-      <div class="m-body">
-        <h4>D405：机身的宽、高、厚</h4>
-        <p><b>怎么量</b>用外爪夹住机身两个相对的面，宽、高、厚各量一次。厚度量最前面到最后面。</p>
-        <dl class="m-exp"><dt>应约</dt><dd>宽 42.0，高 42.0，厚 23.0 mm</dd><dt>能用的范围</dt><dd>宽 41.7 ~ 42.3，高 41.7 ~ 42.3，厚 22.5 ~ 23.5 mm</dd></dl>
-        <p><b>为什么</b>相机头的背板和侧板按这个外形做；厚度决定镜头离手多远。</p>
-        
-        <div class="m-in" data-name="D405：机身的宽、高、厚"><label>宽 <input type="text" inputmode="decimal" data-m="d405_body.w" data-label="宽" data-lo="41.7" data-hi="42.3"> mm</label><label>高 <input type="text" inputmode="decimal" data-m="d405_body.h" data-label="高" data-lo="41.7" data-hi="42.3"> mm</label><label>厚 <input type="text" inputmode="decimal" data-m="d405_body.t" data-label="厚" data-lo="22.5" data-hi="23.5"> mm</label><span class="m-warn" hidden>和预期差得多，照实填就行</span></div>
-        <p class="m-src">出处：RealSense D400 系列 datasheet rev 020（337029-017） 表 3-54：42 × 42 × 23</p>
-      </div>
-    </article>
-    <article class="m-card" id="m-d405_m3_spacing">
-      <figure class="m-fig"><div class="m-scroll"><img src="media/measure/d405_m3_spacing.svg" width="700" height="584" alt="D405：背面两个 M3 螺孔的孔距：量法示意图" loading="lazy"></div></figure>
-      <div class="m-body">
-        <h4>D405：背面两个 M3 螺孔的孔距</h4>
-        <p><b>怎么量</b>再把两只内爪各伸进一个螺孔，向外撑开，量最远的孔壁到孔壁。读数减去单孔内径，就是孔心到孔心。</p>
-        <dl class="m-exp"><dt>卡尺读数</dt><dd>约 22.5 mm</dd><dt>换算</dt><dd>孔距 = 读数 − 单孔内径 = 22.5 − 2.5 = 20.0</dd><dt>能用的范围</dt><dd>算出来 19.7 ~ 20.3 mm</dd></dl>
-        <p><b>为什么</b>相机头背板上两个 M3 孔按这个距离打。</p>
-        
-        <div class="m-in" data-name="D405：背面两个 M3 螺孔的孔距"><label>单孔内径 <input type="text" inputmode="decimal" data-m="d405_m3_spacing.d" data-label="单孔内径"> mm</label><label>读数 <input type="text" inputmode="decimal" data-m="d405_m3_spacing.r" data-label="读数" data-lo="22.2" data-hi="22.8"> mm</label><span class="m-warn" hidden>和预期差得多，照实填就行</span></div>
-        <p class="m-src">出处：RealSense D400 系列 datasheet rev 020（337029-017） 图 10-13：2 × M3×0.5，间距 20</p>
-      </div>
-    </article>
-    <article class="m-card" id="m-d405_m3_edges">
-      <figure class="m-fig"><div class="m-scroll"><img src="media/measure/d405_m3_edges.svg" width="700" height="639" alt="D405：螺孔离机身四条边多远：量法示意图" loading="lazy"></div></figure>
-      <div class="m-body">
-        <h4>D405：螺孔离机身四条边多远</h4>
-        <p><b>怎么量</b>螺孔的中心量不到，拧一颗 M3 螺丝当靶子：只拧 2 圈，别拧到底（相机螺孔最多只能进 4 mm）。一只外爪顶住机身的一条边，另一只顶住螺丝杆上离那条边远的一侧。量三次：A = 上边到螺丝下侧，B = 下边到螺丝上侧，C = 近的侧边到螺丝远侧。读数减去螺丝直径的一半（先量一下螺丝直径，约 2.9），就是孔心到那条边的距离。</p>
-        <dl class="m-exp"><dt>卡尺读数</dt><dd>A ≈ 22.45，B ≈ 22.45，C ≈ 12.45</dd><dt>换算</dt><dd>孔心到边 = 读数 − 螺丝直径 ÷ 2 = 22.45 − 1.45 = 21（上、下边）；12.45 − 1.45 = 11（侧边）</dd><dt>能用的范围</dt><dd>孔心到上边 20.7 ~ 21.3，孔心到下边 20.7 ~ 21.3，孔心到近的侧边 10.0 ~ 12.0 mm</dd></dl>
-        <p><b>为什么</b>竖装时机身的顶面要贴住相机头的侧板：螺孔如果不在正中，机身会顶住侧板或者离开一条缝，相机就歪了。这个尺寸图纸上没有标，是最需要实测的一项。</p>
-        <p class="m-diff"><b>不一样时</b>A 和 B 差超过 0.5，就把 A、B、C 三个读数都告诉我。</p>
-        <div class="m-in" data-name="D405：螺孔离机身四条边多远"><label>螺丝直径 <input type="text" inputmode="decimal" data-m="d405_m3_edges.s" data-label="螺丝直径"> mm</label><label>A <input type="text" inputmode="decimal" data-m="d405_m3_edges.A" data-label="A" data-lo="22.15" data-hi="22.75"> mm</label><label>B <input type="text" inputmode="decimal" data-m="d405_m3_edges.B" data-label="B" data-lo="22.15" data-hi="22.75"> mm</label><label>C <input type="text" inputmode="decimal" data-m="d405_m3_edges.C" data-label="C" data-lo="11.45" data-hi="13.45"> mm</label><span class="m-warn" hidden>和预期差得多，照实填就行</span></div>
-        <p class="m-src">出处：图纸没有标注；按图上看螺孔在机身高度的正中（params.py: D405_M3_HEIGHT = 0）、左右对称推出来的</p>
-      </div>
-    </article>
-    <article class="m-card" id="m-d405_usb_side">
-      <figure class="m-fig"><div class="m-scroll"><img src="media/measure/d405_usb_side.svg" width="700" height="530" alt="D405：USB-C 口在哪一面：量法示意图" loading="lazy"></div></figure>
-      <div class="m-body">
-        <h4>D405：USB-C 口在哪一面</h4>
-        <p><b>怎么量</b>镜头背对你、三脚架螺孔朝下拿着相机，看 USB-C 口在你的哪只手那边。</p>
-        <dl class="m-exp"><dt>预期</dt><dd>左侧面（左手边），口的两边各有一个小螺孔</dd></dl>
-        <p><b>为什么</b>竖装后线从哪边出来、会不会挡到手和相机臂。</p>
-        <p class="m-diff"><b>不一样时</b>回答“是，在左侧面”或者“不是，在 ___ 面”。</p>
-        <div class="m-in" data-name="D405：USB-C 口在哪一面"><label>你的答案 <select data-m="d405_usb_side.a" data-name="D405：USB-C 口在哪一面"><option value="">（没看）</option><option>是，在左侧面</option><option>不是，在右侧面</option><option>不是，在顶面</option><option>不是，在底面</option></select></label></div>
-        <p class="m-src">出处：RealSense D400 系列 datasheet rev 020（337029-017） 图 10-13 侧视图（图的分辨率低，所以要对一下实物）</p>
-      </div>
-    </article>
-    <article class="m-card" id="m-d405_top_flat">
-      <figure class="m-fig"><div class="m-scroll"><img src="media/measure/d405_top_flat.svg" width="700" height="540" alt="D405：顶面平不平：量法示意图" loading="lazy"></div></figure>
-      <div class="m-body">
-        <h4>D405：顶面平不平</h4>
-        <p><b>怎么量</b>拿卡尺的尺身或钢尺的直边横着压在顶面上，对着光看缝；再看顶面上有没有凸起的螺丝头、标签、台阶。</p>
-        <dl class="m-exp"><dt>预期</dt><dd>中间约 30 mm 长是平的，直边压上去不晃，缝小于 0.2</dd></dl>
-        <p><b>为什么</b>竖装时顶面贴着相机头的侧板，靠它保证相机绕镜头方向不歪（要准到 ±0.5°）。</p>
-        <p class="m-diff"><b>不一样时</b>告诉我顶面上有什么、大概多高。</p>
-        <div class="m-in" data-name="D405：顶面平不平"><label class="wide">看到的情况 <input type="text" data-m="d405_top_flat.x" data-label="看到的情况"></label><span class="m-warn" hidden>和预期差得多，照实填就行</span></div>
-        <p class="m-src">出处：假设；datasheet 没有给顶面的平面度</p>
-      </div>
-    </article>
-    <h3 class="sub" id="measure-table">桌子（现在就能量）</h3>
-    <article class="m-card" id="m-table_thickness">
-      <figure class="m-fig"><div class="m-scroll"><img src="media/measure/table_thickness.svg" width="700" height="512" alt="桌子：桌面有多厚：量法示意图" loading="lazy"></div></figure>
-      <div class="m-body">
-        <h4>桌子：桌面有多厚</h4>
-        <p><b>怎么量</b>在准备放支架的那段桌沿，用外爪夹住桌面板的上下两面。</p>
-        <dl class="m-exp"><dt>能用的范围</dt><dd>≤ 55（用 3 寸夹） mm</dd></dl>
-        <p><b>为什么</b>选 G 型夹：夹子的开口要 ≥ 桌面厚度 + 12（底板）+ 5。桌面厚 ≤ 55 用 3 寸夹（开口 75），更厚用 4 寸。</p>
-        
-        <div class="m-in" data-name="桌子：桌面有多厚"><label>读数 <input type="text" inputmode="decimal" data-m="table_thickness.r" data-label="读数" data-hi="55"> mm</label><span class="m-warn" hidden>和预期差得多，照实填就行</span></div>
-        <p class="m-src">出处：没有期望值</p>
-      </div>
-    </article>
-    <article class="m-card" id="m-table_clearance">
-      <figure class="m-fig"><div class="m-scroll"><img src="media/measure/table_clearance.svg" width="700" height="512" alt="桌子：桌沿往里多深、往下多高是空的：量法示意图" loading="lazy"></div></figure>
-      <div class="m-body">
-        <h4>桌子：桌沿往里多深、往下多高是空的</h4>
-        <p><b>怎么量</b>用卷尺或钢尺，量到厘米就行。</p>
-        <dl class="m-exp"><dt>能用的范围</dt><dd>L ≥ 60，H ≥ 100 mm</dd></dl>
-        <p><b>为什么</b>2 个 G 型夹要从桌子前沿伸进去 44 mm 压住底板上的两个圆坑，桌面板下面还要放得下夹子的下爪、螺杆和手柄。</p>
-        <p class="m-diff"><b>不一样时</b>把 L 和 H 告诉我；不够的话改用 4 颗 M6 把底板拧在桌上。</p>
-        <div class="m-in" data-name="桌子：桌沿往里多深、往下多高是空的"><label>L <input type="text" inputmode="decimal" data-m="table_clearance.L" data-label="L" data-lo="60"> mm</label><label>H <input type="text" inputmode="decimal" data-m="table_clearance.H" data-label="H" data-lo="100"> mm</label><span class="m-warn" hidden>和预期差得多，照实填就行</span></div>
-        <p class="m-src">出处：垫块中心离桌沿 44 mm（params.py: CLAMP_PAD_XY）加垫块半径；100 是 3 寸 G 型夹螺杆加手柄的长度</p>
-      </div>
-    </article>
-    <h3 class="sub" id="measure-hand">手腕线（现在就能量）</h3>
-    <div class="caveat m-note"><p>手断电后再碰线。</p></div>
-    <article class="m-card" id="m-wrist_plug">
-      <figure class="m-fig"><div class="m-scroll"><img src="media/measure/wrist_plug.svg" width="700" height="724" alt="手腕线插头：硬的那段有多长：量法示意图" loading="lazy"></div></figure>
-      <div class="m-body">
-        <h4>手腕线插头：硬的那段有多长</h4>
-        
-        <dl class="m-exp"><dt>能用的范围</dt><dd>≤ 40 mm</dd></dl>
-        <p><b>为什么</b>插座在桌沿外面、下面是空的，插头多长都放得下；量它是为了确认插头能不能藏在手腕后面、不进相机画面。</p>
-        
-        <div class="m-in" data-name="手腕线插头：硬的那段有多长"><label>读数 <input type="text" inputmode="decimal" data-m="wrist_plug.r" data-label="读数" data-hi="40"> mm</label><span class="m-warn" hidden>和预期差得多，照实填就行</span></div>
-        <p class="m-src">出处：插座位置来自 wave-R-01.STEP（X 4.4 ~ 29.5，最低点在轴线下 25.4）；40 是按视线被手腕挡住的范围估的</p>
-      </div>
-    </article>
-    <h3 class="sub" id="measure-flange">法兰转接件（要先把手拆下来）</h3>
-    <div class="caveat m-note"><p>转接件夹在手和官方底座之间，螺丝孔和凸台都被挡住，不拆量不了。顺序：手断电、拔掉手腕线 → 一只手托住手，松开手腕一圈 6 颗 M4，取下手放稳 → 松开 4 颗 M6，取下转接件。这和以后把手换到新支架上的步骤一样。只想少拆一步的话：取下手之后不拆转接件，用外爪夹对角两颗 M6 螺丝头的外侧，读数减去一颗螺丝头的直径也是对角孔距（应约 50），但凸台和螺丝露出长度量不到。这几项的期望值来自官方图纸和 ISO 标准，出错的可能性小；不想现在拆手的话可以先打印，装的时候发现不对再改立柱。</p></div>
-    <article class="m-card" id="m-flange_hole_d">
-      <figure class="m-fig"><div class="m-scroll"><img src="media/measure/flange_hole_d.svg" width="700" height="590" alt="转接件：螺丝孔的直径：量法示意图" loading="lazy"></div></figure>
-      <div class="m-body">
-        <h4>转接件：螺丝孔的直径</h4>
-        <p><b>怎么量</b>用卡尺上面那对小的“内爪”，伸进一个螺丝孔里，向外撑开顶住孔壁，读数。</p>
-        <dl class="m-exp"><dt>应约</dt><dd>6.6 mm</dd><dt>能用的范围</dt><dd>6.4 ~ 6.8 mm</dd></dl>
-        <p><b>为什么</b>后面两项孔距要用它来换算。</p>
-        
-        <div class="m-in" data-name="转接件：螺丝孔的直径"><label>读数 <input type="text" inputmode="decimal" data-m="flange_hole_d.r" data-label="读数" data-lo="6.4" data-hi="6.8"> mm</label><span class="m-warn" hidden>和预期差得多，照实填就行</span></div>
-        <p class="m-src">出处：Sharpa 官方 external/sharpa-opencad-library/wave_01/adapter/Flange-Interface.STEP（check.py 第 1 项逐孔核对）</p>
-      </div>
-    </article>
-    <article class="m-card" id="m-flange_holes_diag">
-      <figure class="m-fig"><div class="m-scroll"><img src="media/measure/flange_holes_diag.svg" width="700" height="590" alt="转接件：对角两个孔的孔距：量法示意图" loading="lazy"></div></figure>
-      <div class="m-body">
-        <h4>转接件：对角两个孔的孔距</h4>
-        <p><b>怎么量</b>两只内爪各伸进对角的一个孔，向外撑开，量“最远的孔边到最远的孔边”。再减去上一项量到的孔径，就是孔心到孔心的距离。</p>
-        <dl class="m-exp"><dt>卡尺读数</dt><dd>约 56.6 mm</dd><dt>换算</dt><dd>孔距 = 读数 − 孔径 = 56.6 − 6.6 = 50.0</dd><dt>能用的范围</dt><dd>算出来 49.6 ~ 50.4 mm</dd></dl>
-        <p><b>为什么</b>立柱正面 4 个 M6 螺丝孔照这个距离打的：差太多螺丝拧不进去。</p>
-        
-        <div class="m-in" data-name="转接件：对角两个孔的孔距"><label>读数 <input type="text" inputmode="decimal" data-m="flange_holes_diag.r" data-label="读数" data-lo="56.2" data-hi="57.0"> mm</label><span class="m-warn" hidden>和预期差得多，照实填就行</span></div>
-        <p class="m-src">出处：Sharpa 官方 external/sharpa-opencad-library/wave_01/adapter/Flange-Interface.STEP（check.py 第 1 项逐孔核对）；ISO 9409-1-50-4-M6</p>
-      </div>
-    </article>
-    <article class="m-card" id="m-flange_holes_adj">
-      <figure class="m-fig"><div class="m-scroll"><img src="media/measure/flange_holes_adj.svg" width="700" height="590" alt="转接件：相邻两个孔的孔距：量法示意图" loading="lazy"></div></figure>
-      <div class="m-body">
-        <h4>转接件：相邻两个孔的孔距</h4>
-        <p><b>怎么量</b>和上一项一样的量法，换成相邻的两个孔（比如上面一排的两个）：内爪撑开量最远的孔边到孔边，再减去孔径。</p>
-        <dl class="m-exp"><dt>卡尺读数</dt><dd>约 41.96 mm</dd><dt>换算</dt><dd>孔距 = 读数 − 孔径 = 41.96 − 6.6 = 35.36（= 50 ÷ 1.414）</dd><dt>能用的范围</dt><dd>算出来 35.0 ~ 35.8 mm</dd></dl>
-        <p><b>为什么</b>和对角孔距一起确认 4 个孔是正方形排列。</p>
-        
-        <div class="m-in" data-name="转接件：相邻两个孔的孔距"><label>读数 <input type="text" inputmode="decimal" data-m="flange_holes_adj.r" data-label="读数" data-lo="41.6" data-hi="42.4"> mm</label><span class="m-warn" hidden>和预期差得多，照实填就行</span></div>
-        <p class="m-src">出处：Sharpa 官方 external/sharpa-opencad-library/wave_01/adapter/Flange-Interface.STEP（check.py 第 1 项逐孔核对）</p>
-      </div>
-    </article>
-    <article class="m-card" id="m-flange_pilot_d">
-      <figure class="m-fig"><div class="m-scroll"><img src="media/measure/flange_pilot_d.svg" width="700" height="612" alt="转接件：中间圆凸台的直径：量法示意图" loading="lazy"></div></figure>
-      <div class="m-body">
-        <h4>转接件：中间圆凸台的直径</h4>
-        <p><b>怎么量</b>用卡尺下面那对大的“外爪”夹住圆凸台的两侧，夹在最宽的地方。凸台只高出平面 2 mm，爪尖要卡在凸台的侧壁上，别卡到外圈。</p>
-        <dl class="m-exp"><dt>应约</dt><dd>31.5 mm</dd><dt>能用的范围</dt><dd>31.0 ~ 31.8 mm</dd></dl>
-        <p><b>为什么</b>立柱正面有一个 Ø32 的凹坑让凸台嵌进去定位：凸台更大就嵌不进。</p>
-        
-        <div class="m-in" data-name="转接件：中间圆凸台的直径"><label>读数 <input type="text" inputmode="decimal" data-m="flange_pilot_d.r" data-label="读数" data-lo="31.0" data-hi="31.8"> mm</label><span class="m-warn" hidden>和预期差得多，照实填就行</span></div>
-        <p class="m-src">出处：Sharpa 官方 external/sharpa-opencad-library/wave_01/adapter/Flange-Interface.STEP（check.py 第 1 项逐孔核对）；Flange-Interface.pdf 标注 Ø31.5 −0.05/−0.075</p>
-      </div>
-    </article>
-    <article class="m-card" id="m-flange_pilot_h">
-      <figure class="m-fig"><div class="m-scroll"><img src="media/measure/flange_pilot_h.svg" width="700" height="512" alt="转接件：圆凸台高出平面多少：量法示意图" loading="lazy"></div></figure>
-      <div class="m-body">
-        <h4>转接件：圆凸台高出平面多少</h4>
-        <p><b>怎么量</b>转接件凸台朝上放在桌上。卡尺竖着拿，尾端的平面压在凸台顶上、伸出凸台边一点；推出尾部那根细的“深度杆”，让它顶到凸台旁边的大平面。读数就是高度。</p>
-        <dl class="m-exp"><dt>应约</dt><dd>2.0 mm</dd><dt>能用的范围</dt><dd>1.5 ~ 2.7 mm</dd></dl>
-        <p><b>为什么</b>立柱凹坑深 3 mm：凸台更高的话转接件贴不平。</p>
-        
-        <div class="m-in" data-name="转接件：圆凸台高出平面多少"><label>读数 <input type="text" inputmode="decimal" data-m="flange_pilot_h.r" data-label="读数" data-lo="1.5" data-hi="2.7"> mm</label><span class="m-warn" hidden>和预期差得多，照实填就行</span></div>
-        <p class="m-src">出处：Sharpa 官方 external/sharpa-opencad-library/wave_01/adapter/Flange-Interface.STEP（check.py 第 1 项逐孔核对）</p>
-      </div>
-    </article>
     <article class="m-card" id="m-flange_screw_out">
       <figure class="m-fig"><div class="m-scroll"><img src="media/measure/flange_screw_out.svg" width="700" height="510" alt="官方 M6 螺丝穿过转接件后露出多长：量法示意图" loading="lazy"></div></figure>
       <div class="m-body">
         <h4>官方 M6 螺丝穿过转接件后露出多长</h4>
+        <details class="m-gnote"><summary>法兰转接件（要先把手拆下来）：注意事项</summary><p>转接件夹在手和官方底座之间，螺丝孔和凸台都被挡住，不拆量不了。顺序：手断电、拔掉手腕线 → 一只手托住手，松开手腕一圈 6 颗 M4，取下手放稳 → 松开 4 颗 M6，取下转接件。这和以后把手换到新支架上的步骤一样。只想少拆一步的话：取下手之后不拆转接件，用外爪夹对角两颗 M6 螺丝头的外侧，读数减去一颗螺丝头的直径也是对角孔距（应约 50），但凸台和螺丝露出长度量不到。这几项的期望值来自官方图纸和 ISO 标准，出错的可能性小；不想现在拆手的话可以先打印，装的时候发现不对再改立柱。</p></details>
         <p><b>怎么量</b>把一颗官方 M6 螺丝从转接件“朝手的那一面”穿进孔里，手指顶住螺丝头，翻过来让凸台朝上。</p>
         <dl class="m-exp"><dt>卡尺读数</dt><dd>约 6.0 mm</dd><dt>换算</dt><dd>露出 = 螺丝杆长 10 − 孔底剩下的厚度 4 = 6</dd><dt>能用的范围</dt><dd>算出来 5.0 ~ 12.0 mm</dd></dl>
         <p><b>为什么</b>决定螺丝能拧进立柱多深：太短吃不住力（要换长螺丝），太长会顶到孔底。</p>
@@ -413,12 +252,24 @@ dof_limit_diff(in deg): [0.5 0.4 0.2 0.2 -0 -0.1 0.2 0 0 -0 0.2 0 -0.2 0.1 0.7 0
         <p class="m-src">出处：Sharpa 官方 external/sharpa-opencad-library/wave_01/adapter/Flange-Interface.STEP（check.py 第 1 项逐孔核对）（转接件厚 8、沉孔深 4）；螺丝是装箱清单里的 M6×10（见本页第一节）</p>
       </div>
     </article>
-    <h3 class="sub" id="measure-buy">热熔铜螺母（买到后量）</h3>
-    <div class="caveat m-note"><p>最好在打印立柱之前买到并量好，孔径要按实物定。</p></div>
+    <article class="m-card" id="m-table_clearance">
+      <figure class="m-fig"><div class="m-scroll"><img src="media/measure/table_clearance.svg" width="700" height="512" alt="桌子：桌沿往里多深、往下多高是空的：量法示意图" loading="lazy"></div></figure>
+      <div class="m-body">
+        <h4>桌子：桌沿往里多深、往下多高是空的</h4>
+        
+        <p><b>怎么量</b>用卷尺或钢尺，量到厘米就行。</p>
+        <dl class="m-exp"><dt>能用的范围</dt><dd>L ≥ 60，H ≥ 100 mm</dd></dl>
+        <p><b>为什么</b>2 个 G 型夹要从桌子前沿伸进去 44 mm 压住底板上的两个圆坑，桌面板下面还要放得下夹子的下爪、螺杆和手柄。</p>
+        <p class="m-diff"><b>不一样时</b>把 L 和 H 告诉我；不够的话改用 4 颗 M6 把底板拧在桌上。</p>
+        <div class="m-in" data-name="桌子：桌沿往里多深、往下多高是空的"><label>L <input type="text" inputmode="decimal" data-m="table_clearance.L" data-label="L" data-lo="60"> mm</label><label>H <input type="text" inputmode="decimal" data-m="table_clearance.H" data-label="H" data-lo="100"> mm</label><span class="m-warn" hidden>和预期差得多，照实填就行</span></div>
+        <p class="m-src">出处：垫块中心离桌沿 44 mm（params.py: CLAMP_PAD_XY）加垫块半径；100 是 3 寸 G 型夹螺杆加手柄的长度</p>
+      </div>
+    </article>
     <article class="m-card" id="m-insert_m6">
       <figure class="m-fig"><div class="m-scroll"><img src="media/measure/insert_m6.svg" width="700" height="480" alt="M6 热熔铜螺母：外径和长度（买到后）：量法示意图" loading="lazy"></div></figure>
       <div class="m-body">
         <h4>M6 热熔铜螺母：外径和长度（买到后）</h4>
+        <p class="m-src">最好在打印立柱之前买到并量好，孔径要按实物定。</p>
         <p><b>怎么量</b>外径：外爪夹在滚花（斜纹）最粗的地方，转着量两三处取最大。长度：外爪夹住两个端面。</p>
         <dl class="m-exp"><dt>应约</dt><dd>外径 8.5 ~ 9.0，长度 ≤ 10 mm</dd></dl>
         <p><b>为什么</b>立柱正面 4 个压铜螺母的孔现在是 Ø8.0、深 10，按孔径 = 外径 − 0.4 ~ 0.5 定的。</p>
@@ -431,6 +282,7 @@ dof_limit_diff(in deg): [0.5 0.4 0.2 0.2 -0 -0.1 0.2 0 0 -0 0.2 0 -0.2 0.1 0.7 0
       <figure class="m-fig"><div class="m-scroll"><img src="media/measure/insert_m4.svg" width="700" height="480" alt="M4 热熔铜螺母：外径和长度（买到后）：量法示意图" loading="lazy"></div></figure>
       <div class="m-body">
         <h4>M4 热熔铜螺母：外径和长度（买到后）</h4>
+        <p class="m-src">最好在打印立柱之前买到并量好，孔径要按实物定。</p>
         <p><b>怎么量</b>和 M6 的一样：外径夹滚花最粗处，长度夹两个端面。</p>
         <dl class="m-exp"><dt>应约</dt><dd>外径 6.0 ~ 6.2，长度 ≤ 8 mm</dd></dl>
         <p><b>为什么</b>立柱侧面 2 个压铜螺母的孔现在是 Ø5.6、深 9。</p>
@@ -439,6 +291,26 @@ dof_limit_diff(in deg): [0.5 0.4 0.2 0.2 -0 -0.1 0.2 0 0 -0 0.2 0 -0.2 0.1 0.7 0
         <p class="m-src">出处：params.py: M4_INSERT_HOLE_D / M4_INSERT_HOLE_L；常见规格，没有实物</p>
       </div>
     </article>
+    <h3 class="sub" id="measure-done">已量的（12 项，2026-11-26，都不用重量）</h3>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>项目</th><th>读数（mm）</th><th>结论</th></tr></thead>
+        <tbody>
+          <tr id="m-flange_hole_d"><td>转接件：螺丝孔的直径</td><td>6.5</td><td class="w">符合（图纸 6.6）</td></tr>
+          <tr id="m-flange_holes_diag"><td>转接件：对角两个孔的孔距</td><td>读数 56.5 → 孔距 50.0</td><td class="w">符合（50.0）</td></tr>
+          <tr id="m-flange_holes_adj"><td>转接件：相邻两个孔的孔距</td><td>读数 42 → 孔距 35.5</td><td class="w">符合（35.36）</td></tr>
+          <tr id="m-flange_pilot_d"><td>转接件：中间圆凸台的直径</td><td>31</td><td class="w">能装（图纸 31.5，立柱凹坑 Ø32；读到整毫米）</td></tr>
+          <tr id="m-flange_pilot_h"><td>转接件：圆凸台高出平面多少</td><td>2</td><td class="w">符合（2.0）</td></tr>
+          <tr id="m-d405_body"><td>D405：机身的宽、高、厚</td><td>宽 42，高 42，厚 23</td><td class="w">符合（42 × 42 × 23）</td></tr>
+          <tr id="m-d405_m3_spacing"><td>D405：背面两个 M3 螺孔的孔距</td><td>单孔内径 2，两孔最远孔壁读数 23 → 孔距 21</td><td class="w">datasheet 是 20，实测 21 ± 1。不用重量：过孔已改成长孔，孔距 18.9 ~ 22.1 都能装</td></tr>
+          <tr id="m-d405_m3_edges"><td>D405：螺孔离机身四条边多远</td><td>A 22，B 19，C 13</td><td class="w">A + B 对不上机身高度（应约 44.9），多半是 B 量到了螺丝近侧。不用重量：过孔已改成长孔，孔心到顶面 17.2 ~ 24.8 都能装，定位靠顶面贴鳍片</td></tr>
+          <tr id="m-d405_usb_side"><td>D405：USB-C 口在哪一面</td><td>是，在左侧面（从背后看）</td><td class="w">符合：竖装后 USB 口朝上前方</td></tr>
+          <tr id="m-d405_top_flat"><td>D405：顶面平不平</td><td>直（平的）</td><td class="w">符合：可以当滚转靠山面</td></tr>
+          <tr id="m-table_thickness"><td>桌子：桌面有多厚</td><td>25</td><td class="w">用 3 寸 G 型夹（开口 75 ≥ 25 + 12 + 5）</td></tr>
+          <tr id="m-wrist_plug"><td>手腕线插头：硬的那段有多长</td><td>47</td><td class="w">可以：按 47 mm 做了光线投射，插头和垂下的线在画面里 0 像素（被手腕和转接件挡住）。线要往下垂，不要往指尖方向甩</td></tr>
+        </tbody>
+      </table>
+    </div>
     <h3 class="sub">装的时候再看</h3>
     <ul class="plain">
       <li><strong>手腕线最小能弯多急、垂下来的那段会不会进相机画面</strong>：装好后看深度预览：画面右边缘不应该出现线。</li>
