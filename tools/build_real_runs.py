@@ -157,6 +157,8 @@ def main():
         model = meta.get('model') or fill.get('model')
         obj = (meta.get('object') or {}).get('id') or fill.get('object')
         fs = meta.get('force_scale', fill.get('force_scale'))
+        if not model and fs is None:
+            continue  # 模型和参数都不知道的旧记录不进表（用户 2026-11-26）
         m = metrics(os.path.join(LOGS, fn), fs)
         end = meta.get('end') or {}
         run_s = end.get('run_s') if end.get('run_s') is not None else (m or {}).get('csv_s')
