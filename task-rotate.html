@@ -173,13 +173,14 @@
         <tbody>
           <tr><td>圆柱尺寸</td><td>r16–24，高 25.6–38.4 mm</td><td>圆柱 2 r20 × h32；圆柱 1、3 r24 × h60</td><td>圆柱 2 在；圆柱 1、3 半径在、高超出一半多</td></tr>
           <tr><td>圆柱质量</td><td>10–250 g</td><td>圆柱 1 29 g、圆柱 2 26 g、圆柱 3 65 g</td><td>在</td></tr>
-          <tr><td>指尖力读数</td><td>约 1–1.6 N，大小不随机</td><td>拇指约 10 N</td><td><strong>不在</strong>。部署时乘 0.2 拉回来，但各指之间的比例对不上</td></tr>
+          <tr><td>指尖力读数</td><td>约 1–1.6 N，大小不随机</td><td>拇指原始读数 7–13 N；乘官方触觉系数 0.667 后约 5 N</td><td><strong>不在</strong></td></tr>
           <tr><td>关节软硬</td><td>标准值的 0.5–2 倍</td><td>没法直接量。真手夹得明显更紧</td><td><strong>看起来不在</strong>，这是推断</td></tr>
         </tbody>
       </table>
     </div>
     <div class="explain">
       <p>差距集中在两处：指尖力的大小，和关节的软硬。v1 加宽的就是这两项。</p>
+      <p><strong>真手传感器读数是准的</strong>（11-25 按秤核对：位置控制下指腹压厨房秤，传感器取 2 秒平均）。食指 110 / 300 / 500 / 750 g，传感器 ÷ 秤 = 1.07 / 0.84 / 1.00 / 1.06，过原点拟合 ×1.02；中指 96 / 320 / 550 / 820 / 1225 g，比值 0.81 / 0.73 / 0.80 / 0.87 / 0.91，拟合 ×0.88（偏低约一成，原因没查）。所以真手的力本身就比仿真大，不是读数虚高。</p>
     </div>
 
     <h3 class="sub">手的状态：每 50 ms 读一次，每次 64 个数</h3>
@@ -265,13 +266,13 @@
 
     <h3 class="sub">结果</h3>
     <div class="explain">
-      <p>真手的指尖力读数和仿真不一样大（拇指真手约 10 N，仿真约 1.3 N）。“乘 3”“乘 0.33”是在仿真里把 5 个指尖的触觉读数统一乘 3 或乘 0.33 再喂给策略，看它受多大影响，其余条件不变。</p>
+      <p>真手的指尖力和仿真不一样大（拇指真手原始读数 7–13 N，仿真约 1.3 N）。“乘 3”“乘 0.33”是在仿真里把 5 个指尖的触觉读数统一乘 3 或乘 0.33 再喂给策略，看它受多大影响，其余条件不变。</p>
     </div>
     <div class="tablewrap">
       <table class="dense">
         <thead><tr><th>模型</th><th>平均转速</th><th>从不掉落<br>（共 512）</th><th>轻圆柱<br>从不掉落<br>（共 83）</th><th>轻圆柱<br>转速</th><th>重圆柱<br>从不掉落<br>（共 106）</th><th>手竖着摆：转速<br>（放倒 → 竖着，r20）</th><th>真手：<br>能不能部署</th><th>真手：效果</th></tr></thead>
         <tbody>
-          <tr><td><strong>官方 0.4-0.6-8</strong></td><td>原样 0.63 rad/s<br>乘 3 0.48 rad/s</td><td>原样 192<br>乘 3 <strong>34</strong><br>乘 0.33 228</td><td>原样 66<br>乘 3 <strong>26</strong><br>乘 0.33 47</td><td>0.73 rad/s</td><td>7</td><td>0.65 → 0.61 rad/s</td><td>能</td><td class="w"><strong>目前最好</strong>，触觉系数 0.2、电流系数 0.4、多合 0 格。<br>圆柱 1：能转，约 15–20 秒一圈（11-25 转满一圈）。<br>圆柱 2：不稳，11-25 转了半圈多后不再转（第 13–14 秒小指根关节掉到 0.02 rad 再没回来）；11-23 也基本不转（<a href="#cyl2">见下</a>）</td></tr>
+          <tr><td><strong>官方 0.4-0.6-8</strong></td><td>原样 0.63 rad/s<br>乘 3 0.48 rad/s</td><td>原样 192<br>乘 3 <strong>34</strong><br>乘 0.33 228</td><td>原样 66<br>乘 3 <strong>26</strong><br>乘 0.33 47</td><td>0.73 rad/s</td><td>7</td><td>0.65 → 0.61 rad/s</td><td>能</td><td class="w"><strong>目前最好</strong>，触觉系数 0.667（官方默认）、多合 0 格。<br>圆柱 1（电流系数 0.6，1 次，11-25 18:24:29）：10 秒转约一圈。<br>圆柱 2（3 次）：电流系数 0.4 连续转 53.6 秒约 3 圈；0.6 一次 33.2 秒约 3 圈，一次约 16–18 秒掉了。<br>触觉系数 0.2 时圆柱 2 转约半圈到一圈就卡住（<a href="#cyl2">见下</a>）</td></tr>
           <tr><td><strong>官方 0.5-0.5-1</strong></td><td>原样 0.33 rad/s<br>乘 3 没测</td><td>原样 390<br>乘 3 没测<br>乘 0.33 没测</td><td>原样 81<br>乘 3 没测<br>乘 0.33 没测</td><td>0.35 rad/s</td><td>没有统计</td><td>0.33 → 0.36 rad/s</td><td>能</td><td>基本不转</td></tr>
           <tr><td><strong>v1 学生</strong></td><td>原样 0.39 rad/s<br>乘 3 0.35 rad/s</td><td>原样 372<br>乘 3 <strong>346</strong><br>乘 0.33 317</td><td>原样 65<br>乘 3 <strong>57</strong><br>乘 0.33 58</td><td>0.46 rad/s</td><td>67</td><td>没测</td><td>能</td><td class="w"><strong>很差</strong>（11-20，各试 1 次）：圆柱 1、3 上手指越动越小，约 7、8 秒后完全不动；圆柱 2 上约 16 秒后指尖全部离开圆柱</td></tr>
           <tr><td><strong>v1 老师</strong></td><td>原样 0.42 rad/s<br>乘 3 没测</td><td>原样 481<br>乘 3 没测<br>乘 0.33 没测</td><td>原样 77<br>乘 3 没测<br>乘 0.33 没测</td><td>0.50 rad/s</td><td>91</td><td>没测</td><td>不能</td><td>—</td></tr>
@@ -285,21 +286,46 @@
       <li><strong>官方 <code>0.4-0.6-8</code> 快但容易掉。</strong>掉落主要发生在重的、滑的圆柱上。</li>
       <li><strong>我们的 v1 慢四成，但稳得多。</strong>但在轻圆柱上（圆柱 1、2 属于这一类），两者掉落差不多（65 对 66），v1 只是更慢。</li>
       <li><strong>v1 慢，主要是老师就慢</strong>（0.42）。原因还不清楚：可能是刚度随机加宽，也可能是 3 亿步不够。</li>
-      <li><strong>触觉读数偏大对官方模型伤害很大</strong>（192 → 34），v1 基本不受影响（372 → 346）。真手拇指的读数约 10 N，仿真里约 1.3 N。但 v1 在真手上实测比官方模型差（见上表）：真手和仿真的差别不只是读数整体放大。</li>
+      <li><strong>触觉读数偏大对官方模型伤害很大</strong>（192 → 34），v1 基本不受影响（372 → 346）。真手拇指原始读数 7–13 N，仿真里约 1.3 N。读数缩小同样有害：仿真里乘 0.33，官方模型在轻圆柱上的从不掉落从 66 降到 47；真手上触觉系数 0.2 也比 0.667 差（<a href="#cyl2">见下</a>）。v1 在真手上也比官方模型差：真手和仿真的差别不只是读数整体放大。</li>
       <li><strong>手竖着摆没有影响</strong>，真手不用改摆法。</li>
     </ul>
 
-    <h3 class="sub" id="cyl2">真手上圆柱 2 为什么转半圈就不转了</h3>
+    <h3 class="sub" id="cyl2">真手上圆柱 2 转半圈就卡住：和触觉系数 0.2 有关</h3>
     <div class="explain">
-      <p>官方模型在真手上，圆柱 1 能转；圆柱 2 开头十来秒正常，之后小指掌根关节（CMC）的实际角度从约 0.16 掉到 0.02 rad（目标一直在上限约 0.24），步态从约 1.9 Hz 掉到约 1.4 Hz，圆柱不再转。11-23、11-25 共 4 次都这样，电流系数从 0.4 调到 0.6 也一样。</p>
-    </div>
-    <div class="vids" style="grid-template-columns:1fr;max-width:900px">
-      <figure><video src="media/rotate_replay_cyl2_vs_sim.mp4" poster="media/rotate_replay_cyl2_vs_sim.jpg" controls loop muted playsinline preload="none"></video><figcaption><strong>左：把真手的手指动作照搬进仿真（11-25 15:09，圆柱 2，电流系数 0.4）；右：同样的圆柱，策略在仿真里自己跑。</strong>左边 12 秒转了 432° 后基本停住，右边一直转。左边只照搬手指、不看圆柱的反应，仿真和真手稍有差别圆柱的走法就会不同，所以只能看倾向。</figcaption></figure>
-      <figure><video src="media/rotate_replay_cyl2b_vs_cyl1.mp4" poster="media/rotate_replay_cyl2b_vs_cyl1.jpg" controls loop muted playsinline preload="none"></video><figcaption><strong>都是真手动作的回放。左：圆柱 2（11-25 15:23，电流系数 0.6）；右：圆柱 1（11-25 15:08）。</strong>左边转到约 210° 停住，右边一直转。</figcaption></figure>
+      <p>官方模型 <code>0.4-0.6-8</code>，圆柱 2，11-25 真手记录。触觉系数 0.2 是 11-19 我们自己试出来的，没有留依据；官方部署代码默认 1/1.5 ≈ 0.667（<code>sharpa_wave_deploy_env_cfg.py</code> 第 27 行）。</p>
     </div>
     <div class="tablewrap">
       <table class="dense">
-        <thead><tr><th>真手和仿真闭环的差别</th><th>真手</th><th>真手动作回放进仿真</th><th>仿真闭环</th></tr></thead>
+        <thead><tr><th></th><th>15:09:39</th><th>15:23:14</th><th>15:23:49</th><th>18:30:00</th><th>18:31:14</th><th>18:31:49</th></tr></thead>
+        <tbody>
+          <tr><td>触觉系数</td><td>0.2</td><td>0.2</td><td>0.2</td><td><strong>0.667</strong></td><td><strong>0.667</strong></td><td><strong>0.667</strong></td></tr>
+          <tr><td>电流系数</td><td>0.4</td><td>0.4</td><td>0.6</td><td>0.4</td><td>0.6</td><td>0.6</td></tr>
+          <tr><td>运行时长</td><td>41.2 秒</td><td>19.5 秒</td><td>39.2 秒</td><td>53.6 秒</td><td>23.1 秒</td><td>33.2 秒</td></tr>
+          <tr><td>结果</td><td>约 14 秒卡住</td><td>约 8 秒卡住</td><td>约 12 秒卡住</td><td><strong>一直转，约 3 圈</strong></td><td>约 16–18 秒掉了</td><td><strong>一直转，约 3 圈</strong>；停止后掉</td></tr>
+          <tr><td>小指掌根关节（2 秒平均）</td><td>0.16–0.19 → <strong>0.02</strong> rad</td><td>0.15–0.20 → <strong>0.02</strong> rad</td><td>0.16–0.17 → <strong>0.02–0.04</strong> rad</td><td>0.15–0.22 rad，第 16–18 秒一次 0.11</td><td>0.17–0.19 rad，掉之后 0.02</td><td>0.19–0.22 → 0.11–0.17 rad</td></tr>
+          <tr><td>步态</td><td>1.9 → 1.4 Hz</td><td>1.9 → 1.4 Hz</td><td>1.9 → 1.4 Hz</td><td>1.7–1.9 Hz</td><td>1.8 Hz，掉之后 1.3</td><td>1.7–1.8 Hz</td></tr>
+          <tr><td>拇指力：策略收到的</td><td>2.1 N</td><td>2.2 N</td><td>2.7 N</td><td>4.7 N</td><td>5.1 N</td><td>5.0 N</td></tr>
+          <tr><td>拇指力：传感器原始</td><td>10.3 N</td><td>10.8 N</td><td>13.5 N</td><td>7.1 N</td><td>7.6 N</td><td>7.6 N</td></tr>
+          <tr><td>中指力：策略收到的</td><td>1.2 N</td><td>0.9 N</td><td>1.4 N</td><td>2.7 N</td><td>2.8 N</td><td>3.5 N</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="explain">
+      <p>数据来自 <code>playstation/.cache/rotate_logs/rotate_sharpa_1125_*.csv</code>（表头是文件名里的时间）。“约 3 圈”“掉了”是用户看到的；“卡住”指小指掌根塌到 0.02 rad 后步态变慢、圆柱不再转。15:09:39、15:23:49 在约 30 秒后小指掌根又升回 0.16 以上，圆柱有没有重新转没有记录。小指掌根是 Isaac 关节顺序第 2 个（<code>right_pinky_CMC</code>），目标一直在上限约 0.24 rad。步态是各关节角 5 秒一段做频谱的主频。力是有接触时的中位数，原始 = 策略收到的 ÷ 触觉系数。</p>
+    </div>
+    <ul class="caveat">
+      <li><strong>触觉系数改回 0.667 后，“转半圈就卡住”没有再出现</strong>：3 次里 2 次连续转 30 秒以上，1 次是掉落，不是卡住。0.2 时 11-23、11-25 共 4 次都卡住（表里是 11-25 的 3 次）。</li>
+      <li><strong>原因（推断）：0.2 把力缩得太小，策略以为没夹住，越夹越紧、越夹越偏。</strong>同样电流系数 0.4，0.2 时拇指实际用力 10.3–10.8 N，0.667 时 7.1 N。</li>
+      <li><strong>样本少</strong>：0.667 + 电流 0.4 只跑了 1 次；0.667 + 电流 0.6 跑了 2 次，掉了 1 次。</li>
+    </ul>
+    <h3 class="sub">触觉系数 0.2 时，真手和仿真闭环的差别</h3>
+    <div class="vids" style="grid-template-columns:1fr;max-width:900px">
+      <figure><video src="media/rotate_replay_cyl2_vs_sim.mp4" poster="media/rotate_replay_cyl2_vs_sim.jpg" controls loop muted playsinline preload="metadata"></video><figcaption><strong>左：把真手的手指动作照搬进仿真（11-25 15:09，圆柱 2，电流系数 0.4）；右：同样的圆柱，策略在仿真里自己跑。</strong>左边 12 秒转了 432° 后基本停住，右边一直转。左边只照搬手指、不看圆柱的反应，仿真和真手稍有差别圆柱的走法就会不同，所以只能看倾向。</figcaption></figure>
+      <figure><video src="media/rotate_replay_cyl2b_vs_cyl1.mp4" poster="media/rotate_replay_cyl2b_vs_cyl1.jpg" controls loop muted playsinline preload="metadata"></video><figcaption><strong>都是真手动作的回放。左：圆柱 2（11-25 15:23，电流系数 0.6）；右：圆柱 1（11-25 15:08）。</strong>左边转到约 210° 停住，右边一直转。</figcaption></figure>
+    </div>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>项目</th><th>真手</th><th>真手动作回放进仿真</th><th>仿真闭环</th></tr></thead>
         <tbody>
           <tr><td>拇指有接触力的时间</td><td>100%</td><td>—</td><td>65%</td></tr>
           <tr><td>无名指有接触力的时间</td><td>92–96%（塌掉前 10 秒）</td><td>—</td><td>46%</td></tr>
@@ -313,7 +339,7 @@
       <p>真手数字来自 playstation 的运行记录（11-25），仿真数字来自 hand-sim 的回放 / 闭环评估；力的对比只是量级。</p>
     </div>
     <ul class="caveat">
-      <li><strong>“指尖没握紧”：不支持，方向相反。</strong>真手比仿真里夹得更紧、更拢，拇指从不松开（确定，来自真手记录）。</li>
+      <li><strong>“指尖没握紧”：不支持，方向相反。</strong>真手比仿真里夹得更紧、更拢，拇指从不松开（确定，来自真手记录）。现在看是触觉系数 0.2 造成的（见上）。</li>
       <li><strong>“圆柱慢慢跑到手心”：部分支持。</strong>圆柱 2 的回放里，圆柱在塌掉前大多往手心方向走，压在小指中节上把掌根关节顶回去；仿真闭环里没有这种漂移。但回放是开环的、结果随摩擦变化很大，真手上圆柱实际在哪没有直接证据（推测）。</li>
       <li><strong>不是初始握姿的问题</strong>：从真手第一帧的姿势起步、让策略在仿真里自己跑，16 / 16 不掉。</li>
     </ul>
