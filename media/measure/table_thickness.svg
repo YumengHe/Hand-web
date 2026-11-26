@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 490" width="700" height="490" font-family="'Noto Sans CJK SC','Source Han Sans SC','PingFang SC','Microsoft YaHei','WenQuanYi Micro Hei',sans-serif">
+<rect width="700" height="490" fill="#ffffff"/>
+<text x="20.0" y="30.0" font-size="21" fill="#222" text-anchor="start" font-weight="bold">桌子：桌面有多厚</text>
+<text x="20.0" y="54.0" font-size="15" fill="#555" text-anchor="start" font-weight="normal">从侧面看桌沿（示意，不按比例）</text>
+<rect x="60.00" y="190.00" width="460.00" height="46.00" rx="0.00" stroke="#222" stroke-width="2.00" fill="#ead9c0"/>
+<text x="200.0" y="219.0" font-size="15" fill="#6d4c41" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">桌面板</text>
+<rect x="60.00" y="236.00" width="130.00" height="86.00" rx="0.00" stroke="#222" stroke-width="1.60" fill="#d7c2a0"/>
+<text x="125.0" y="284.0" font-size="14" fill="#6d4c41" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">横梁 / 抽屉</text>
+<rect x="250.00" y="176.00" width="270.00" height="14.00" rx="0.00" stroke="#222" stroke-width="1.40" fill="#cfd8dc"/>
+<text x="380.0" y="168.0" font-size="14" fill="#888" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">支架底板（厚 10）</text>
+<rect x="20.00" y="70.00" width="14.00" height="14.00" rx="0.00" stroke="#1565c0" stroke-width="1.60" fill="#1565c0"/>
+<text x="40.0" y="82.0" font-size="14" fill="#222" text-anchor="start" font-weight="normal">蓝 = 卡尺外爪（固定）</text>
+<rect x="228.00" y="70.00" width="14.00" height="14.00" rx="0.00" stroke="#e65100" stroke-width="1.60" fill="#e65100"/>
+<text x="248.0" y="82.0" font-size="14" fill="#222" text-anchor="start" font-weight="normal">橙 = 卡尺外爪（活动）</text>
+<path d="M489.00 190.00 L519.00 190.00 L519.00 183.50 L489.00 183.50 Z" stroke="#1565c0" stroke-width="1.00" fill="#1565c0" stroke-linejoin="round" stroke-linecap="round" opacity="0.90"/>
+<path d="M519.00 236.00 L489.00 236.00 L489.00 242.50 L519.00 242.50 Z" stroke="#e65100" stroke-width="1.00" fill="#e65100" stroke-linejoin="round" stroke-linecap="round" opacity="0.90"/>
+<path d="M504.00 190.00 L572.00 190.00" stroke="#c62828" stroke-width="1.00" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M504.00 236.00 L572.00 236.00" stroke="#c62828" stroke-width="1.00" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M566.00 201.00 L566.00 225.00" stroke="#c62828" stroke-width="2.60" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M566.00 236.00 L561.00 223.00 L571.00 223.00 Z" stroke="#c62828" stroke-width="0.50" fill="#c62828" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M566.00 190.00 L561.00 203.00 L571.00 203.00 Z" stroke="#c62828" stroke-width="0.50" fill="#c62828" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="578.0" y="219.0" font-size="17" fill="#c62828" text-anchor="start" font-weight="bold" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">厚度 T</text>
+<rect x="12.00" y="398.00" width="676.00" height="80.00" rx="6.00" stroke="#ccc" stroke-width="1.00" fill="#fafafa"/>
+<text x="24.0" y="420.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">在桌沿用外爪夹住桌面板的上下两面（先把底板拿开，只量桌面板）。卡尺张不够就用尺子。</text>
+<text x="24.0" y="442.0" font-size="15" fill="#c62828" text-anchor="start" font-weight="normal">没有期望值，把读数告诉我。</text>
+<text x="24.0" y="464.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">用途：选 G 型夹。夹子的开口要 ≥ T + 10（底板）+ 5。</text>
+</svg>

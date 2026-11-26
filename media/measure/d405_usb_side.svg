@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 530" width="700" height="530" font-family="'Noto Sans CJK SC','Source Han Sans SC','PingFang SC','Microsoft YaHei','WenQuanYi Micro Hei',sans-serif">
+<rect width="700" height="530" fill="#ffffff"/>
+<text x="20.0" y="30.0" font-size="21" fill="#222" text-anchor="start" font-weight="bold">D405：USB-C 口在哪一面</text>
+<text x="20.0" y="54.0" font-size="15" fill="#555" text-anchor="start" font-weight="normal">从相机背后看（镜头朝离开你的方向，三脚架螺孔朝下）</text>
+<rect x="211.40" y="116.40" width="277.20" height="277.20" rx="26.40" stroke="#222" stroke-width="2.00" fill="#f1f3f5"/>
+<circle cx="284.00" cy="255.00" r="8.25" stroke="#222" stroke-width="1.50" fill="#fff"/>
+<circle cx="284.00" cy="255.00" r="9.90" stroke="#777" stroke-width="0.80" fill="none" stroke-dasharray="3 2"/>
+<circle cx="416.00" cy="255.00" r="8.25" stroke="#222" stroke-width="1.50" fill="#fff"/>
+<circle cx="416.00" cy="255.00" r="9.90" stroke="#777" stroke-width="0.80" fill="none" stroke-dasharray="3 2"/>
+<rect x="328.88" y="360.60" width="42.24" height="33.00" rx="0.00" stroke="#777" stroke-width="0.90" fill="none" stroke-dasharray="4 3"/>
+<rect x="206.40" y="227.28" width="10.00" height="55.44" rx="3.00" stroke="#6a1b9a" stroke-width="1.40" fill="#e1bee7"/>
+<path d="M201.40 255.00 L141.40 225.00" stroke="#6a1b9a" stroke-width="1.20" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="137.4" y="201.0" font-size="16" fill="#6a1b9a" text-anchor="end" font-weight="bold" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">我预期 USB-C 口</text>
+<text x="137.4" y="221.0" font-size="16" fill="#6a1b9a" text-anchor="end" font-weight="bold" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">在左侧面</text>
+<text x="350.0" y="104.4" font-size="15" fill="#888" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">顶面</text>
+<text x="502.6" y="260.0" font-size="15" fill="#888" text-anchor="start" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">右侧面</text>
+<text x="350.0" y="417.6" font-size="15" fill="#888" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">底面（有三脚架螺孔）</text>
+<text x="350.0" y="229.0" font-size="14" fill="#888" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">背面</text>
+<text x="350.0" y="289.0" font-size="13" fill="#888" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">（两个 M3 螺孔）</text>
+<rect x="12.00" y="438.00" width="676.00" height="80.00" rx="6.00" stroke="#ccc" stroke-width="1.00" fill="#fafafa"/>
+<text x="24.0" y="460.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">不用卡尺，看一眼：镜头背对你、三脚架螺孔朝下拿着相机，USB-C 口在你的哪只手那边？</text>
+<text x="24.0" y="482.0" font-size="15" fill="#c62828" text-anchor="start" font-weight="normal">预期：左手边（左侧面），口的两边各有一个小螺孔。</text>
+<text x="24.0" y="504.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">请回答：□ 是，在左侧面    □ 不是，在 ______ 面。  （它决定竖装后线从哪边出来）</text>
+</svg>

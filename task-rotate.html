@@ -271,13 +271,25 @@
       <table class="dense">
         <thead><tr><th>模型</th><th>平均转速</th><th>从不掉落<br>（共 512）</th><th>轻圆柱<br>从不掉落<br>（共 83）</th><th>轻圆柱<br>转速</th><th>重圆柱<br>从不掉落<br>（共 106）</th><th>手竖着摆：转速<br>（放倒 → 竖着，r20）</th><th>真手：<br>能不能部署</th><th>真手：效果</th></tr></thead>
         <tbody>
-          <tr><td><strong>官方 0.4-0.6-8</strong></td><td>原样 1.34 rad/s<br>乘 3 1.05 rad/s<br>乘 0.33 1.25 rad/s</td><td>原样 192<br>乘 3 <strong>34</strong><br>乘 0.33 228</td><td>原样 66<br>乘 3 <strong>26</strong><br>乘 0.33 47</td><td>1.58 rad/s</td><td>7</td><td>1.37 → 1.31 rad/s</td><td>能</td><td class="w"><strong>目前最好</strong>，触觉系数 0.667（官方默认）。<br>圆柱 1（电流系数 0.6，1 次，11-25 18:24:29）：10 秒转约一圈。<br>圆柱 2（4 次）：电流系数 0.4 连续转 53.6 秒约 3 圈；0.6 一次 33.2 秒约 3 圈，一次约 16–18 秒掉了；官方全套（电流 0.3、多合 2）53.4 秒约 2.5 圈。<br>触觉系数 0.2 时圆柱 2 转约半圈到一圈就卡住（<a href="#cyl2">见下</a>）</td></tr>
+          <tr><td><strong>官方 0.4-0.6-8</strong></td><td>原样 1.34 rad/s<br>乘 3 1.05 rad/s<br>乘 0.33 1.25 rad/s</td><td>原样 192<br>乘 3 <strong>34</strong><br>乘 0.33 228</td><td>原样 66<br>乘 3 <strong>26</strong><br>乘 0.33 47</td><td>1.58 rad/s</td><td>7</td><td>1.37 → 1.31 rad/s</td><td>能</td><td class="w"><strong>目前最好</strong>，触觉系数 0.667（官方默认）。<br>圆柱 1（电流系数 0.6，1 次，11-25 18:24:29）：10 秒转约一圈。<br>圆柱 2（4 次）：电流系数 0.4 连续转 53.6 秒约 3 圈；0.6 一次 33.2 秒约 3 圈，一次约 16–18 秒掉了；官方全套（电流 0.3、多合 2）53.4 秒约 2.5 圈。<br>触觉系数 0.2 时圆柱 2 转约半圈到一圈就卡住（<a href="#cyl2">见下</a>）。<a href="#param-test">全部记录</a></td></tr>
           <tr><td><strong>官方 0.5-0.5-1</strong></td><td>原样 0.82 rad/s<br>乘 3 没测</td><td>原样 390<br>乘 3 没测<br>乘 0.33 没测</td><td>原样 81<br>乘 3 没测<br>乘 0.33 没测</td><td>0.91 rad/s</td><td>没有统计</td><td>0.82 → 0.79 rad/s</td><td>能</td><td>基本不转</td></tr>
-          <tr><td><strong>v1 学生</strong></td><td>原样 0.96 rad/s<br>乘 3 0.87 rad/s<br>乘 0.33 0.93 rad/s</td><td>原样 372<br>乘 3 <strong>346</strong><br>乘 0.33 317</td><td>原样 65<br>乘 3 <strong>57</strong><br>乘 0.33 58</td><td>1.05 rad/s</td><td>67</td><td>没测</td><td>能</td><td class="w"><strong>很差</strong>（11-20，各试 1 次）：圆柱 1、3 上手指越动越小，约 7、8 秒后完全不动；圆柱 2 上约 16 秒后指尖全部离开圆柱</td></tr>
+          <tr><td><strong>v1 学生</strong></td><td>原样 0.96 rad/s<br>乘 3 0.87 rad/s<br>乘 0.33 0.93 rad/s</td><td>原样 372<br>乘 3 <strong>346</strong><br>乘 0.33 317</td><td>原样 65<br>乘 3 <strong>57</strong><br>乘 0.33 58</td><td>1.05 rad/s</td><td>67</td><td>没测</td><td>能</td><td class="w"><strong>比官方差</strong>。触觉系数 0.667（11-26，各 30 秒）：圆柱 2 两次一直转，约 1、1.5 圈；圆柱 1 一次约半圈，一次约 5 秒后停住。<br>触觉系数 0.2（11-20）：圆柱 1、3 约 7–8 秒后不动，圆柱 2 约 16 秒后指尖全部离开。<a href="#param-test">全部记录</a></td></tr>
           <tr><td><strong>v1 老师</strong></td><td>原样 0.97 rad/s<br>乘 3 没测</td><td>原样 481<br>乘 3 没测<br>乘 0.33 没测</td><td>原样 77<br>乘 3 没测<br>乘 0.33 没测</td><td>1.06 rad/s</td><td>91</td><td>没测</td><td>不能</td><td>—</td></tr>
         </tbody>
       </table>
     </div>
+    <details class="more">
+      <summary>按圆柱尺寸分（每档 64 个环境，“从不掉落数 / 转速 rad/s”）：越小越容易掉，也稍快一点，官方 r16 比 r24 快 28%</summary>
+    <div class="tablewrap">
+        <table>
+          <thead><tr><th>半径 mm</th><th>16.0</th><th>17.1</th><th>18.3</th><th>19.4</th><th>20.6</th><th>21.7</th><th>22.9</th><th>24.0</th></tr></thead>
+          <tbody>
+            <tr><td>官方 <code>0.4-0.6-8</code></td><td>2 / 1.47</td><td>8 / 1.37</td><td>17 / 1.45</td><td>28 / 1.43</td><td>32 / 1.32</td><td>39 / 1.31</td><td>29 / 1.23</td><td>37 / 1.15</td></tr>
+            <tr><td>我们的 v1 学生</td><td>20 / 1.09</td><td>26 / 1.03</td><td>44 / 1.05</td><td>48 / 1.02</td><td>54 / 0.94</td><td>57 / 0.91</td><td>62 / 0.86</td><td>61 / 0.74</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
     <div class="explain">
       <p><strong>测法：</strong>512 个环境跑 60 秒，训练时的随机化全部打开，正常重力。<code>0.5-0.5-1</code> 只在 r20 上测，其余在 8 个尺寸上测。转速 = 圆柱累计转角 ÷ 时间；1.34 rad/s 约 4.7 秒一圈，60 秒转 13 圈（中位）。11-25 前页面用的是每个 50 ms 控制步末的瞬时角速度，步末正好是一步里最慢的时刻，只有实际的 0.42–0.48 倍（<code>logs/night_1125/REPORT.md</code> 任务 2）。“从不掉落”是 60 秒内一次都没掉的环境数，不受口径影响。轻圆柱指 50 g 以下（圆柱 1、2 属于这一类），重圆柱指 200 g 以上；圆柱 3（65 g）两类都不属于。“推断”指官方没有公布训练配置，按仓库的默认配置和代码写的。</p>
     </div>
@@ -289,147 +301,6 @@
       <li><strong>手竖着摆没有影响</strong>，真手不用改摆法。</li>
       <li><strong>真手比仿真慢到约六分之一</strong>：真手 11-25 19:34:26（官方全套 0.667 / 0.3 / 2，圆柱 2）录像里 53.8 秒约 2.5 圈 ≈ 0.29 rad/s（按圆柱侧面蓝胶带出现的周期数，假设一圈一段蓝色）；仿真里同样的圆柱 2 是 1.62 rad/s。</li>
     </ul>
-
-    <h3 class="sub" id="cyl2">真手上圆柱 2 转半圈就卡住：和触觉系数 0.2 有关</h3>
-    <div class="explain">
-      <p>官方模型 <code>0.4-0.6-8</code>，圆柱 2，11-25 真手记录。触觉系数 0.2 是 11-19 我们自己试出来的，没有留依据；官方部署代码默认 1/1.5 ≈ 0.667（<code>sharpa_wave_deploy_env_cfg.py</code> 第 27 行）。</p>
-    </div>
-    <div class="tablewrap">
-      <table class="dense">
-        <thead><tr><th></th><th>15:09:39</th><th>15:23:14</th><th>15:23:49</th><th>18:30:00</th><th>18:31:49</th><th>19:34:26</th><th>18:31:14</th></tr></thead>
-        <tbody>
-          <tr><td>触觉系数</td><td>0.2</td><td>0.2</td><td>0.2</td><td><strong>0.667</strong></td><td><strong>0.667</strong></td><td><strong>0.667</strong></td><td><strong>0.667</strong></td></tr>
-          <tr><td>电流系数</td><td>0.4</td><td>0.4</td><td>0.6</td><td>0.4</td><td>0.6</td><td>0.3</td><td>0.6</td></tr>
-          <tr><td>多合几格</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td></tr>
-          <tr><td>运行时长</td><td>41.2 秒</td><td>19.5 秒</td><td>39.2 秒</td><td>53.6 秒</td><td>33.2 秒</td><td>53.4 秒</td><td>23.1 秒</td></tr>
-          <tr><td>结果</td><td>约 14 秒卡住</td><td>约 8 秒卡住</td><td>约 12 秒卡住</td><td><strong>一直转，约 3 圈</strong></td><td><strong>一直转，约 3 圈</strong>；停止后掉</td><td><strong>一直转，约 2.5 圈</strong></td><td>约 16–18 秒掉了</td></tr>
-          <tr><td>小指掌根 &lt; 0.06 rad 的时间</td><td>42%</td><td>60%</td><td>37%</td><td>2%</td><td>3%</td><td>18%</td><td>38%（大多在掉之后）</td></tr>
-          <tr><td>其中最长连续</td><td>13.6 秒</td><td>11.8 秒</td><td>4.8 秒</td><td>1.0 秒</td><td>0.3 秒</td><td>2.1 秒</td><td>7.5 秒</td></tr>
-          <tr><td>步态</td><td>1.9 → 1.4 Hz</td><td>1.9 → 1.4 Hz</td><td>1.9 → 1.4 Hz</td><td>1.7–1.9 Hz</td><td>1.7–1.8 Hz</td><td>1.6–1.9 Hz</td><td>1.8 Hz，掉之后 1.3</td></tr>
-          <tr><td>拇-中指尖距（0–5 → 12–20 秒）</td><td>38.6 → 37.9 mm</td><td>39.4 → 37.9 mm</td><td>37.6 → 35.1 mm</td><td>42.1 → 41.3 mm</td><td>42.3 → 40.4 mm</td><td>43.4 → 41.6 mm</td><td>43.0 → 33.3 mm</td></tr>
-          <tr><td>无名指有接触的时间</td><td>91%</td><td>57%</td><td>92%</td><td>33%</td><td>45%</td><td>45%</td><td>37%</td></tr>
-          <tr><td>拇指力：策略收到的</td><td>2.1 N</td><td>2.2 N</td><td>2.7 N</td><td>4.7 N</td><td>5.0 N</td><td>4.6 N</td><td>5.1 N</td></tr>
-          <tr><td>拇指力：传感器原始</td><td>10.3 N</td><td>10.8 N</td><td>13.5 N</td><td>7.1 N</td><td>7.6 N</td><td>6.8 N</td><td>7.6 N</td></tr>
-          <tr><td>中指力：策略收到的</td><td>1.2 N</td><td>0.9 N</td><td>1.4 N</td><td>2.7 N</td><td>3.5 N</td><td>2.1 N</td><td>2.8 N</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="explain">
-      <p>数据来自 <code>playstation/.cache/rotate_logs/rotate_sharpa_1125_*.csv</code>（表头是文件名里的时间）；小指掌根占比、指尖距、无名指接触来自 <code>logs/night_1125/t3/compare.json</code>，指尖距是把真手实际关节角摆进仿真模型算的。18:30:00、18:31:49 的“约 3 圈”和“掉了”是用户看到的；19:34:26 的圈数是从录像里数圆柱侧面蓝胶带出现的周期（假设一圈一段蓝色）。“卡住”指小指掌根塌到 0.02 rad 后步态变慢、圆柱不再转；15:09:39、15:23:49 约 30 秒后小指掌根又升回 0.16 以上，圆柱有没有重新转没有记录。小指掌根是 Isaac 关节顺序第 2 个（<code>right_pinky_CMC</code>），目标一直在上限约 0.24 rad。步态是各关节角 5 秒一段做频谱的主频。力是有接触时的中位数，原始 = 策略收到的 ÷ 触觉系数。</p>
-    </div>
-    <ul class="caveat">
-      <li><strong>触觉系数 0.667 后，“转半圈就卡住”没有再出现</strong>：4 次里 3 次连续转 30 秒以上，1 次是掉落。0.2 时 11-23、11-25 共 4 次都卡住（表里是 11-25 的 3 次）。但没有完全消失：19:34:26（电流 0.3、多合 2）有 18% 的时间小指掌根被顶回，每次不超过 2.1 秒，能自己恢复。</li>
-      <li><strong>0.2 时手指合得更拢、捏得更紧</strong>（实测）：拇-中指尖距比 0.667 小 3–6 mm（35–39 对 40–43 mm；仿真闭环自己跑是 43.9 mm），拇指原始力大 3–7 N，无名指几乎一直压着。</li>
-      <li><strong>“小指掌根塌”不一定是圆柱顶的，它等于“手指合得太拢”</strong>（实测）：18:31:14 圆柱掉了以后小指掌根仍停在 0.022 rad；仿真里手中没有圆柱、按这条记录的目标角回放，小指掌根同样被压到 0.01–0.04 rad，此时四指近节互相挤着，各 8–12 N。</li>
-      <li><strong>原因（推断）：0.2 把力缩得太小，策略以为没夹住，越合越拢。</strong>同样电流系数 0.4，0.2 时拇指实际用力 10.3–10.8 N，0.667 时 7.1 N。</li>
-      <li><strong>样本少</strong>：0.667 时每种参数组合只有 1–2 次。</li>
-    </ul>
-
-    <h3 class="sub">仿真回放：把真手关节角搬进仿真</h3>
-    <div class="vids" style="grid-template-columns:1fr;max-width:900px">
-      <figure><video src="media/rotate_replay_tac02_vs_0667.mp4" poster="media/rotate_replay_tac02_vs_0667.jpg" controls loop muted playsinline preload="metadata"></video><figcaption><strong>仿真回放，不是真手录像。左：15:09:39（0.2，真手卡住）；右：18:30:00（0.667，真手一直转）。</strong>左边 10 秒转到 409° 后基本不动（24 秒 460°），右边一直转（24 秒 588°）。回放用了刚度 ×2、摩擦 ×2 才夹得住；右边在仿真第 25 秒掉了（真手没掉），所以截到 24 秒。</figcaption></figure>
-      <figure><video src="media/rotate_replay_cyl2_vs_sim.mp4" poster="media/rotate_replay_cyl2_vs_sim.jpg" controls loop muted playsinline preload="metadata"></video><figcaption><strong>左：15:09 真手动作回放（0.2，电流系数 0.4）；右：同样的圆柱，策略在仿真里自己跑。</strong>左边 12 秒转了 432° 后基本停住，右边一直转。</figcaption></figure>
-      <figure><video src="media/rotate_replay_cyl2b_vs_cyl1.mp4" poster="media/rotate_replay_cyl2b_vs_cyl1.jpg" controls loop muted playsinline preload="metadata"></video><figcaption><strong>都是真手动作的回放。左：圆柱 2（15:23，0.2，电流系数 0.6）；右：圆柱 1（15:08，0.2）。</strong>左边转到约 210° 停住，右边一直转。</figcaption></figure>
-    </div>
-    <div class="tablewrap">
-      <table class="dense">
-        <thead><tr><th>项目</th><th>真手（0.2）</th><th>真手动作回放进仿真</th><th>仿真闭环</th></tr></thead>
-        <tbody>
-          <tr><td>拇指有接触力的时间</td><td>100%</td><td>—</td><td>65%</td></tr>
-          <tr><td>拇指给圆柱的力</td><td>8.9–12.0 N</td><td>1.3–1.6 N（同一组目标角）</td><td>1.3 N</td></tr>
-          <tr><td>小指中节受到圆柱的力</td><td>—</td><td>4–7 N，塌掉后 12–18 N</td><td>1.3 N</td></tr>
-          <tr><td>41 秒不掉（圆柱 2 设置，不加随机化）</td><td>—</td><td>—</td><td>16 / 16 个环境；从真手第一帧姿势起步也是 16 / 16</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <ul class="caveat">
-      <li><strong>开环回放不可靠</strong>（实测）：同一组目标角，真手上 6–12 N，仿真里只有 0–1.6 N，相当于差了指尖几毫米（来源没查，可能是关节零位、指尖胶皮、圆柱直径、真手 PD 更硬，都是猜的）。0.667 的回放在仿真里大多 5 秒内就掉了，19:34:26 回放 53 秒只转了 146°，真手约 900°。</li>
-      <li><strong>“圆柱慢慢跑到手心”：仿真回答不了。</strong>0.667 回放里没掉的环境，圆柱也往手心走了 14–30 mm（夹不住往下滑），和 0.2 的 22–31 mm 分不开。真手上圆柱在哪没有测量。</li>
-      <li><strong>不是初始握姿的问题</strong>：从真手第一帧的姿势起步、让策略在仿真里自己跑，16 / 16 不掉。</li>
-    </ul>
-
-    <h3 class="sub" id="param-test">真手部署参数测试计划（待测）</h3>
-    <div class="tablewrap">
-      <table class="dense">
-        <thead><tr><th>参数</th><th>代码里</th><th>作用</th><th>官方值</th><th>我们现在</th></tr></thead>
-        <tbody>
-          <tr><td>触觉系数</td><td><code>force_scale</code></td><td class="w">指尖原始力乘它，小于 0.2 的清零，再给策略。合拢阶段也用它：手沿合拢轨迹一格格合，直到乘过系数的力达到 1 才停（<code>sharpa_wave_deploy_env.py</code> 第 334 行），所以原始力要到 1 ÷ 系数才停：0.2 时 5 N、0.667 时 1.5 N、1.0 时 1 N</td><td>1/1.5 ≈ 0.667</td><td>0.667（11-25 前是 0.2）</td></tr>
-          <tr><td>电流系数</td><td><code>current_coef</code></td><td class="w">SDK <code>set_current_coeff</code>，限制电机出力，越大夹得越紧。SE 型号上限 0.6（<code>SharpaWaveSDK.h</code> 注释）</td><td>0.3（WM-Craftnet 0.5，SDK 示例 0.6）</td><td>0.4</td></tr>
-          <tr><td>多合几格</td><td><code>grasp_offset</code></td><td class="w">合拢停下后，再沿轨迹往里走几格，作为策略起步的握姿。只影响开头</td><td>2（原代码写死）</td><td>0</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="explain">
-      <p>官方和网上都没有这三个值的正式说明（查过官方仓库、SDK、两个第三方复制仓库、UniLab 版、Tacmap 和 UniLab 论文），只有代码里一行注释，所以自己测。</p>
-      <p><strong>测法：</strong>模型 <code>0.4-0.6-8</code>，圆柱 2，每种情况 3 次，顺序打乱。每次固定 30 秒停（卡住的情况转不满 1 圈，不能用转 1 圈当终点）。现场记“转了几圈”和“正常 / 卡住 / 掉了”；卡住或掉落在第几秒、步态、小指掌根、原始力、合拢停在第几格从记录和录像里算。</p>
-    </div>
-
-    <div class="tablewrap">
-      <table class="dense">
-        <thead><tr><th>#</th><th>触觉</th><th>电流</th><th>多合</th><th>目的</th><th>结果（3 次）</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td>0.667</td><td>0.3</td><td>2</td><td>官方全套，基准</td><td class="w">待测<br><small>已有 1 次（不按本规程）：19:34:26，53.4 秒没停、约 2.5 圈（<a href="#cyl2">见上</a>）</small></td></tr>
-          <tr><td>2</td><td><mark>0.2</mark></td><td>0.3</td><td>2</td><td>只改触觉</td><td>待测</td></tr>
-          <tr><td>3</td><td><mark>1.0</mark></td><td>0.3</td><td>2</td><td>只改触觉</td><td>待测</td></tr>
-          <tr><td>4</td><td>0.667</td><td><mark>0.4</mark></td><td>2</td><td>只改电流</td><td>待测</td></tr>
-          <tr><td>5</td><td>0.667</td><td><mark>0.6</mark></td><td>2</td><td>只改电流</td><td>待测</td></tr>
-          <tr><td>6</td><td>0.667</td><td>0.3</td><td><mark>0</mark></td><td>只改多合</td><td>待测</td></tr>
-          <tr><td>7</td><td>0.667</td><td><mark>0.4</mark></td><td><mark>0</mark></td><td>我们现在的默认值</td><td class="w">待测<br><small>已有 1 次（不按本规程）：18:30:00，53.6 秒没停、约 3 圈（<a href="#cyl2">见上</a>）</small></td></tr>
-          <tr><td>8</td><td><mark>0.2</mark></td><td><mark>0.4</mark></td><td><mark>0</mark></td><td>我们以前的默认值</td><td class="w">待测<br><small>已有 2 次（不按本规程）：15:09:39 约 14 秒卡住，15:23:14 约 8 秒卡住（<a href="#cyl2">见上</a>）</small></td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="explain">
-      <p>方案 A：8 种情况、24 次，约 30–40 分钟。标色的格子是和第 1 行（官方）不同的值。</p>
-      <p><strong>范围待定，先按 A 展示。</strong>另外两个选项：B 全组合（触觉 0.2 / 0.667 / 1.0 × 电流 0.3 / 0.4 / 0.6 × 多合 0 / 2，18 种、54 次，约 1.5 小时）；C 是 A 做完后用圆柱 1 再做一遍。</p>
-      <p>playstation 里的“按表测试”（自动填参数、30 秒自动停、填圈数）还没做；现在只能手动填参数、自己看表计时。</p>
-    </div>
-
-    <h3 class="sub" id="param-sim">仿真里的对应扫描（11-25 夜）</h3>
-    <div class="explain">
-      <p><strong>测法：</strong>圆柱 2（r20 × h32，质量固定 26 g），512 个环境连续跑 60 秒，不做 20 秒到时重置，其余随机化全开。和上面结果表的测法不同，只在这组内部比较。触觉倍率 = 5 个指尖读数统一乘的数，对应真手的触觉系数，但数值不能直接对照（真手力是仿真的 5 倍以上）。“卡住过” = 60 秒里有连续 5 秒累计转角 &lt; 0.25 rad 且没掉。数据 <code>logs/night_1125/t4/tables_final.md</code>。</p>
-    </div>
-    <div class="tablewrap">
-      <table class="dense">
-        <thead><tr><th>触觉倍率</th><th>官方<br>从不掉落</th><th>官方<br>转速</th><th>官方<br>卡住过</th><th>官方<br>拇指原始力</th><th>官方<br>掉落方向</th><th>v1 学生<br>从不掉落</th><th>v1 学生<br>转速</th><th>v1 学生<br>卡住过</th></tr></thead>
-        <tbody>
-          <tr><td>×0.1</td><td>117</td><td>1.26</td><td>6</td><td>2.03 N</td><td>往指尖外 97%</td><td>84</td><td>0.90</td><td>42</td></tr>
-          <tr><td>×0.2</td><td>215</td><td>1.18</td><td>4</td><td>2.30 N</td><td>往指尖外 96%</td><td>387</td><td>1.02</td><td>10</td></tr>
-          <tr><td>×0.3</td><td>351</td><td>1.29</td><td>2</td><td>2.17 N</td><td>往指尖外 91%</td><td>457</td><td>1.04</td><td>4</td></tr>
-          <tr><td>×0.5</td><td>495</td><td>1.52</td><td>2</td><td>1.53 N</td><td>往指尖外 56%</td><td>472</td><td>1.05</td><td>5</td></tr>
-          <tr><td><strong>×1</strong></td><td>499</td><td>1.63</td><td>0</td><td>1.13 N</td><td>—</td><td>492</td><td>1.08</td><td>4</td></tr>
-          <tr><td>×1.5</td><td>494</td><td>1.59</td><td>2</td><td>1.00 N</td><td>往手心 100%</td><td>495</td><td>1.06</td><td>2</td></tr>
-          <tr><td>×3</td><td>282</td><td>1.42</td><td>1</td><td>0.71 N</td><td>往手心 100%</td><td>483</td><td>0.99</td><td>3</td></tr>
-          <tr><td>×5</td><td>2</td><td>1.11</td><td>1</td><td>0.53 N</td><td>往手心 100%</td><td>466</td><td>0.93</td><td>1</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="explain">
-      <p>手平放，共 512 个环境；转速 rad/s（累计口径）；拇指原始力是全程平均（没接触按 0 算）。手立着趋势相同，高倍率掉得少一些（×3 446、×5 56）。</p>
-      <p><strong>力矩上限</strong>（各关节 <code>effort_limit</code> 统一乘倍数，对应真手电流系数，没有换算关系）：×0.3 及以上没有影响（官方从不掉落 498–502，v1 487–493）；×0.15 转速 -6%；×0.1 转速 -23%、官方从不掉落 423，小指掌根 21% 的时间被压到 0.06 rad 以下（它的上限最小，最先顶到）。</p>
-      <p><strong>起步握姿</strong>（对应多合几格）：少收 2 格到多收 16 格都没有影响（官方从不掉落 496–502，v1 481–500）。</p>
-    </div>
-    <ul class="caveat">
-      <li><strong>仿真里只有触觉倍率起作用</strong>（实测）。力矩上限压到 ×0.15、再加上触觉 ×0.2，才出现变慢 + 小指掌根被压（0.94 rad/s，11% 的时间），仍然不卡住。</li>
-      <li><strong>官方模型：倍率低就越捏越紧，圆柱被挤出指尖外掉落，不是卡住；倍率高就越捏越松，往手心滑掉</strong>（实测）。×0.5–×1.5 都好。真手上的“小指掌根塌、卡住”在仿真里没有复现。</li>
-      <li><strong>v1 学生：倍率低时复现了“陷进手心、停住”</strong>（实测）：掉落判定放宽到 ±60 mm 后，×0.2 有 75 / 512 个环境卡住（×1 是 6），圆柱朝手心陷进 30–40 mm，手指动作幅度小四成。11-20 真手上 v1 也是手指越动越小、七八秒后不动，那天触觉系数是 0.2（推断是同一种失败；v1 值得在 0.667 下重测）。</li>
-      <li><strong>不能按“读数落在仿真分布里”选系数</strong>：真手 0.667 时策略看到的拇指力约 4–5 N，在仿真分布（官方 ×1，有接触时）99.5% 分位以上；0.2 时约 2–2.7 N，在仿真 50%–93% 分位之间。真手上却是 0.667 好。</li>
-      <li><strong>对真手测试的预期</strong>（推断）：触觉系数差别最大，1.0 和 0.667 差不多（仿真 ×1.5 对 ×1 转速 -2%）；电流系数和多合格数在仿真里看不出差别，但真手力是仿真 5 倍以上，这条不一定搬得过去。</li>
-    </ul>
-
-    <h3 class="sub">按圆柱尺寸分</h3>
-    <div class="explain">
-      <p>每档 64 个环境，“从不掉落数 / 转速（rad/s）”。圆柱越小越容易掉，也稍快一点：官方 r16 比 r24 快 28%。</p>
-    </div>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>半径 mm</th><th>16.0</th><th>17.1</th><th>18.3</th><th>19.4</th><th>20.6</th><th>21.7</th><th>22.9</th><th>24.0</th></tr></thead>
-        <tbody>
-          <tr><td>官方 <code>0.4-0.6-8</code></td><td>2 / 1.47</td><td>8 / 1.37</td><td>17 / 1.45</td><td>28 / 1.43</td><td>32 / 1.32</td><td>39 / 1.31</td><td>29 / 1.23</td><td>37 / 1.15</td></tr>
-          <tr><td>我们的 v1 学生</td><td>20 / 1.09</td><td>26 / 1.03</td><td>44 / 1.05</td><td>48 / 1.02</td><td>54 / 0.94</td><td>57 / 0.91</td><td>62 / 0.86</td><td>61 / 0.74</td></tr>
-        </tbody>
-      </table>
-    </div>
 
     <h3 class="sub">视频</h3>
     <div class="explain">
@@ -444,6 +315,94 @@
     <div class="explain">
       <p>脚本：<code>sharpa-rl-lab-il3/rl_isaaclab/scripts/sim_diag.py</code>；数据：<code>logs/baseline_*.npz</code>。</p>
     </div>
+
+    <h3 class="sub" id="param-test">真手测试记录</h3>
+    <div class="explain">
+      <p><strong>三个部署参数：</strong><b>触觉系数</b> <code>force_scale</code>：指尖原始力乘它，小于 0.2 的清零，再给策略；合拢阶段手一格格合，直到乘过系数的力达到 1 才停（<code>sharpa_wave_deploy_env.py</code> 第 334 行），所以原始力要到 1 ÷ 系数：0.2 时 5 N、0.667 时 1.5 N、1.0 时 1 N。<b>电流系数</b> <code>current_coef</code>：SDK <code>set_current_coeff</code>，限制电机出力，SE 上限 0.6（<code>SharpaWaveSDK.h</code> 注释）。<b>多合几格</b> <code>grasp_offset</code>：合拢停下后再往里走几格当起步握姿，只影响开头。</p>
+      <p><strong>官方值</strong> 0.667 / 0.3 / 2（触觉 / 电流 / 多合；电流 WM-Craftnet 用 0.5、SDK 示例 0.6），<strong>我们现在</strong> 0.667 / 0.4 / 0（11-25 前触觉是 0.2）。官方和网上都没有正式说明（查过官方仓库、SDK、两个第三方复制仓库、UniLab 版、Tacmap 和 UniLab 论文），所以自己测。</p>
+      <p><strong>测试规程：</strong>官方 <code>0.4-0.6-8</code>，圆柱 2，每种情况 3 次、顺序打乱，自动停，每次 30 秒（建议改 60 秒，待定）。现场记圈数和结果，其余从记录和录像里算。方案 A 是下面 8 种情况（24 次）；另两个选项：B 全组合（触觉 0.2 / 0.667 / 1.0 × 电流 0.3 / 0.4 / 0.6 × 多合 0 / 2，18 种、54 次），C 是 A 做完后圆柱 1 再做一遍。<strong>范围待定，先按 A 展示。</strong></p>
+    </div>
+    <p class="sub-label"><strong>方案 A 覆盖情况</strong>：按规程测了几次 / 3，“参考”是参数相同但不按规程的记录（不计次数）。点一格只看那一种。</p>
+    <div id="cover" class="cover" aria-live="polite"></div>
+    <p class="legend" id="runs-legend"><span class="v v-ok">一直转</span><span class="v v-stop">停住</span><span class="v v-stuck">卡住</span><span class="v v-drop">掉了</span><span class="v v-short">太短不算</span><span><span class="pdiff">0.2</span> 和官方 0.667 / 0.3 / 2 不同</span><span>小指掌根被压 <span class="hg">≤ 5%</span><span class="hm">5–25%</span><span class="hb">&gt; 25%</span></span><span><i>自动</i> 没人工判定，按脚本规则</span></p>
+    <div class="runs-filter">
+      <label>模型 <select id="f-model"><option value="">全部</option></select></label>
+      <label>圆柱 <select id="f-object"><option value="">全部</option></select></label>
+      <label><input type="checkbox" id="f-short"> 显示太短的</label>
+      <button type="button" id="f-clear" class="ghost">清除筛选</button>
+      <span id="f-count" class="aside"></span>
+    </div>
+    <div class="tablewrap"><table class="dense runs" id="runs"><thead><tr><th>时间</th><th>模型</th><th>圆柱</th><th>触觉</th><th>电流</th><th>多合</th><th>运行</th><th>结果</th><th>圈数</th><th>小指掌根<br>被压</th><th>步态</th><th>动作<br>幅度</th><th>原始力 N<br>拇 / 中 / 无名</th><th>拇-中<br>指尖距</th><th>录像</th><th>备注</th></tr></thead><tbody><tr><td colspan="16">载入中…（<code>data/real_runs.json</code>）</td></tr></tbody></table></div>
+    <details class="more">
+      <summary>各列怎么算、数据从哪来</summary>
+      <ul class="plain">
+        <li>每次真手运行一行，按时间倒序。数据由 <code>tools/build_real_runs.py</code> 扫描 <code>playstation/.cache/rotate_logs/rotate_sharpa_*.csv</code>（+ 同名 .json）生成 <code>data/real_runs.json</code>；圈数、结果判定、备注是人工填的（<code>data/real_runs_notes.json</code>）。11-25 之前的记录没有 .json，模型、圆柱、参数是按当时的记录补的（带 * 号，鼠标停上去看依据），11-19 的几条没有任何信息。</li>
+        <li><b>运行</b>：策略运行秒数，“自动”表示到时自动停。<b>小指掌根被压</b>：Isaac 第 2 个关节 <code>right_pinky_CMC</code> &lt; 0.06 rad 的时间占比 / 最长连续秒数（目标一直在上限约 0.24 rad）。<b>步态</b>：第 2 秒起每 5 秒一段，22 个关节角做频谱取主频，各段中位数。<b>动作幅度</b>：每个控制步（50 ms）关节角变化的平均，mrad。<b>原始力</b>：有接触时的中位数，原始 = 记录值 ÷ 触觉系数（传感器 11-25 按秤核对过，基本准确）。<b>拇-中指尖距</b>：把真手关节角摆进仿真模型算的，0–5 秒 → 12–20 秒，只有 11-25 的几条（<code>logs/night_1125/t3/compare.json</code>）。</li>
+        <li><b>自动判定</b>（没人工判定时用）：运行 &lt; 5 秒 = 太短；5 个指尖力全为 0 连续 ≥ 2 秒 = 掉了（显示“疑似掉落”时刻）；小指掌根被压最长 ≥ 5 秒 = 卡住；3 秒滑窗动作幅度 &lt; 本次第 2–10 秒中位数的 30% = 停住（显示“疑似停住”时刻）；否则一直转。</li>
+        <li><b>录像</b>：链到本机 playstation（8005），只在本机能看；录像保留 14 天。录像拍到了桌面和屏幕，不放进学习站。</li>
+      </ul>
+    </details>
+
+    <ul class="caveat">
+      <li><strong>v1 学生改用触觉系数 0.667 后能转了，但比官方慢</strong>（11-26，4 次）：圆柱 2 两次一直转，30 秒约 1、1.5 圈；圆柱 1 一次约半圈、一次约 5 秒停住。动作幅度 10.5–11.6 mrad，官方 0.667 时 16–19 mrad（约三分之二；看录像估约一半），步态更快（2.2–2.3 对 1.8 Hz）。11-20 用 0.2 时三次都停住或掉了。</li>
+    </ul>
+
+    <h3 class="sub" id="cyl2">圆柱 2 转半圈就卡住：和触觉系数 0.2 有关</h3>
+    <div class="explain">
+      <p>官方模型，圆柱 2。触觉系数 0.2 是 11-19 我们自己试出来的，没有留依据；官方部署代码默认 1/1.5 ≈ 0.667（<code>sharpa_wave_deploy_env_cfg.py</code> 第 27 行）。逐次数据见上面的记录表。</p>
+    </div>
+    <ul class="caveat">
+      <li><strong>触觉系数 0.667 后，“转半圈就卡住”没有再出现</strong>：4 次里 3 次连续转 30 秒以上，1 次是掉落。0.2 时 11-23、11-25 共 4 次都卡住（记录表里 11-23 一次、11-25 三次）。但没有完全消失：19:34:26（电流 0.3、多合 2）有 18% 的时间小指掌根被顶回，每次不超过 2.1 秒，能自己恢复。</li>
+      <li><strong>0.2 时手指合得更拢、捏得更紧</strong>（实测）：拇-中指尖距比 0.667 小 3–6 mm（35–39 对 40–43 mm；仿真闭环自己跑是 43.9 mm），拇指原始力大 3–7 N，无名指几乎一直压着。</li>
+      <li><strong>“小指掌根塌”不一定是圆柱顶的，它等于“手指合得太拢”</strong>（实测）：18:31:14 圆柱掉了以后小指掌根仍停在 0.022 rad；仿真里手中没有圆柱、按这条记录的目标角回放，小指掌根同样被压到 0.01–0.04 rad，此时四指近节互相挤着，各 8–12 N。</li>
+      <li><strong>原因（推断）：0.2 把力缩得太小，策略以为没夹住，越合越拢。</strong>同样电流系数 0.4，0.2 时拇指实际用力 10.3–10.8 N，0.667 时 7.1 N。</li>
+      <li><strong>样本少</strong>：0.667 时每种参数组合只有 1–2 次。</li>
+    </ul>
+
+    <h3 class="sub">仿真回放：把真手关节角搬进仿真</h3>
+    <div class="vids" style="grid-template-columns:1fr;max-width:900px">
+      <figure><video src="media/rotate_replay_tac02_vs_0667.mp4" poster="media/rotate_replay_tac02_vs_0667.jpg" controls loop muted playsinline preload="metadata"></video><figcaption><strong>仿真回放，不是真手录像。左：15:09:39（0.2，真手卡住）；右：18:30:00（0.667，真手一直转）。</strong>左边 10 秒转到 409° 后基本不动（24 秒 460°），右边一直转（24 秒 588°）。回放用了刚度 ×2、摩擦 ×2 才夹得住；右边在仿真第 25 秒掉了（真手没掉），所以截到 24 秒。</figcaption></figure>
+      <figure><video src="media/rotate_replay_cyl2_vs_sim.mp4" poster="media/rotate_replay_cyl2_vs_sim.jpg" controls loop muted playsinline preload="metadata"></video><figcaption><strong>左：15:09 真手动作回放（0.2，电流系数 0.4）；右：同样的圆柱，策略在仿真里自己跑。</strong>左边 12 秒转了 432° 后基本停住，右边一直转。</figcaption></figure>
+      <figure><video src="media/rotate_replay_cyl2b_vs_cyl1.mp4" poster="media/rotate_replay_cyl2b_vs_cyl1.jpg" controls loop muted playsinline preload="metadata"></video><figcaption><strong>都是真手动作的回放。左：圆柱 2（15:23，0.2，电流系数 0.6）；右：圆柱 1（15:08，0.2）。</strong>左边转到约 210° 停住，右边一直转。</figcaption></figure>
+    </div>
+    <ul class="caveat">
+      <li><strong>真手比仿真夹得更紧、更拢</strong>（0.2 时）：拇指 100% 的时间有接触（仿真闭环 65%），拇指给圆柱 8.9–12.0 N（同一组目标角回放进仿真 1.3–1.6 N，仿真闭环 1.3 N）；回放里小指中节受圆柱的力 4–7 N，塌掉后 12–18 N（仿真闭环 1.3 N）。</li>
+      <li><strong>开环回放不可靠</strong>（实测）：同一组目标角，真手上 6–12 N，仿真里只有 0–1.6 N，相当于差了指尖几毫米（来源没查，可能是关节零位、指尖胶皮、圆柱直径、真手 PD 更硬，都是猜的）。0.667 的回放在仿真里大多 5 秒内就掉了，19:34:26 回放 53 秒只转了 146°，真手约 900°。</li>
+      <li><strong>“圆柱慢慢跑到手心”：仿真回答不了。</strong>0.667 回放里没掉的环境，圆柱也往手心走了 14–30 mm（夹不住往下滑），和 0.2 的 22–31 mm 分不开。真手上圆柱在哪没有测量。</li>
+      <li><strong>不是初始握姿的问题</strong>：从真手第一帧的姿势起步、让策略在仿真里自己跑（圆柱 2 设置、不加随机化），41 秒 16 / 16 不掉。</li>
+    </ul>
+
+    <h3 class="sub" id="param-sim">仿真里的对应扫描（11-25 夜）</h3>
+    <div class="explain">
+      <p><strong>测法：</strong>圆柱 2（r20 × h32，质量固定 26 g），512 个环境连续跑 60 秒，不做 20 秒到时重置，其余随机化全开。和上面结果表的测法不同，只在这组内部比较。触觉倍率 = 5 个指尖读数统一乘的数，对应真手的触觉系数，但数值不能直接对照（真手力是仿真的 5 倍以上）。“卡住过” = 60 秒里有连续 5 秒累计转角 &lt; 0.25 rad 且没掉。数据 <code>logs/night_1125/t4/tables_final.md</code>。</p>
+    </div>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>触觉倍率</th><th>官方<br>从不掉落</th><th>官方<br>拇指原始力</th><th>官方<br>怎么掉的</th><th>v1 学生<br>从不掉落</th><th>v1 学生<br>卡住过</th></tr></thead>
+        <tbody>
+          <tr><td>×0.1</td><td class="hb">117</td><td>2.03 N</td><td>挤出指尖外 97%</td><td class="hb">84</td><td class="hb">42</td></tr>
+          <tr><td>×0.2</td><td class="hb">215</td><td>2.30 N</td><td>挤出指尖外 96%</td><td class="hm">387</td><td class="hm">10</td></tr>
+          <tr><td>×0.3</td><td class="hm">351</td><td>2.17 N</td><td>挤出指尖外 91%</td><td class="hm">457</td><td class="hg">4</td></tr>
+          <tr><td>×0.5</td><td class="hg">495</td><td>1.53 N</td><td>挤出指尖外 56%</td><td class="hg">472</td><td class="hg">5</td></tr>
+          <tr><td><strong>×1</strong></td><td class="hg">499</td><td>1.13 N</td><td>—</td><td class="hg">492</td><td class="hg">4</td></tr>
+          <tr><td>×1.5</td><td class="hg">494</td><td>1.00 N</td><td>滑向手心 100%</td><td class="hg">495</td><td class="hg">2</td></tr>
+          <tr><td>×3</td><td class="hb">282</td><td>0.71 N</td><td>滑向手心 100%</td><td class="hg">483</td><td class="hg">3</td></tr>
+          <tr><td>×5</td><td class="hb">2</td><td>0.53 N</td><td>滑向手心 100%</td><td class="hg">466</td><td class="hg">1</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="explain">
+      <p>手平放，共 512 个环境。底色：从不掉落 ≥ 470 绿、300–470 黄、&lt; 300 橙；卡住过 ≤ 5 绿、6–20 黄、&gt; 20 橙。拇指原始力是全程平均（没接触按 0 算）。官方模型卡住过的环境每档都 ≤ 6；转速见 <code>logs/night_1125/t4/tables_final.md</code>（×1 时官方 1.63、v1 1.08 rad/s，×0.2 时 1.18、1.02）。手立着趋势相同，高倍率掉得少一些（×3 446、×5 56）。</p>
+      <p><strong>力矩上限</strong>（各关节 <code>effort_limit</code> 统一乘倍数，对应真手电流系数，没有换算关系）：×0.3 及以上没有影响（官方从不掉落 498–502，v1 487–493）；×0.15 转速 -6%；×0.1 转速 -23%、官方从不掉落 423，小指掌根 21% 的时间被压到 0.06 rad 以下（它的上限最小，最先顶到）。</p>
+      <p><strong>起步握姿</strong>（对应多合几格）：少收 2 格到多收 16 格都没有影响（官方从不掉落 496–502，v1 481–500）。</p>
+    </div>
+    <ul class="caveat">
+      <li><strong>仿真里只有触觉倍率起作用</strong>（实测）。力矩上限压到 ×0.15、再加上触觉 ×0.2，才出现变慢 + 小指掌根被压（0.94 rad/s，11% 的时间），仍然不卡住。</li>
+      <li><strong>官方模型：倍率低就越捏越紧，圆柱被挤出指尖外掉落，不是卡住；倍率高就越捏越松，往手心滑掉</strong>（实测）。×0.5–×1.5 都好。真手上的“小指掌根塌、卡住”在仿真里没有复现。</li>
+      <li><strong>v1 学生：倍率低时复现了“陷进手心、停住”</strong>（实测）：掉落判定放宽到 ±60 mm 后，×0.2 有 75 / 512 个环境卡住（×1 是 6），圆柱朝手心陷进 30–40 mm，手指动作幅度小四成。11-20 真手上 v1 也是手指越动越小、七八秒后不动，那天触觉系数是 0.2（推断是同一种失败；v1 值得在 0.667 下重测）。</li>
+      <li><strong>不能按“读数落在仿真分布里”选系数</strong>：真手 0.667 时策略看到的拇指力约 4–5 N，在仿真分布（官方 ×1，有接触时）99.5% 分位以上；0.2 时约 2–2.7 N，在仿真 50%–93% 分位之间。真手上却是 0.667 好。</li>
+      <li><strong>对真手测试的预期</strong>（推断）：触觉系数差别最大，1.0 和 0.667 差不多（仿真 ×1.5 对 ×1 转速 -2%）；电流系数和多合格数在仿真里看不出差别，但真手力是仿真 5 倍以上，这条不一定搬得过去。</li>
+    </ul>
 
     <h3 class="sub">v1 是怎么训练的</h3>
     <div class="explain">
@@ -627,6 +586,106 @@ PYTHONPATH=. LD_LIBRARY_PATH=/opt/sharpa-wave-sdk/lib python rl_isaaclab/scripts
     });
     draw();
   }).catch(function (e) { document.getElementById('lit-lead').textContent = '论文数据加载失败：' + e.message; });
+})();
+</script>
+<script>
+// 第 6 节：真手测试记录，从 data/real_runs.json 现读（tools/build_real_runs.py 生成）
+(function () {
+  var H = window.HandPapers, el = H.el;
+  var OBJ = { cyl1: '圆柱 1', cyl2: '圆柱 2', cyl3: '圆柱 3' };
+  var VCLS = { '一直转': 'v-ok', '停住': 'v-stop', '卡住': 'v-stuck', '掉了': 'v-drop', '太短': 'v-short' };
+  var PLAN = [[0.667, 0.3, 2, '官方全套，基准'], [0.2, 0.3, 2, '只改触觉'], [1.0, 0.3, 2, '只改触觉'], [0.667, 0.4, 2, '只改电流'],
+              [0.667, 0.6, 2, '只改电流'], [0.667, 0.3, 0, '只改多合'], [0.667, 0.4, 0, '我们现在的默认'], [0.2, 0.4, 0, '我们以前的默认']];
+  var OFFICIAL = '官方 0.4-0.6-8';
+  var runs = [], base = {}, f = { model: '', object: '', short: false, plan: null };
+  var VIDEO = 'http://127.0.0.1:8005/rotate_logs/';
+  function same(a, b) { return a != null && Math.abs(a - b) < 1e-3; }
+  function inPlan(r, p) { return r.model === OFFICIAL && r.object === 'cyl2' && same(r.force_scale, p[0]) && same(r.current_coef, p[1]) && r.grasp_offset === p[2]; }
+  function byRule(r) { return !!r.auto_stop_s && r.verdict !== '太短'; }
+  function param(r, k) {
+    var v = r[k], star = r.filled && r.filled.indexOf(k) !== -1;
+    if (v == null) return el('td', { class: 'na', text: '—' });
+    var t = (k === 'force_scale' && same(v, 0.667) ? '0.667' : String(v)) + (star ? '*' : '');
+    var a = star ? { title: r.fill_src || '人工补的' } : null;
+    return el('td', a, [same(v, base[k]) ? t : el('span', { class: 'pdiff', text: t })]);
+  }
+  function heat(x) { return x <= 0.05 ? 'hg' : x <= 0.25 ? 'hm' : 'hb'; }
+  function row(r) {
+    var m = r.metrics || {}, fr = m.force_raw;
+    var res = [el('span', { class: 'v ' + (VCLS[r.verdict] || ''), text: r.verdict === '太短' ? '太短不算' : (r.verdict || '—') })];
+    if (r.verdict_auto && r.verdict) res.push(' ', el('i', { class: 'aside', text: '自动' }));
+    if (m.drop_t != null) res.push(el('br'), el('small', { text: '疑似掉落 ' + m.drop_t + ' s' }));
+    if (m.stop_t != null) res.push(el('br'), el('small', { text: '疑似停住 ' + m.stop_t + ' s' }));
+    var pk = m.pinky_low_frac == null ? el('td', { class: 'na', text: '—' }) :
+      el('td', { class: heat(m.pinky_low_frac), text: Math.round(m.pinky_low_frac * 100) + '% / ' + m.pinky_low_max_s + ' s' });
+    var force = fr ? [0, 2, 3].map(function (i) { return fr[i] == null ? '—' : fr[i].toFixed(1); }).join(' / ') : '—';
+    var vid = r.video ? el('td', null, [el('a', { href: VIDEO + r.video, target: '_blank', rel: 'noopener', text: '看录像' })]) : el('td', { class: 'na', text: '' });
+    return el('tr', { class: r.verdict === '太短' ? 'short' : '' }, [
+      el('td', { class: 'nw', text: r.start.replace(/^2026-/, '').slice(0, 14) }),
+      el('td', { class: 'nw', text: r.model || '没记录' }),
+      el('td', { class: 'nw', text: OBJ[r.object] || r.object || '没记录' }),
+      param(r, 'force_scale'), param(r, 'current_coef'), param(r, 'grasp_offset'),
+      el('td', { class: 'nw', text: r.run_s == null ? '—' : r.run_s + ' s' + (r.auto_stop_s ? ' 自动' : '') }),
+      el('td', { class: 'nw' }, res),
+      el('td', { class: 'nw', text: r.turns || '' }),
+      pk,
+      el('td', { class: 'nw', text: m.gait_hz == null ? '—' : m.gait_hz.toFixed(1) + ' Hz' }),
+      el('td', { text: m.amp_mrad == null ? '—' : String(m.amp_mrad) }),
+      el('td', { class: 'nw', text: force }),
+      el('td', { class: 'nw', text: r.thumb_middle_mm ? r.thumb_middle_mm.map(function (x) { return x.toFixed(1); }).join(' → ') + ' mm' : '' }),
+      vid,
+      el('td', { class: 'w', text: r.note || '' })
+    ]);
+  }
+  function draw() {
+    var tb = document.querySelector('#runs tbody'), frag = document.createDocumentFragment(), n = 0;
+    runs.forEach(function (r) {
+      if (f.model && r.model !== f.model) return;
+      if (f.object && r.object !== f.object) return;
+      if (!f.short && r.verdict === '太短') return;
+      if (f.plan != null && !inPlan(r, PLAN[f.plan])) return;
+      frag.appendChild(row(r)); n++;
+    });
+    if (!n) frag.appendChild(el('tr', null, [el('td', { colspan: '16', text: '没有符合的记录' })]));
+    tb.textContent = ''; tb.appendChild(frag);
+    document.getElementById('f-count').textContent = n + ' / ' + runs.length + ' 条';
+    Array.prototype.forEach.call(document.querySelectorAll('#cover button'), function (b, i) { b.setAttribute('aria-pressed', String(f.plan === i)); });
+  }
+  function cover() {
+    var box = document.getElementById('cover');
+    PLAN.forEach(function (p, i) {
+      var hit = runs.filter(function (r) { return inPlan(r, p) && r.verdict !== '太短'; });
+      var ok = hit.filter(byRule).length, ref = hit.length - ok;
+      var b = el('button', { type: 'button', class: 'cell ' + (ok >= 3 ? 'done' : ok ? 'part' : 'todo') }, [
+        el('span', { class: 'p' }, [p[0], p[1], p[2]].reduce(function (acc, v, k) {
+          if (k) acc.push(' / ');
+          var t = v === 1 ? '1.0' : String(v);
+          acc.push(same(v, [base.force_scale, base.current_coef, base.grasp_offset][k]) ? t : el('span', { class: 'pdiff', text: t }));
+          return acc;
+        }, [])),
+        el('span', { class: 'what', text: (i + 1) + '. ' + p[3] }),
+        el('span', { class: 'n', text: ok + ' / 3' + (ref ? '，参考 ' + ref : '') })
+      ]);
+      b.addEventListener('click', function () { f.plan = f.plan === i ? null : i; draw(); });
+      box.appendChild(b);
+    });
+  }
+  function opts(id, key, label) {
+    var s = document.getElementById(id), seen = {};
+    runs.forEach(function (r) { if (r[key]) seen[r[key]] = 1; });
+    Object.keys(seen).sort().forEach(function (k) { s.appendChild(el('option', { value: k, text: label ? label(k) : k })); });
+    s.addEventListener('change', function () { f[key] = s.value; draw(); });
+  }
+  H.getJSON('data/real_runs.json').then(function (d) {
+    runs = d.runs; base = d.baseline;
+    opts('f-model', 'model'); opts('f-object', 'object', function (k) { return OBJ[k] || k; });
+    document.getElementById('f-short').addEventListener('change', function (e) { f.short = e.target.checked; draw(); });
+    document.getElementById('f-clear').addEventListener('click', function () {
+      f = { model: '', object: '', short: false, plan: null };
+      document.getElementById('f-model').value = ''; document.getElementById('f-object').value = ''; document.getElementById('f-short').checked = false; draw();
+    });
+    cover(); draw();
+  }).catch(function (e) { document.querySelector('#runs tbody').textContent = '记录加载失败：' + e.message; });
 })();
 </script>
 </body>

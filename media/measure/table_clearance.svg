@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 490" width="700" height="490" font-family="'Noto Sans CJK SC','Source Han Sans SC','PingFang SC','Microsoft YaHei','WenQuanYi Micro Hei',sans-serif">
+<rect width="700" height="490" fill="#ffffff"/>
+<text x="20.0" y="30.0" font-size="21" fill="#222" text-anchor="start" font-weight="bold">桌子：桌沿往里多深、往下多高是空的</text>
+<text x="20.0" y="54.0" font-size="15" fill="#555" text-anchor="start" font-weight="normal">从侧面看桌沿（示意，不按比例）</text>
+<rect x="60.00" y="190.00" width="460.00" height="46.00" rx="0.00" stroke="#222" stroke-width="2.00" fill="#ead9c0"/>
+<text x="200.0" y="219.0" font-size="15" fill="#6d4c41" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">桌面板</text>
+<rect x="60.00" y="236.00" width="130.00" height="86.00" rx="0.00" stroke="#222" stroke-width="1.60" fill="#d7c2a0"/>
+<text x="125.0" y="284.0" font-size="14" fill="#6d4c41" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">横梁 / 抽屉</text>
+<rect x="250.00" y="176.00" width="270.00" height="14.00" rx="0.00" stroke="#222" stroke-width="1.40" fill="#cfd8dc"/>
+<text x="380.0" y="168.0" font-size="14" fill="#888" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">支架底板（厚 10）</text>
+<path d="M190.00 240.00 L190.00 278.00" stroke="#c62828" stroke-width="1.00" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M520.00 240.00 L520.00 278.00" stroke="#c62828" stroke-width="1.00" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M201.00 266.00 L509.00 266.00" stroke="#c62828" stroke-width="2.60" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M520.00 266.00 L507.00 271.00 L507.00 261.00 Z" stroke="#c62828" stroke-width="0.50" fill="#c62828" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M190.00 266.00 L203.00 271.00 L203.00 261.00 Z" stroke="#c62828" stroke-width="0.50" fill="#c62828" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="355.0" y="290.0" font-size="16" fill="#c62828" text-anchor="middle" font-weight="bold" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">净深 L：桌沿 → 下面第一个挡住的东西</text>
+<path d="M524.00 236.00 L572.00 236.00" stroke="#c62828" stroke-width="1.00" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M536.00 366.00 L572.00 366.00" stroke="#888" stroke-width="1.00" fill="none" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="5 4"/>
+<path d="M566.00 247.00 L566.00 355.00" stroke="#c62828" stroke-width="2.60" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M566.00 366.00 L561.00 353.00 L571.00 353.00 Z" stroke="#c62828" stroke-width="0.50" fill="#c62828" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M566.00 236.00 L561.00 249.00 L571.00 249.00 Z" stroke="#c62828" stroke-width="0.50" fill="#c62828" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="576.0" y="296.0" font-size="16" fill="#c62828" text-anchor="start" font-weight="bold" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">净高 H</text>
+<text x="532.0" y="384.0" font-size="13" fill="#888" text-anchor="end" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">下面第一个挡住的东西（没有就写“空的”）</text>
+<rect x="12.00" y="398.00" width="676.00" height="80.00" rx="6.00" stroke="#ccc" stroke-width="1.00" fill="#fafafa"/>
+<text x="24.0" y="420.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">用卷尺 / 钢尺就行，量到厘米。L：从桌沿往里，桌面板下面到横梁或抽屉之前有多深是空的。</text>
+<text x="24.0" y="442.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">H：桌面板底面往下有多高是空的（G 型夹的螺杆和手柄要占地方）。</text>
+<text x="24.0" y="464.0" font-size="15" fill="#c62828" text-anchor="start" font-weight="normal">需要 L ≥ 60 mm、H ≥ 100 mm。不够就告诉我读数，改用螺丝固定或换夹法。</text>
+</svg>

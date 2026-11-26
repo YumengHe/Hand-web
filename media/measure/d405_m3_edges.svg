@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 639" width="700" height="639" font-family="'Noto Sans CJK SC','Source Han Sans SC','PingFang SC','Microsoft YaHei','WenQuanYi Micro Hei',sans-serif">
+<rect width="700" height="639" fill="#ffffff"/>
+<text x="20.0" y="30.0" font-size="21" fill="#222" text-anchor="start" font-weight="bold">D405：螺孔离机身四条边多远</text>
+<text x="20.0" y="54.0" font-size="15" fill="#555" text-anchor="start" font-weight="normal">从相机背后看。先在一个螺孔里拧一颗 M3 螺丝：只拧 2 圈，别拧到底</text>
+<rect x="20.00" y="70.00" width="14.00" height="14.00" rx="0.00" stroke="#1565c0" stroke-width="1.60" fill="#1565c0"/>
+<text x="40.0" y="82.0" font-size="14" fill="#222" text-anchor="start" font-weight="normal">蓝 = 卡尺外爪（顶住机身边）</text>
+<rect x="271.50" y="70.00" width="14.00" height="14.00" rx="0.00" stroke="#e65100" stroke-width="1.60" fill="#e65100"/>
+<text x="291.5" y="82.0" font-size="14" fill="#222" text-anchor="start" font-weight="normal">橙 = 卡尺外爪（顶住螺丝）</text>
+<rect x="140.40" y="165.40" width="319.20" height="319.20" rx="30.40" stroke="#222" stroke-width="2.00" fill="#f1f3f5"/>
+<circle cx="224.00" cy="325.00" r="9.50" stroke="#222" stroke-width="1.50" fill="#fff"/>
+<circle cx="224.00" cy="325.00" r="11.40" stroke="#777" stroke-width="0.80" fill="none" stroke-dasharray="3 2"/>
+<circle cx="376.00" cy="325.00" r="11.02" stroke="#222" stroke-width="1.50" fill="#b0b6bf"/>
+<rect x="275.68" y="446.60" width="48.64" height="38.00" rx="0.00" stroke="#777" stroke-width="0.90" fill="none" stroke-dasharray="4 3"/>
+<path d="M363.00 165.40 L389.00 165.40 L389.00 158.90 L363.00 158.90 Z" stroke="#1565c0" stroke-width="1.00" fill="#1565c0" stroke-linejoin="round" stroke-linecap="round" opacity="0.90"/>
+<path d="M387.00 336.02 L365.00 336.02 L365.00 341.02 L387.00 341.02 Z" stroke="#e65100" stroke-width="1.00" fill="#e65100" stroke-linejoin="round" stroke-linecap="round" opacity="0.90"/>
+<path d="M376.00 165.40 L505.60 165.40" stroke="#c62828" stroke-width="1.00" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M376.00 336.02 L505.60 336.02" stroke="#c62828" stroke-width="1.00" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M499.60 176.40 L499.60 325.02" stroke="#c62828" stroke-width="2.60" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M499.60 336.02 L494.60 323.02 L504.60 323.02 Z" stroke="#c62828" stroke-width="0.50" fill="#c62828" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M499.60 165.40 L494.60 178.40 L504.60 178.40 Z" stroke="#c62828" stroke-width="0.50" fill="#c62828" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="509.6" y="246.7" font-size="17" fill="#c62828" text-anchor="start" font-weight="bold" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">A ≈ 22.45</text>
+<text x="509.6" y="266.7" font-size="13" fill="#c62828" text-anchor="start" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">上边 → 螺丝下侧</text>
+<path d="M376.00 484.60 L505.60 484.60" stroke="#c62828" stroke-width="1.00" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M499.60 473.60 L499.60 363.02" stroke="#c62828" stroke-width="2.00" fill="none" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="5 4"/>
+<path d="M499.60 352.02 L504.60 365.02 L494.60 365.02 Z" stroke="#c62828" stroke-width="0.50" fill="#c62828" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M499.60 484.60 L504.60 471.60 L494.60 471.60 Z" stroke="#c62828" stroke-width="0.50" fill="#c62828" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="509.6" y="440.6" font-size="17" fill="#c62828" text-anchor="start" font-weight="bold" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">B ≈ 22.45</text>
+<text x="509.6" y="460.6" font-size="13" fill="#c62828" text-anchor="start" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">下边 → 螺丝上侧</text>
+<text x="509.6" y="478.6" font-size="13" fill="#c62828" text-anchor="start" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">（卡尺反过来再量一次）</text>
+<path d="M459.60 305.00 L459.60 129.40" stroke="#c62828" stroke-width="1.00" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M364.98 325.00 L364.98 129.40" stroke="#c62828" stroke-width="1.00" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M375.98 135.40 L448.60 135.40" stroke="#c62828" stroke-width="2.60" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M459.60 135.40 L446.60 140.40 L446.60 130.40 Z" stroke="#c62828" stroke-width="0.50" fill="#c62828" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M364.98 135.40 L377.98 140.40 L377.98 130.40 Z" stroke="#c62828" stroke-width="0.50" fill="#c62828" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="412.3" y="126.4" font-size="16" fill="#c62828" text-anchor="middle" font-weight="bold" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">C ≈ 12.45（近的侧边 → 螺丝远侧）</text>
+<text x="376.0" y="361.0" font-size="13" fill="#888" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">拧了 2 圈的</text>
+<text x="376.0" y="377.0" font-size="13" fill="#888" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">M3 螺丝</text>
+<text x="224.0" y="355.0" font-size="13" fill="#888" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">另一个螺孔</text>
+<text x="300.0" y="444.6" font-size="13" fill="#888" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">三脚架螺孔（在底面）</text>
+<rect x="12.00" y="503.00" width="676.00" height="124.00" rx="6.00" stroke="#ccc" stroke-width="1.00" fill="#fafafa"/>
+<text x="24.0" y="525.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">螺孔的中心量不到：拧一颗螺丝当靶子。一只外爪顶住机身的一条边，另一只顶住螺丝杆“离那</text>
+<text x="24.0" y="547.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">条边远”的一侧。</text>
+<text x="24.0" y="569.0" font-size="15" fill="#c62828" text-anchor="start" font-weight="normal">换算：孔心到边 = 读数 − 螺丝直径的一半（M3 螺丝直径约 2.9，量一下你那颗）。</text>
+<text x="24.0" y="591.0" font-size="15" fill="#c62828" text-anchor="start" font-weight="normal">应约：A = B ≈ 22.45（孔心到上、下边都是 21）；C ≈ 12.45（孔心到近的侧边 11）。</text>
+<text x="24.0" y="613.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">最要紧的是 A 和 B 相等（差 0.5 以内）。不相等就把 A、B、C 三个读数都告诉我。</text>
+</svg>

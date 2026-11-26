@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 560" width="700" height="560" font-family="'Noto Sans CJK SC','Source Han Sans SC','PingFang SC','Microsoft YaHei','WenQuanYi Micro Hei',sans-serif">
+<rect width="700" height="560" fill="#ffffff"/>
+<text x="20.0" y="30.0" font-size="21" fill="#222" text-anchor="start" font-weight="bold">D405：机身的宽、高、厚</text>
+<text x="20.0" y="54.0" font-size="15" fill="#555" text-anchor="start" font-weight="normal">左：从相机背后看（镜头朝离开你的方向，三脚架螺孔朝下）。右：从侧面看</text>
+<rect x="20.00" y="70.00" width="14.00" height="14.00" rx="0.00" stroke="#1565c0" stroke-width="1.60" fill="#1565c0"/>
+<text x="40.0" y="82.0" font-size="14" fill="#222" text-anchor="start" font-weight="normal">蓝 = 卡尺外爪（固定）</text>
+<rect x="228.00" y="70.00" width="14.00" height="14.00" rx="0.00" stroke="#e65100" stroke-width="1.60" fill="#e65100"/>
+<text x="248.0" y="82.0" font-size="14" fill="#222" text-anchor="start" font-weight="normal">橙 = 卡尺外爪（活动）</text>
+<rect x="119.80" y="159.80" width="260.40" height="260.40" rx="24.80" stroke="#222" stroke-width="2.00" fill="#f1f3f5"/>
+<circle cx="188.00" cy="290.00" r="7.75" stroke="#222" stroke-width="1.50" fill="#fff"/>
+<circle cx="188.00" cy="290.00" r="9.30" stroke="#777" stroke-width="0.80" fill="none" stroke-dasharray="3 2"/>
+<circle cx="312.00" cy="290.00" r="7.75" stroke="#222" stroke-width="1.50" fill="#fff"/>
+<circle cx="312.00" cy="290.00" r="9.30" stroke="#777" stroke-width="0.80" fill="none" stroke-dasharray="3 2"/>
+<rect x="230.16" y="389.20" width="39.68" height="31.00" rx="0.00" stroke="#777" stroke-width="0.90" fill="none" stroke-dasharray="4 3"/>
+<text x="250.0" y="352.0" font-size="14" fill="#888" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">背面</text>
+<text x="250.0" y="384.2" font-size="13" fill="#888" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">三脚架螺孔（在底面）</text>
+<path d="M119.80 255.40 L119.80 225.40 L113.30 225.40 L113.30 255.40 Z" stroke="#1565c0" stroke-width="1.00" fill="#1565c0" stroke-linejoin="round" stroke-linecap="round" opacity="0.90"/>
+<path d="M380.20 225.40 L380.20 255.40 L386.70 255.40 L386.70 225.40 Z" stroke="#e65100" stroke-width="1.00" fill="#e65100" stroke-linejoin="round" stroke-linecap="round" opacity="0.90"/>
+<path d="M119.80 240.40 L119.80 119.80" stroke="#c62828" stroke-width="1.00" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M380.20 240.40 L380.20 119.80" stroke="#c62828" stroke-width="1.00" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M130.80 125.80 L369.20 125.80" stroke="#c62828" stroke-width="2.60" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M380.20 125.80 L367.20 130.80 L367.20 120.80 Z" stroke="#c62828" stroke-width="0.50" fill="#c62828" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M119.80 125.80 L132.80 130.80 L132.80 120.80 Z" stroke="#c62828" stroke-width="0.50" fill="#c62828" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="250.0" y="116.8" font-size="17" fill="#c62828" text-anchor="middle" font-weight="bold" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">宽 ≈ 42.0</text>
+<path d="M185.40 159.80 L215.40 159.80 L215.40 153.30 L185.40 153.30 Z" stroke="#1565c0" stroke-width="1.00" fill="#1565c0" stroke-linejoin="round" stroke-linecap="round" opacity="0.90"/>
+<path d="M215.40 420.20 L185.40 420.20 L185.40 426.70 L215.40 426.70 Z" stroke="#e65100" stroke-width="1.00" fill="#e65100" stroke-linejoin="round" stroke-linecap="round" opacity="0.90"/>
+<path d="M200.40 159.80 L79.80 159.80" stroke="#c62828" stroke-width="1.00" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M200.40 420.20 L79.80 420.20" stroke="#c62828" stroke-width="1.00" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M85.80 170.80 L85.80 409.20" stroke="#c62828" stroke-width="2.60" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M85.80 420.20 L80.80 407.20 L90.80 407.20 Z" stroke="#c62828" stroke-width="0.50" fill="#c62828" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M85.80 159.80 L80.80 172.80 L90.80 172.80 Z" stroke="#c62828" stroke-width="0.50" fill="#c62828" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="77.8" y="284.0" font-size="17" fill="#c62828" text-anchor="end" font-weight="bold" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">高</text>
+<text x="77.8" y="306.0" font-size="17" fill="#c62828" text-anchor="end" font-weight="bold" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">≈ 42.0</text>
+<rect x="488.70" y="159.80" width="142.60" height="260.40" rx="12.40" stroke="#222" stroke-width="2.00" fill="#f1f3f5"/>
+<text x="480.7" y="442.2" font-size="14" fill="#888" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">背面</text>
+<text x="639.3" y="442.2" font-size="14" fill="#888" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">镜头这面</text>
+<path d="M488.70 345.00 L488.70 315.00 L482.20 315.00 L482.20 345.00 Z" stroke="#1565c0" stroke-width="1.00" fill="#1565c0" stroke-linejoin="round" stroke-linecap="round" opacity="0.90"/>
+<path d="M631.30 315.00 L631.30 345.00 L637.80 345.00 L637.80 315.00 Z" stroke="#e65100" stroke-width="1.00" fill="#e65100" stroke-linejoin="round" stroke-linecap="round" opacity="0.90"/>
+<path d="M488.70 330.00 L488.70 119.80" stroke="#c62828" stroke-width="1.00" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M631.30 330.00 L631.30 119.80" stroke="#c62828" stroke-width="1.00" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M499.70 125.80 L620.30 125.80" stroke="#c62828" stroke-width="2.60" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M631.30 125.80 L618.30 130.80 L618.30 120.80 Z" stroke="#c62828" stroke-width="0.50" fill="#c62828" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M488.70 125.80 L501.70 130.80 L501.70 120.80 Z" stroke="#c62828" stroke-width="0.50" fill="#c62828" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="560.0" y="116.8" font-size="17" fill="#c62828" text-anchor="middle" font-weight="bold" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">厚 ≈ 23.0</text>
+<rect x="12.00" y="468.00" width="676.00" height="80.00" rx="6.00" stroke="#ccc" stroke-width="1.00" fill="#fafafa"/>
+<text x="24.0" y="490.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">用外爪夹住机身两个相对的面。夹在平的地方，别夹在圆角上，别压到镜头玻璃。</text>
+<text x="24.0" y="512.0" font-size="15" fill="#c62828" text-anchor="start" font-weight="normal">读数应约：宽 42.0、高 42.0、厚 23.0（厚度按最前到最后量）。</text>
+<text x="24.0" y="534.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">宽、高在 ±0.3 以内、厚在 ±0.5 以内算正常。超出就把读数告诉我。</text>
+</svg>

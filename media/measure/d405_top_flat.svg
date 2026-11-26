@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 540" width="700" height="540" font-family="'Noto Sans CJK SC','Source Han Sans SC','PingFang SC','Microsoft YaHei','WenQuanYi Micro Hei',sans-serif">
+<rect width="700" height="540" fill="#ffffff"/>
+<text x="20.0" y="30.0" font-size="21" fill="#222" text-anchor="start" font-weight="bold">D405：顶面平不平</text>
+<text x="20.0" y="54.0" font-size="15" fill="#555" text-anchor="start" font-weight="normal">从相机背后看。拿一把直的东西（卡尺的尺身 / 钢尺）横着压在顶面上</text>
+<rect x="211.40" y="151.40" width="277.20" height="277.20" rx="26.40" stroke="#222" stroke-width="2.00" fill="#f1f3f5"/>
+<circle cx="284.00" cy="290.00" r="8.25" stroke="#222" stroke-width="1.50" fill="#fff"/>
+<circle cx="284.00" cy="290.00" r="9.90" stroke="#777" stroke-width="0.80" fill="none" stroke-dasharray="3 2"/>
+<circle cx="416.00" cy="290.00" r="8.25" stroke="#222" stroke-width="1.50" fill="#fff"/>
+<circle cx="416.00" cy="290.00" r="9.90" stroke="#777" stroke-width="0.80" fill="none" stroke-dasharray="3 2"/>
+<rect x="328.88" y="395.60" width="42.24" height="33.00" rx="0.00" stroke="#777" stroke-width="0.90" fill="none" stroke-dasharray="4 3"/>
+<rect x="125.60" y="125.40" width="448.80" height="26.00" rx="0.00" stroke="#1565c0" stroke-width="1.40" fill="#e3f2fd"/>
+<text x="350.0" y="143.4" font-size="14" fill="#1565c0" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">卡尺尺身 / 钢尺（直边朝下）</text>
+<path d="M237.80 151.40 L462.20 151.40" stroke="#c62828" stroke-width="4.00" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M389.60 153.40 L521.60 230.60" stroke="#c62828" stroke-width="1.20" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="501.6" y="250.6" font-size="15" fill="#c62828" text-anchor="start" font-weight="bold" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">看这条缝：对着光不透光</text>
+<text x="350.0" y="294.0" font-size="14" fill="#888" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">背面</text>
+<text x="350.0" y="390.6" font-size="13" fill="#888" text-anchor="middle" font-weight="normal" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">三脚架螺孔（在底面）</text>
+<rect x="12.00" y="448.00" width="676.00" height="80.00" rx="6.00" stroke="#ccc" stroke-width="1.00" fill="#fafafa"/>
+<text x="24.0" y="470.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">顶面 = 三脚架螺孔对面的那个面。支架上有一片板要贴着它，用来保证相机不歪。</text>
+<text x="24.0" y="492.0" font-size="15" fill="#c62828" text-anchor="start" font-weight="normal">预期：顶面中间约 30 mm 长是平的，直边压上去不晃、基本不透光（缝小于 0.2）。</text>
+<text x="24.0" y="514.0" font-size="15" fill="#222" text-anchor="start" font-weight="normal">如果顶面有凸起的螺丝头、标签、台阶或明显的弧度，告诉我有什么、大概多高。</text>
+</svg>
