@@ -84,17 +84,46 @@
   };
 
   var papers = [];
-  var saved = store.get('hand.saved', {});
   var read = store.get('hand.read', {});
-  var state = { q: '', cat: 'all', task: 'all', sub: 'all', rel: 'all', mount: 'all', sort: 'new', onlyStar: false, onlySaved: false, hideRead: false };
+  var state = { q: '', cat: 'all', task: 'all', sub: 'all', rel: 'all', mount: 'all', sort: 'new', onlyStar: false, hideRead: false };
   var REL_RANK = { high: 0, mid: 1, low: 2 };
   var isArxiv = function (p) { return /^\d{4}\.\d{4,5}$/.test(p.id); };
   var paperUrl = function (p) { return isArxiv(p) ? 'https://arxiv.org/abs/' + p.id : p.url; };
   var byDateDesc = function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; };
   var relRank = function (p) { return p.relevance in REL_RANK ? REL_RANK[p.relevance] : 3; };
 
+  // ---- 星标：papers.json 的 star 是默认值，用户点过的存在 hand.stars（{id: true/false}），两个页面共用 ----
+  var stars = store.get('hand.stars', {});
+  var oldSaved = store.get('hand.saved', null);  // 以前的“收藏”并入星标
+  if (oldSaved) {
+    Object.keys(oldSaved).forEach(function (id) { if (!(id in stars)) stars[id] = true; });
+    store.set('hand.stars', stars);
+    try { localStorage.removeItem('hand.saved'); } catch (e) { /* ignore */ }
+  }
+  var isStarred = function (p) { return p.id in stars ? !!stars[p.id] : !!p.star; };
+  // 星标的永远在前，组内按 cmp 排
+  var starFirst = function (cmp) {
+    return function (a, b) { return (isStarred(b) - isStarred(a)) || cmp(a, b); };
+  };
+  // 点一下切换星标，再调 onToggle（各页面自己重排）；重排后把焦点还给这颗星
+  function starButton(p, onToggle) {
+    var on = isStarred(p);
+    var b = el('button', { type: 'button', class: 'starbtn', 'data-id': p.id, 'aria-pressed': String(on),
+      'aria-label': (on ? '取消星标：' : '加星标：') + p.short, title: on ? '取消星标' : '加星标（排在最前）', text: on ? '★' : '☆' });
+    b.addEventListener('click', function () {
+      stars[p.id] = !on;
+      store.set('hand.stars', stars);
+      onToggle();
+      var again = document.querySelector('.starbtn[data-id="' + p.id.replace(/"/g, '\\"') + '"]');
+      if (again) again.focus();
+    });
+    return b;
+  }
+  var starredIds = function (list) { return list.filter(isStarred).map(function (p) { return p.id; }); };
+
   // task-rotate.html 的“相关文献”表复用这些；下面是文献库页面自己的逻辑
-  window.HandPapers = { el: el, getJSON: getJSON, paperUrl: paperUrl, byDateDesc: byDateDesc, relRank: relRank, REL: REL };
+  window.HandPapers = { el: el, getJSON: getJSON, paperUrl: paperUrl, byDateDesc: byDateDesc, relRank: relRank, REL: REL,
+    isStarred: isStarred, starFirst: starFirst, starButton: starButton };
   if (!$('list')) return;
 
   // ---- helpers ----
@@ -141,19 +170,18 @@
       if (state.sub !== 'all' && p.subtasks.indexOf(state.sub) === -1) return false;
       if (state.rel !== 'all' && (p.relevance || 'none') !== state.rel) return false;
       if (state.mount !== 'all' && p.mount !== state.mount) return false;
-      if (state.onlyStar && !p.star) return false;
-      if (state.onlySaved && !saved[p.id]) return false;
+      if (state.onlyStar && !isStarred(p)) return false;
       if (state.hideRead && read[p.id]) return false;
       return ts.every(function (t) { return p._hay.indexOf(t) !== -1; });
     });
-    out.sort(function (a, b) {
+    out.sort(starFirst(function (a, b) {
       if (state.sort === 'title') return a.title.localeCompare(b.title);
       if (state.sort === 'rel') {
         return relRank(a) - relRank(b) || byDateDesc(a, b);
       }
       var d = a.date < b.date ? -1 : a.date > b.date ? 1 : 0;
       return state.sort === 'old' ? d : -d;
-    });
+    }));
     return out;
   }
 
@@ -196,11 +224,11 @@
 
     var node = el('article', { class: 'paper' + (read[p.id] ? ' read' : ''), id: 'p-' + p.id, style: '--c: var(--c-' + p.cat + ')' }, [
       el('div', { class: 'meta' }, [
+        starButton(p, render),
         el('span', { class: 'tag' }, [el('span', { class: 'dot' }), CAT_NAME[p.cat]]),
         el('span', { class: 'date', text: p.date }),
         isArxiv(p) ? el('span', { class: 'aid', text: 'arXiv:' + p.id }) : null,
         p.venue && !/^arxiv/i.test(p.venue) ? el('span', { class: 'aid', text: p.venue }) : null,
-        p.star ? el('span', { class: 'star', text: '精选' }) : null,
         p.relevance === 'high' ? el('span', { class: 'rel', text: '和转圆柱高度相关', title: REL_PLAIN }) : null
       ]),
       el('h3', null, [el('span', { class: 'short', text: p.short }), titleLink]),
@@ -214,10 +242,6 @@
         isArxiv(p) ? el('a', { href: 'https://arxiv.org/pdf/' + p.id, target: '_blank', rel: 'noopener', text: 'PDF' }) : null,
         el('a', { href: 'https://scholar.google.com/scholar?q=' + encodeURIComponent(p.title), target: '_blank', rel: 'noopener', text: 'Scholar' }),
         el('span', { class: 'sp' }),
-        toggleBtn(saved[p.id] ? '★ 已收藏' : '☆ 收藏', saved[p.id], function () {
-          if (saved[p.id]) delete saved[p.id]; else saved[p.id] = 1;
-          store.set('hand.saved', saved); render();
-        }),
         toggleBtn(read[p.id] ? '✓ 已读' : '标为已读', read[p.id], function () {
           if (read[p.id]) delete read[p.id]; else read[p.id] = 1;
           store.set('hand.read', read); render();
@@ -348,7 +372,19 @@
   // ---- wire up ----
   $('q').addEventListener('input', function (e) { state.q = e.target.value; render(); });
   $('sort').addEventListener('change', function (e) { state.sort = e.target.value; render(); });
-  ['onlyStar', 'onlySaved', 'hideRead'].forEach(function (k) {
+  $('copyStars').addEventListener('click', function () {
+    var b = this, text = JSON.stringify(starredIds(papers));
+    var done = function () { b.textContent = '已复制 ' + starredIds(papers).length + ' 篇'; setTimeout(function () { b.textContent = '复制星标清单'; }, 2000); };
+    var fallback = function () {
+      var t = el('textarea', { readonly: '', style: 'position:fixed;opacity:0' });
+      t.value = text; document.body.appendChild(t); t.select();
+      try { document.execCommand('copy'); done(); } catch (e) { window.prompt('复制这段：', text); }
+      t.remove();
+    };
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done, fallback);
+    else fallback();
+  });
+  ['onlyStar', 'hideRead'].forEach(function (k) {
     $(k).addEventListener('change', function (e) { state[k] = e.target.checked; render(); });
   });
 

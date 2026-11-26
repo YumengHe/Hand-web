@@ -92,11 +92,15 @@ input[type="search"] { flex: 1; min-width: 0; }
 .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; font-size: 13px; color: var(--muted); }
 .tag { display: inline-flex; align-items: center; gap: 6px; color: var(--ink); font-weight: 600; }
 .meta .date, .meta .aid { font-family: var(--mono); font-size: 12px; }
-.star { color: var(--accent); background: var(--accent-soft); border-radius: 4px; padding: 0 6px; font-size: 12px; font-weight: 600; }
+.starbtn { font: 18px/1 var(--sans); color: var(--muted); background: none; border: 0; border-radius: 4px; padding: 2px 4px; cursor: pointer; }
+.starbtn[aria-pressed="true"] { color: var(--accent); }
+.starbtn:hover { color: var(--accent); }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .paper h3 { font: 700 19px/1.4 var(--serif); margin: 6px 0 2px; overflow-wrap: anywhere; }
 .paper h3 a { color: var(--ink); text-decoration: none; }
 .paper h3 a:hover { color: var(--accent); text-decoration: underline; }
 .short { font: 600 12px var(--mono); color: var(--c); margin-right: 8px; white-space: nowrap; }
+@media (max-width: 600px) { .short { white-space: normal; } }
 .authors { font-size: 13.5px; color: var(--muted); margin: 0 0 8px; }
 .zh { margin: 0 0 8px; }
 mark { background: var(--mark); color: inherit; border-radius: 2px; padding: 0 1px; }

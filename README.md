@@ -18,7 +18,7 @@ nohup ./serve.sh > /tmp/hand-web.log 2>&1 &
 ## 结构
 
 - `index.html`：首页，只放各页面的入口
-- `papers.html` / `app.js`：文献库（搜索、按任务/按方法筛选、排序、收藏/已读）
+- `papers.html` / `app.js`：文献库（搜索、按任务/按方法筛选、排序、星标/已读）
 - `style.css`：所有页面共用的样式
 - `compare.html`：无极 2 和 Sharpa Wave 两只手的区别
 - `setup.html`：Sharpa 开箱、固定、接线、连电脑、关机
@@ -51,6 +51,7 @@ nohup ./serve.sh > /tmp/hand-web.log 2>&1 &
 ```
 
 `cat` 取值：`survey` `rl` `grasp` `teleop` `human` `hardware` `tactile` `vla` `model`（基于模型的规划和控制）。
+`star`：默认星标（`true` 的排在最前）。用户在页面上点的星存在浏览器 localStorage（`hand.stars`，文献库和任务页共用），覆盖这里的默认值；要固定下来，用文献库的“复制星标清单”拿到 id 列表，再改这个字段。
 `tasks` 取值（可多个）：`rotate` `grasp` `tool` `bimanual` `daily` `none`，含义见 `app.js` 里的 `TASKS`。
 `subtasks`（必填，可多个）：细分任务，取值必须是 `data/subtasks.json` 里的 `key`。筛选时，一篇论文也算进它细标签所属（`parent`）的粗任务。魔方的三个标签 `rubik_hand` `rubik_robot` `rubik_algo` 另外合成一个“魔方”入口。
 `mount`（要不要机械臂）取值：`fixed`（手固定，只动手指）`mixed`（有的实验要臂、有的不要）`arm`（需要机械臂或人形机器人）`none`（没用真手做任务）。可选的 `mount_note` 写一句依据，比如“已核对原文：……”，会显示在卡片上。

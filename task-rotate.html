@@ -23,7 +23,7 @@
   .status .s { font-size: 16px; }
   .explain code { overflow-wrap: anywhere; }
   #lit-chips { margin: 10px 0; }
-  #lit-table td:nth-child(3) { white-space: pre; }
+  #lit-table td:nth-child(4) { white-space: pre; }
   pre.cmd { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; overflow-x: auto; font-size: 13px; }
 </style>
 </head>
@@ -443,7 +443,7 @@ PYTHONPATH=. LD_LIBRARY_PATH=/opt/sharpa-wave-sdk/lib python rl_isaaclab/scripts
     <div class="chips" id="lit-chips" role="group" aria-label="按细标签筛选"></div>
     <div class="tablewrap">
       <table class="dense" id="lit-table">
-        <thead><tr><th>简称 / 标题</th><th>年份</th><th>转法</th><th>说明</th><th title="调研时按和我们转圆柱的接近程度标的；较早收录的没标">相关度</th><th>要机械臂</th></tr></thead>
+        <thead><tr><th><span class="vh">星标</span></th><th>简称 / 标题</th><th>年份</th><th>转法</th><th>说明</th><th title="调研时按和我们转圆柱的接近程度标的；较早收录的没标">相关度</th><th>要机械臂</th></tr></thead>
         <tbody></tbody>
       </table>
     </div>
@@ -462,12 +462,16 @@ PYTHONPATH=. LD_LIBRARY_PATH=/opt/sharpa-wave-sdk/lib python rl_isaaclab/scripts
   var REL_NAME = {}; H.REL.forEach(function (r) { REL_NAME[r.key] = r.name; });
   var MOUNT_SHORT = { fixed: '不要', mixed: '部分要', arm: '要', none: '没用真手' };
   var cur = 'all', rows = [], keys = [], SUB = {};
+  var base = function (a, b) { return H.relRank(a) - H.relRank(b) || ax(a) - ax(b) || H.byDateDesc(a, b); };
+  var ax = function (p) { return p.subtasks.indexOf('rot_axis') === -1 ? 1 : 0; };
   function draw() {
+    rows.sort(H.starFirst(base));
     var tb = document.querySelector('#lit-table tbody'), frag = document.createDocumentFragment();
     rows.forEach(function (p) {
       if (cur !== 'all' && p.subtasks.indexOf(cur) === -1) return;
       var a = el('a', { href: H.paperUrl(p), target: '_blank', rel: 'noopener', text: p.title });
       frag.appendChild(el('tr', null, [
+        el('td', null, [H.starButton(p, draw)]),
         el('td', { class: 'w' }, [el('strong', { text: p.short }), el('br'), a]),
         el('td', { text: String(p.date).slice(0, 4) }),
         el('td', { text: p.subtasks.filter(function (k) { return keys.indexOf(k) !== -1; }).map(function (k) { return SUB[k].name; }).join('\n') }),
@@ -484,9 +488,7 @@ PYTHONPATH=. LD_LIBRARY_PATH=/opt/sharpa-wave-sdk/lib python rl_isaaclab/scripts
   Promise.all([H.getJSON('data/papers.json'), H.getJSON('data/subtasks.json')]).then(function (res) {
     res[1].forEach(function (s) { SUB[s.key] = s; if (s.parent === 'rotate') keys.push(s.key); });
     rows = res[0].filter(function (p) { return p.subtasks.some(function (k) { return keys.indexOf(k) !== -1; }); });
-    var ax = function (p) { return p.subtasks.indexOf('rot_axis') === -1 ? 1 : 0; };
-    rows.sort(function (a, b) { return H.relRank(a) - H.relRank(b) || ax(a) - ax(b) || H.byDateDesc(a, b); });
-    document.getElementById('lit-lead').innerHTML = '<a href="papers.html">文献库</a>里带“在手里转东西”细标签的文章，共 ' + rows.length + ' 篇，按相关度、再按时间新到旧排。';
+    document.getElementById('lit-lead').innerHTML = '<a href="papers.html">文献库</a>里带“在手里转东西”细标签的文章，共 ' + rows.length + ' 篇，星标在前，其余按相关度、再按时间新到旧排。';
     var chips = document.getElementById('lit-chips');
     ['all'].concat(keys).forEach(function (k) {
       var n = k === 'all' ? rows.length : rows.filter(function (p) { return p.subtasks.indexOf(k) !== -1; }).length;

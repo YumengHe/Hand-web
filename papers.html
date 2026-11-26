@@ -50,9 +50,9 @@
     <div class="chips" id="chips" role="group" aria-label="按方法筛选"></div>
     <p id="catnote" class="catnote" hidden></p>
     <div class="toggles">
-      <label><input type="checkbox" id="onlyStar"> 只看精选</label>
-      <label><input type="checkbox" id="onlySaved"> 只看我收藏的</label>
+      <label><input type="checkbox" id="onlyStar"> 只看星标</label>
       <label><input type="checkbox" id="hideRead"> 隐藏已读</label>
+      <button type="button" class="ghost" id="copyStars" title="把星标文章的 id 复制成 JSON 数组，用来写回 papers.json 的 star">复制星标清单</button>
       <span id="count" class="count" aria-live="polite"></span>
     </div>
     <div id="list" class="list"></div>
@@ -61,7 +61,7 @@
 </main>
 
 <footer class="wrap foot">
-  <p>数据来源：arXiv API 和 Crossref。中文导读为人工撰写的一句话概括，细节请以原文为准。“做了什么任务”根据摘要和对论文的了解整理，没有逐篇核对全文；写着“具体见原文”的是摘要里没列出任务的。收藏与已读状态只保存在本浏览器。</p>
+  <p>数据来源：arXiv API 和 Crossref。中文导读为人工撰写的一句话概括，细节请以原文为准。“做了什么任务”根据摘要和对论文的了解整理，没有逐篇核对全文；写着“具体见原文”的是摘要里没列出任务的。星标与已读状态只保存在本浏览器。</p>
 </footer>
 
 <script src="app.js"></script>
