@@ -15,8 +15,12 @@
   .fig figcaption { font-size: 14px; color: var(--muted); margin-top: 6px; }
   .toc a.toc-sub { padding-left: 1.6em; font-size: 14px; }
   .fig svg { display: block; width: 100%; max-width: 900px; height: auto; border: 1px solid var(--line); border-radius: 10px; background: #fffdf8; }
-  td.pos { border-left: 3px solid #2f7d6b; }
-  td.neg { border-left: 3px solid #b4532a; }
+  td.pos { border-left: 5px solid #2f7d6b; font-weight: 600; }
+  td.neg { border-left: 5px solid #b4532a; font-weight: 600; }
+  tr:has(td.pos) td { background: #e3f1e6; }
+  tr:has(td.neg) td { background: #fbe6d8; }
+  tr:has(td.pos) td:nth-last-child(-n+2) { color: #1f6a57; font-weight: 600; }
+  tr:has(td.neg) td:nth-last-child(-n+2) { color: #a2451f; font-weight: 600; }
   .tag-inf { font-size: 12px; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; margin-right: 4px; white-space: nowrap; }
 </style>
 </head>
@@ -161,7 +165,7 @@
       </table>
     </div>
 
-    <p><strong>每一项</strong>（绿 = 加分，红 = 扣分；每步算一次，一局最长 20 s = 400 步，每步最多 +4）</p>
+    <p><strong>每一项</strong>（<span class="hg" style="padding:0 6px;border-radius:4px">绿底 = 加分</span> <span class="hb" style="padding:0 6px;border-radius:4px">红底 = 扣分</span>；每步算一次，一局最长 20 s = 400 步，每步最多 +4）</p>
     <div class="tablewrap">
       <table class="dense">
         <thead><tr><th>项</th><th>式子</th><th>权重</th><th>封顶 / 尺度</th><th>作用</th><th>START<br>每步</th><th>SQ12<br>每步</th></tr></thead>
