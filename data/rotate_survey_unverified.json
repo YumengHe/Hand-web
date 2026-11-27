@@ -1,0 +1,58 @@
+{
+ "_readme": "转圆柱文献调研（2026-11-20）里没能核实、或读后排除的条目；其余 253 篇已并入 papers.json。",
+ "unverified": [
+  {
+   "title": "Contact-Invariant Optimization for Hand Manipulation (Mordatch, Popović, Todorov, SCA 2012)",
+   "why": "Crossref 里只查到同组的《Discovery of complex behaviors through contact-invariant optimization》（10.1145/2185520.2185539），这篇手部操作的没查到 DOI，作者和年份是凭印象，没有打开原始页面核实。"
+  },
+  {
+   "title": "Finding Optimal Solutions to Rubik's Cube Using Pattern Databases (Korf, AAAI 1997)",
+   "why": "魔方最优解搜索的经典论文，AAAI 会议论文没有 DOI，Crossref 查不到，没打开 AAAI 原始页面核实。"
+  },
+  {
+   "title": "Effectiveness of Kinesthetic Sensing in In-Hand Rotation of Objects with an Eccentric Center of Mass",
+   "why": "Semantic Scholar 的引用列表里出现（引用了 Hora 等），但没有年份、DOI 和 arXiv 编号，查不到原始页面。"
+  },
+  {
+   "title": "A Simple Method for Complex In-Hand Manipulation (Todorov 组，约 2010)",
+   "why": "Semantic Scholar 引用图里出现，标注 2010 年，没有 DOI，Crossref 查不到，可能是技术报告。"
+  },
+  {
+   "title": "Rubik's cube puzzle as a benchmark for service robots (Zieliński 等，约 2006) / MRROC++ based controller of a dual arm robot system manipulating a Rubik's cube (2007)",
+   "why": "Semantic Scholar 引用图里出现的会议版本，没有 DOI；同一工作的期刊版（Industrial Robot 2007，10.1108/01439910710774377）已核实并收进正式清单。"
+  },
+  {
+   "title": "Yang et al., RSS 2016 Workshop 摘要：PR2 双手用预接触传感解魔方",
+   "why": "网页搜索里出现的 workshop 摘要 PDF（kavrakilab.org），不是正式论文；同组的正式版本《Benchmarking Robot Manipulation with the Rubik's Cube》（arXiv 2202.07074）已收。"
+  },
+  {
+   "title": "2×2 魔方人形机器人双手操作（2025 年的一个项目主页，seongminjung.github.io）",
+   "why": "网页搜索里出现，只有项目页，没找到对应的论文或 arXiv 编号。"
+  },
+  {
+   "title": "高速解魔方机器（Sub1 Reloaded、MIT 0.38 秒、三菱 TOKUFASTbot 等）",
+   "why": "这些是吉尼斯纪录级的工程作品，只有新闻和视频，没找到对应的学术论文，所以没收进正式清单。"
+  },
+  {
+   "title": "Learning Deep Visuomotor Policies for Dexterous Hand Manipulation (Jain 等, ICRA 2019)",
+   "why": "按标题在 arXiv API 里没搜到，没有进一步核实。"
+  }
+ ],
+ "excluded_after_reading": [
+  {
+   "key": "2511.07381",
+   "title": "Residual Rotation Correction using Tactile Equivariance",
+   "why": "不是手内操作：物体在夹爪里的角度只是被触觉估出来，用来修正机械臂动作，机器人并不在手里转物体。"
+  },
+  {
+   "key": "10.1109/robot.1987.1087910",
+   "title": "Regrasping",
+   "why": "做的是借桌面放下再抓的换握（pick-and-place regrasp），不是手内操作，也不涉及手内旋转。"
+  },
+  {
+   "key": "10.1177/0278364915592961",
+   "title": "A novel type of compliant and underactuated robotic hand for dexterous grasping",
+   "why": "讲的是软手的设计和抓取，没有手内旋转 / 手内操作，也和魔方无关。"
+  }
+ ]
+}
