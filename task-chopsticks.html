@@ -122,7 +122,7 @@
     <p class="ref">来源：<code>chopsticks_env.py</code>（<code>_get_rewards</code> / <code>_get_dones</code> / <code>_update_goal</code>）和 <code>chopsticks_env_cfg.py</code>，下面是 v3 的设置，4 种筷子相同。“每步贡献”= 权重 × tensorboard 里该项最后 20 个记录的平均（START 训练到 2 亿步，SQ12 到 0.66 亿步）。</p>
 
     <figure class="fig">
-      <svg viewBox="0 0 900 300" role="img" aria-label="间隙、前后错开、漂移分别量的是什么">
+      <svg viewBox="0 0 1000 300" role="img" aria-label="间隙、前后错开、漂移分别量的是什么">
         <defs>
           <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b665e"/></marker>
         </defs>
@@ -135,21 +135,22 @@
         <circle cx="660" cy="111" r="5" fill="#1f1d1a"/>
         <circle cx="620" cy="153" r="5" fill="#1f1d1a"/>
         <line x1="660" y1="111" x2="620" y2="153" stroke="#2f7d6b" stroke-width="2.5"/>
-        <text x="652" y="146" font-size="15" fill="#2f7d6b">间隙 G = 筷尖中心距 − 筷尖厚度</text>
+        <text x="678" y="124" font-size="15" fill="#2f7d6b">间隙 G = 筷尖中心距 − 筷尖厚度</text>
         <line x1="620" y1="270" x2="660" y2="270" stroke="#b4532a" stroke-width="2.5" marker-start="url(#arr)" marker-end="url(#arr)"/>
         <line x1="620" y1="160" x2="620" y2="276" stroke="#b4532a" stroke-dasharray="3 3"/>
         <line x1="660" y1="118" x2="660" y2="276" stroke="#b4532a" stroke-dasharray="3 3"/>
         <text x="610" y="275" font-size="15" fill="#b4532a" text-anchor="end">前后错开：筷尖连线在筷子方向上的投影</text>
         <circle cx="640" cy="132" r="5" fill="none" stroke="#1f1d1a" stroke-width="2"/>
-        <circle cx="575" cy="190" r="5" fill="none" stroke="#6b665e" stroke-width="2" stroke-dasharray="2 2"/>
-        <line x1="580" y1="186" x2="634" y2="137" stroke="#6b665e" stroke-width="2" marker-end="url(#arr)"/>
-        <text x="300" y="250" font-size="15" fill="#6b665e">漂移：筷尖中点离开局位置（虚圈）</text>
+        <circle cx="726" cy="186" r="5" fill="none" stroke="#6b665e" stroke-width="2" stroke-dasharray="2 2"/>
+        <line x1="721" y1="183" x2="647" y2="137" stroke="#6b665e" stroke-width="2" marker-end="url(#arr)"/>
+        <text x="740" y="192" font-size="15" fill="#6b665e">漂移：两个筷尖的中点（空心圈）</text>
+        <text x="740" y="212" font-size="15" fill="#6b665e">离开局位置（虚圈）多远</text>
         <circle cx="360" cy="91" r="4" fill="#1f1d1a"/>
         <circle cx="340" cy="174" r="4" fill="#1f1d1a"/>
         <line x1="360" y1="91" x2="340" y2="174" stroke="#1f1d1a" stroke-dasharray="4 3"/>
         <text x="372" y="138" font-size="14" fill="#1f1d1a">中点连线：和筷尖连线反向 = 交叉</text>
       </svg>
-      <figcaption>示意图，不按比例。黑点是代码里用到的点：筷尖中心、筷子中点。</figcaption>
+      <figcaption>示意图，不按比例。黑点是代码里用到的点：筷尖中心、筷子中点。图里没有画哪根在动：第一轮（v3）的奖励不区分上筷和下筷，两根都是自由的，谁动都可以；“下筷顶住不动、只有上筷动”是第二轮要加的要求。</figcaption>
     </figure>
 
     <p><strong>目标</strong></p>
