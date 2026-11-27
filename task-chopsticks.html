@@ -13,6 +13,10 @@
   .fig { margin: 14px 0; }
   .fig img { display: block; width: 100%; max-width: 900px; height: auto; border: 1px solid var(--line); border-radius: 10px; }
   .fig figcaption { font-size: 14px; color: var(--muted); margin-top: 6px; }
+  .toc a.toc-sub { padding-left: 1.6em; font-size: 14px; }
+  .fig svg { display: block; width: 100%; max-width: 900px; height: auto; border: 1px solid var(--line); border-radius: 10px; background: #fffdf8; }
+  td.pos { border-left: 3px solid #2f7d6b; }
+  td.neg { border-left: 3px solid #b4532a; }
   .tag-inf { font-size: 12px; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; margin-right: 4px; white-space: nowrap; }
 </style>
 </head>
@@ -44,6 +48,8 @@
   <nav class="toc" aria-label="目录">
     <a href="#sticks">1. 我们设计的筷子</a>
     <a href="#sim">2. 仿真初试</a>
+    <a href="#ends" class="toc-sub">筷子的头尾</a>
+    <a href="#reward" class="toc-sub">奖励设计</a>
     <a href="#train">3. 训练配置</a>
     <a href="#works">4. 文献：机器人和仿真工作</a>
     <a href="#human">5. 文献：人手怎么握筷子</a>
@@ -88,10 +94,140 @@
           <tr><td>目标</td><td class="w">筷尖间隙 0–40 mm，每 2–4 秒重新抽一次</td></tr>
           <tr><td>动作 / 控制</td><td class="w">同转圆柱：22 维相对目标角，20 Hz</td></tr>
           <tr><td>观测</td><td class="w">老师：能看到筷子位姿。学生：只有关节角 + 指尖触觉 + 目标</td></tr>
-          <tr><td>奖励</td><td class="w">间隙跟上目标；两个筷尖不前后错开、不交叉；筷子不漂、不掉；省力</td></tr>
+          <tr><td>奖励</td><td class="w">间隙跟上目标；两个筷尖不前后错开、不交叉；筷子不漂、不掉；省力。见<a href="#reward">奖励设计</a></td></tr>
         </tbody>
       </table>
     </div>
+
+    <h3 class="sub" id="ends">筷子分头尾：握持端粗，筷尖细</h3>
+    <div class="tablewrap">
+      <table class="dense">
+        <tbody>
+          <tr><td>模型</td><td class="w">每种筷子都有锥度。连杆原点在握持端端面中心，沿 +x 到筷尖，长 240 mm。<code>meta.json</code> 记了筷尖中心 <code>tip_center</code> 和握持端中心 <code>top_center</code>。截面（握持端 → 筷尖）：START 14×9 → 8×5 mm，STD 6×6 → 4×4，SQ12 12×12 → 4×4，FLAT 14×6 → 6×3</td></tr>
+          <tr><td>目标量哪头</td><td class="w">只量筷尖：间隙 = 两个 <code>tip_center</code> 的距离 − 筷尖厚度</td></tr>
+          <tr><td>握哪一段</td><td class="w">握姿搜索时，筷子上离握持端 60–130 mm 的一点放进手上方的采样区：沿手指 70–160 mm，侧向 −40 到 +60 mm，离掌面 15–60 mm。之后手指随机合拢，碰到就停，所以实际接触点没有规定</td></tr>
+          <tr><td>朝哪边</td><td class="w">筷子大致沿手指方向：偏航（绕掌心法向）±40°，俯仰 −10° 到 +30°。筷尖朝指尖外伸，伸出握点 110–180 mm</td></tr>
+          <tr><td>两根的关系</td><td class="w">两根的筷尖在同一头，并且要同时满足：筷尖距 &lt; 60 mm，前后错开 &lt; 30 mm，不交叉，两根轴线最近距离 &gt; 1.15 × 握持端截面最大边 + 1 mm。中点离掌面近的那根定为下筷（橙）</td></tr>
+          <tr><td>绕长轴转多少</td><td class="w">没有规定：<code>roll</code> 在 0–2π 里随机。方截面哪面朝上、START 的防滑槽朝哪，都是随机的</td></tr>
+          <tr><td>训练时握点会不会跑</td><td class="w">没有直接约束握点位置的奖励项，只有三处间接限制：筷尖中点漂移扣分、关节离开局握姿扣分、任一根重心离开局位置 &gt; 60 mm 判掉落。手沿筷子滑动 6 cm 以内不会被单独发现</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub" id="reward">奖励设计</h3>
+    <p class="ref">来源：<code>chopsticks_env.py</code>（<code>_get_rewards</code> / <code>_get_dones</code> / <code>_update_goal</code>）和 <code>chopsticks_env_cfg.py</code>，下面是 v3 的设置，4 种筷子相同。“每步贡献”= 权重 × tensorboard 里该项最后 20 个记录的平均（START 训练到 2 亿步，SQ12 到 0.66 亿步）。</p>
+
+    <figure class="fig">
+      <svg viewBox="0 0 900 300" role="img" aria-label="间隙、前后错开、漂移分别量的是什么">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b665e"/></marker>
+        </defs>
+        <polygon points="60,58 660,108 660,114 60,74" fill="#4f8cc9"/>
+        <polygon points="60,186 620,150 620,156 60,202" fill="#d9732a"/>
+        <text x="60" y="44" font-size="14" fill="#6b665e">握持端（粗）</text>
+        <text x="610" y="96" font-size="14" fill="#6b665e">筷尖（细）</text>
+        <text x="60" y="226" font-size="14" fill="#6b665e">下筷 chop_a（靠掌心）</text>
+        <text x="200" y="66" font-size="14" fill="#6b665e">上筷 chop_b</text>
+        <circle cx="660" cy="111" r="5" fill="#1f1d1a"/>
+        <circle cx="620" cy="153" r="5" fill="#1f1d1a"/>
+        <line x1="660" y1="111" x2="620" y2="153" stroke="#2f7d6b" stroke-width="2.5"/>
+        <text x="652" y="146" font-size="15" fill="#2f7d6b">间隙 G = 筷尖中心距 − 筷尖厚度</text>
+        <line x1="620" y1="270" x2="660" y2="270" stroke="#b4532a" stroke-width="2.5" marker-start="url(#arr)" marker-end="url(#arr)"/>
+        <line x1="620" y1="160" x2="620" y2="276" stroke="#b4532a" stroke-dasharray="3 3"/>
+        <line x1="660" y1="118" x2="660" y2="276" stroke="#b4532a" stroke-dasharray="3 3"/>
+        <text x="610" y="275" font-size="15" fill="#b4532a" text-anchor="end">前后错开：筷尖连线在筷子方向上的投影</text>
+        <circle cx="640" cy="132" r="5" fill="none" stroke="#1f1d1a" stroke-width="2"/>
+        <circle cx="575" cy="190" r="5" fill="none" stroke="#6b665e" stroke-width="2" stroke-dasharray="2 2"/>
+        <line x1="580" y1="186" x2="634" y2="137" stroke="#6b665e" stroke-width="2" marker-end="url(#arr)"/>
+        <text x="300" y="250" font-size="15" fill="#6b665e">漂移：筷尖中点离开局位置（虚圈）</text>
+        <circle cx="360" cy="91" r="4" fill="#1f1d1a"/>
+        <circle cx="340" cy="174" r="4" fill="#1f1d1a"/>
+        <line x1="360" y1="91" x2="340" y2="174" stroke="#1f1d1a" stroke-dasharray="4 3"/>
+        <text x="372" y="138" font-size="14" fill="#1f1d1a">中点连线：和筷尖连线反向 = 交叉</text>
+      </svg>
+      <figcaption>示意图，不按比例。黑点是代码里用到的点：筷尖中心、筷子中点。</figcaption>
+    </figure>
+
+    <p><strong>目标</strong></p>
+    <div class="tablewrap">
+      <table class="dense">
+        <tbody>
+          <tr><td>间隙 G</td><td class="w"><code>|tip_b − tip_a| − 筷尖厚度</code>；厚度取筷尖宽、厚里小的那个：START 5 mm，STD / SQ12 4 mm，FLAT 3 mm</td></tr>
+          <tr><td>开局</td><td class="w">目标 = 这个握姿本来的间隙（截到 0–40 mm），保持 0.5–1.5 s（10–30 步）</td></tr>
+          <tr><td>之后</td><td class="w">每 2–4 s（40–80 步）重抽一次：0–40 mm 均匀分布，其中 20% 直接设成 0（合上）</td></tr>
+          <tr><td>误差 e</td><td class="w"><code>e = |G − 目标|</code>；目标为 0 时 <code>e = max(G, 0)</code>（代码注释：压得更紧不算误差）</td></tr>
+          <tr><td>不规定握法</td><td class="w">奖励只看筷尖。没有“哪根手指碰哪根筷子”的项，只有 <code>p_pose</code> 把关节拉向这一局开局的握姿</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>每一项</strong>（绿 = 加分，红 = 扣分；每步算一次，一局最长 20 s = 400 步，每步最多 +4）</p>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>项</th><th>式子</th><th>权重</th><th>封顶 / 尺度</th><th>作用</th><th>START<br>每步</th><th>SQ12<br>每步</th></tr></thead>
+        <tbody>
+          <tr><td class="pos">存活</td><td><code>1</code></td><td>1.0</td><td>—</td><td class="w">没掉就有</td><td>+1.00</td><td>+1.00</td></tr>
+          <tr><td class="pos">粗跟踪 <code>r_track</code></td><td><code>exp(−e / 0.008)</code></td><td>2.0</td><td>e = 8 mm 时 0.37</td><td class="w"><span class="tag-inf">推断</span>误差大时也有梯度</td><td>+1.12</td><td>+1.52</td></tr>
+          <tr><td class="pos">精跟踪 <code>r_fine</code></td><td><code>exp(−e / 0.002)</code></td><td>1.0</td><td>e = 2 mm 时 0.37</td><td class="w"><span class="tag-inf">推断</span>逼近到毫米级</td><td>+0.35</td><td>+0.53</td></tr>
+          <tr><td class="neg">前后错开</td><td><code>clamp(|(tip_b − tip_a)·û| / 0.03, 0, 1)</code>，<code>û</code> = 两根“握持端 → 筷尖”方向的平均</td><td>0.5</td><td>30 mm 封顶</td><td class="w">两个筷尖沿筷子方向别一前一后</td><td>−0.17</td><td>−0.10</td></tr>
+          <tr><td class="neg">交叉</td><td><code>relu(−cos∠(mid_b − mid_a, tip_b − tip_a))</code>，筷尖距小于 5 mm 时按 5 mm 算</td><td>0.5</td><td>0–1</td><td class="w">两根在前半段交叉</td><td>−0.002</td><td>−0.002</td></tr>
+          <tr><td class="neg">漂移</td><td><code>clamp(|筷尖中点 − 开局筷尖中点| / 0.10, 0, 1)</code></td><td>1.0</td><td>100 mm 封顶</td><td class="w">筷尖别整体乱跑</td><td>−0.34</td><td>−0.26</td></tr>
+          <tr><td class="neg">筷子速度</td><td><code>|v_a| + |v_b|</code>（重心线速度，m/s）</td><td>0.3</td><td>—</td><td class="w">筷子别晃</td><td>−0.013</td><td>−0.014</td></tr>
+          <tr><td class="neg">偏离握姿</td><td><code>Σ (q − q_开局)²</code>（22 个关节，rad²）</td><td>0.05</td><td>—</td><td class="w">别离开局握姿太远</td><td>−0.18</td><td>−0.16</td></tr>
+          <tr><td class="neg">力矩</td><td><code>Σ τ²</code></td><td>0.1</td><td>—</td><td class="w"><span class="tag-inf">推断</span>省力</td><td>−0.042</td><td>−0.039</td></tr>
+          <tr><td class="neg">功</td><td><code>min((Σ τ·q̇)², 10)</code></td><td>0.5</td><td>10</td><td class="w"><span class="tag-inf">推断</span>省力、动作别猛</td><td>−0.012</td><td>−0.026</td></tr>
+          <tr><td class="neg">动作变化</td><td><code>Σ (a_t − a_{t−1})²</code></td><td>0</td><td>—</td><td class="w">代码里有，没开</td><td>0</td><td>0</td></tr>
+          <tr><td><strong>合计</strong></td><td colspan="4" class="w">核对：回报 ÷ 局长，START 543 ÷ 317 = 1.71，SQ12 865 ÷ 360 = 2.41</td><td><strong>+1.72</strong></td><td><strong>+2.45</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="ref">“功”的贡献按 tensorboard 里没封顶的平均算，封顶后只会更小。</p>
+
+    <p><strong>结束条件</strong>（相对开局，任一条成立就算掉）</p>
+    <div class="tablewrap">
+      <table class="dense">
+        <tbody>
+          <tr><td>掉落</td><td class="w">任一根重心离开局位置 &gt; 60 mm；任一根重心下降 &gt; 40 mm；间隙 &gt; 100 mm；状态出现 NaN</td></tr>
+          <tr><td>超时</td><td class="w">20 s（400 步）</td></tr>
+          <tr><td>掉了另扣分吗</td><td class="w">不扣。掉了只是拿不到后面每步的分</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>重力课程</strong></p>
+    <div class="tablewrap">
+      <table class="dense">
+        <tbody>
+          <tr><td>起点 / 终点</td><td class="w">4.0 → 9.81 m/s²。全局一个重力，所有环境一起变</td></tr>
+          <tr><td>条件</td><td class="w">每个控制步：<code>ema = 0.98·ema + 0.02·这一步的掉落比例</code>（初值 0.05）。前 1000 步不加，之后 <code>ema &lt; 4e-3</code> 就加 0.01，每步最多加一次</td></tr>
+          <tr><td>v3 实测</td><td class="w">4 次 v3 都是 1660 万步开始加、2610 万步到 9.81（tensorboard <code>gravity_z</code>）。4.0 → 9.81 要加 581 次，每次 16384 步，合 952 万步，和实测的 950 万步一致：一开始加就没停过</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>v1 → v2 → v3</strong>（都是 START 老师）</p>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th></th><th>v1</th><th>v2</th><th>v3</th></tr></thead>
+        <tbody>
+          <tr><td>起点</td><td>从头训</td><td>接 v1 的存档续训</td><td>从头训</td></tr>
+          <tr><td>存活分</td><td>0.5</td><td>0.5</td><td>1.0</td></tr>
+          <tr><td>漂移权重 / 封顶</td><td>0.5 / 50 mm</td><td>1.5 / 100 mm</td><td>1.0 / 100 mm</td></tr>
+          <tr><td>重力起点</td><td>2.0</td><td>2.0</td><td>4.0</td></tr>
+          <tr><td>加重力条件</td><td class="w">这一步的掉落比例 &lt; 5e-4 → +0.05</td><td class="w">滑动平均 &lt; 4e-3 → +0.01</td><td>同 v2</td></tr>
+          <tr><td>为什么改</td><td>—</td><td class="w">v1 重力一直停在 2.0（cfg 注释）</td><td class="w">代码里没写原因；<span class="tag-inf">推断</span>针对 v2 每步回报变负</td></tr>
+          <tr><td>结果</td><td class="w hb">8100 万步手动停。每步掉落比例 0.0015–0.012，从没低于 5e-4，重力全程 2.0</td><td class="w hb">3300 万步手动停。局长从约 220 步掉到 15–32 步，回报最低 −66，掉落比例 0.015–0.069，重力全程 2.0。3.3M 步时每步平均回报约 −1.1（−35 ÷ 32 步）；<span class="tag-inf">推断</span>掉落不另扣分，每步为负时早掉反而亏得少</td><td class="w hg">4 种筷子都训完，重力到 9.81，结果见下</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>没解决的</strong></p>
+    <ul class="find">
+      <li>漂移压不下来：START 的漂移项从 1840 万步到 2 亿步一直在 0.34–0.36（平均约 35 mm），评估中位 25–36 mm。</li>
+      <li>重力课程的条件没起作用：v3 到第 1000 步时掉落已经低于阈值，实际等于在约 580 个控制步里匀速从 4.0 加到 9.81。</li>
+      <li>START 跟踪误差停了：训练里的平均误差 1.09 亿步以后一直是 8.4–8.8 mm。SQ12 到 0.66 亿步时 3.7 mm，还在降。</li>
+      <li>握点没有直接约束，手沿筷子滑动 6 cm 以内不会被单独发现（见<a href="#ends">头尾</a>）。</li>
+    </ul>
 
     <h3 class="sub">起始握姿：自动搜，不靠人示范</h3>
     <p>随机摆筷子 → 手指合拢 → 撤掉支撑，在重力和扰动下还稳住的留下。</p>
@@ -151,7 +287,7 @@
         <thead><tr><th>筷子</th><th>类型</th><th>重力</th><th>步数</th><th>局数</th><th>用时</th><th>分数 / 结果</th><th>备注</th></tr></thead>
         <tbody>
           <tr><td>START v1</td><td>老师</td><td class="w">课程照搬转圆柱（从 2.0 起），一直停在 2.0</td><td>0.81 亿（手动停）</td><td>523,665</td><td>44 分钟</td><td>停时回报 326，没评估</td><td class="w">没采用</td></tr>
-          <tr><td>START v2</td><td>老师</td><td class="w">加重力的条件放宽：掉落率滑动平均 &lt; 4e-3 就加 0.01</td><td>0.33 亿（手动停）</td><td>1,774,057</td><td>18 分钟</td><td>策略崩了，回报掉到约 5</td><td class="w">从 v1 的 6500 万步存档续训；没采用</td></tr>
+          <tr><td>START v2</td><td>老师</td><td class="w">加重力的条件放宽：掉落率滑动平均 &lt; 4e-3 就加 0.01</td><td>0.33 亿（手动停）</td><td>1,774,057</td><td>18 分钟</td><td>策略崩了：回报最低 −66，停时约 6</td><td class="w">从 v1 的 6500 万步存档续训；没采用</td></tr>
           <tr><td>START v3</td><td>老师</td><td>4.0 → 9.81</td><td>2.00 亿</td><td>703,737</td><td>101 分钟</td><td>499</td><td></td></tr>
           <tr><td>STD v3</td><td>老师</td><td>4.0 → 9.81</td><td>0.66 亿</td><td>288,830</td><td>35 分钟</td><td>453</td><td></td></tr>
           <tr><td>SQ12 v3</td><td>老师</td><td>4.0 → 9.81</td><td>0.66 亿</td><td>237,397</td><td>31 分钟</td><td>894</td><td></td></tr>
@@ -160,7 +296,7 @@
         </tbody>
       </table>
     </div>
-    <p class="ref">分数是训练末段的平均回报。v3 的重力课程约 3000 万步时到 9.81。v3 随机化：手的 PD 刚度、阻尼 ×0.5–2，摩擦倍数 0.7–1.5，关节噪声 ±0.02 rad，触觉增益 ×0.4–2.5；筷子摩擦 0.5–0.8，质量 ×0.8–1.25，重心沿长度 ±5 mm，随机外力。16384 个环境，RTX 5090。</p>
+    <p class="ref">分数是训练末段的平均回报。v3 的重力课程 1660 万步开始加、2610 万步到 9.81（见<a href="#reward">奖励设计</a>）。v3 随机化：手的 PD 刚度、阻尼 ×0.5–2，摩擦倍数 0.7–1.5，关节噪声 ±0.02 rad，触觉增益 ×0.4–2.5；筷子摩擦 0.5–0.8，质量 ×0.8–1.25，重心沿长度 ±5 mm，随机外力。16384 个环境，RTX 5090。</p>
   </section>
 
   <section id="works">
