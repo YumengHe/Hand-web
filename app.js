@@ -84,8 +84,7 @@
   };
 
   var papers = [];
-  var read = store.get('hand.read', {});
-  var state = { q: '', cat: 'all', task: 'all', sub: 'all', rel: 'all', mount: 'all', sort: 'new', onlyStar: false, hideRead: false };
+  var state = { q: '', cat: 'all', task: 'all', sub: 'all', rel: 'all', mount: 'all', sort: 'new', onlyStar: false };
   var REL_RANK = { high: 0, mid: 1, low: 2 };
   var isArxiv = function (p) { return /^\d{4}\.\d{4,5}$/.test(p.id); };
   var paperUrl = function (p) { return isArxiv(p) ? 'https://arxiv.org/abs/' + p.id : p.url; };
@@ -171,7 +170,6 @@
       if (state.rel !== 'all' && (p.relevance || 'none') !== state.rel) return false;
       if (state.mount !== 'all' && p.mount !== state.mount) return false;
       if (state.onlyStar && !isStarred(p)) return false;
-      if (state.hideRead && read[p.id]) return false;
       return ts.every(function (t) { return p._hay.indexOf(t) !== -1; });
     });
     out.sort(starFirst(function (a, b) {
@@ -186,12 +184,6 @@
   }
 
   // ---- render ----
-  function toggleBtn(label, on, handler) {
-    var b = el('button', { type: 'button', 'aria-pressed': String(!!on), text: label });
-    b.addEventListener('click', handler);
-    return b;
-  }
-
   function card(p, ts) {
     var abs = paperUrl(p);
     var titleLink = el('a', { href: abs, target: '_blank', rel: 'noopener' });
@@ -222,7 +214,7 @@
     if (p.abstract) absP.appendChild(highlight(p.abstract, ts));
     else absP.textContent = '数据里没有这篇的英文摘要。';
 
-    var node = el('article', { class: 'paper' + (read[p.id] ? ' read' : ''), id: 'p-' + p.id, style: '--c: var(--c-' + p.cat + ')' }, [
+    var node = el('article', { class: 'paper', id: 'p-' + p.id, style: '--c: var(--c-' + p.cat + ')' }, [
       el('div', { class: 'meta' }, [
         starButton(p, render),
         el('span', { class: 'tag' }, [el('span', { class: 'dot' }), CAT_NAME[p.cat]]),
@@ -240,12 +232,7 @@
       el('div', { class: 'actions' }, [
         isArxiv(p) ? el('a', { href: abs, target: '_blank', rel: 'noopener', text: 'arXiv' }) : el('a', { href: abs, target: '_blank', rel: 'noopener', text: '原文' }),
         isArxiv(p) ? el('a', { href: 'https://arxiv.org/pdf/' + p.id, target: '_blank', rel: 'noopener', text: 'PDF' }) : null,
-        el('a', { href: 'https://scholar.google.com/scholar?q=' + encodeURIComponent(p.title), target: '_blank', rel: 'noopener', text: 'Scholar' }),
-        el('span', { class: 'sp' }),
-        toggleBtn(read[p.id] ? '✓ 已读' : '标为已读', read[p.id], function () {
-          if (read[p.id]) delete read[p.id]; else read[p.id] = 1;
-          store.set('hand.read', read); render();
-        })
+        el('a', { href: 'https://scholar.google.com/scholar?q=' + encodeURIComponent(p.title), target: '_blank', rel: 'noopener', text: 'Scholar' })
       ])
     ]);
     return node;
@@ -384,9 +371,7 @@
     if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done, fallback);
     else fallback();
   });
-  ['onlyStar', 'hideRead'].forEach(function (k) {
-    $(k).addEventListener('change', function (e) { state[k] = e.target.checked; render(); });
-  });
+  $('onlyStar').addEventListener('change', function (e) { state.onlyStar = e.target.checked; render(); });
 
   function renderMountChips() {
     var counts = { all: papers.length };

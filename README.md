@@ -18,7 +18,7 @@ nohup ./serve.sh > /tmp/hand-web.log 2>&1 &
 ## 结构
 
 - `index.html`：首页，只放各页面的入口
-- `papers.html` / `app.js`：文献库（搜索、按任务/按方法筛选、排序、星标/已读）
+- `papers.html` / `app.js`：文献库（搜索、按任务/按方法筛选、排序、星标）
 - `style.css`：所有页面共用的样式
 - `compare.html`：无极 2 和 Sharpa Wave 两只手的区别
 - `setup.html`：Sharpa 开箱、固定、接线、连电脑、关机

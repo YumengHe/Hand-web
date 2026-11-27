@@ -12,6 +12,12 @@
 
 输出只含数字、文件名和人工备注；不写绝对路径、主机名、hand_sn。
 
+录像：每条进表记录的录像压小放进 Hand-web/media/runs/<id>.mp4（+ <id>.jpg 封面），json 里存站内相对路径。
+裁到手的区域（原片 640×480 → 340×300），15 fps，H.264 crf 32，无音轨，+faststart。
+增量：已压好且不比源录像旧的不重做；源录像被 playstation 清理掉后，已压好的保留、json 照常指向它。
+ffmpeg 取环境变量 RECORD_FFMPEG，否则 env_isaaclab3 里 imageio_ffmpeg 自带的，再否则 PATH 里的；都没有就跳过录像，表照常生成。
+playstation 每次真手运行结束后自动跑本脚本（超时 120 秒），stdout 最后一行显示在它的页面上。
+
 指标定义（页面说明里也有一份）：
 - run_s：策略运行时长（json 的 end.run_s，没有就取 CSV 最后一行的 t）。
 - gait_hz：步态主频。从第 2 秒起，每 5 秒一段，22 个关节角去均值后做频谱，取 0.5 Hz 以上能量最大的频率，各段取中位数。
@@ -23,8 +29,10 @@
 - stop_t：疑似停住。从第 2 秒起，3 秒滑窗的动作幅度 < 本次第 2–10 秒中位数的 30%，取第一个时刻。
 - auto：自动判定。run_s < 5 → 太短；有 drop_t → 掉了；pinky_low_max_s ≥ 5 → 卡住；有 stop_t → 停住；否则 一直转。
 """
-import csv, json, os, re, sys
+import csv, glob, json, os, re, shutil, subprocess, sys, time
 import numpy as np
+
+T0 = time.time()
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 WEB = os.path.dirname(HERE)
@@ -34,6 +42,39 @@ NAMES = os.path.join(HAND, 'playstation', 'web', 'rotate_model_names.json')
 NOTES = os.path.join(WEB, 'data', 'real_runs_notes.json')
 COMPARE = os.path.join(HAND, 'external', 'sharpa-rl-lab-il3', 'logs', 'night_1125', 't3', 'compare.json')
 OUT = os.path.join(WEB, 'data', 'real_runs.json')
+MEDIA = os.path.join(WEB, 'media', 'runs')
+CROP = 'crop=340:300:80:90'   # 手和圆柱，留了余量（相机 2026-11-26 晚上挪过一次，新旧位置都框得住）；不含右边的屏幕。相机再挪要重新核对
+FFMPEG_DIR = os.path.expanduser('~/miniconda3/envs/env_isaaclab3/lib/python3.12/site-packages/imageio_ffmpeg/binaries')
+
+
+def find_ffmpeg():
+    p = os.environ.get('RECORD_FFMPEG')
+    if p and os.path.exists(p):
+        return p
+    c = sorted(glob.glob(os.path.join(FFMPEG_DIR, 'ffmpeg-*')))
+    return c[-1] if c else shutil.which('ffmpeg')
+
+
+def compress(ff, src, rid, t_poster):
+    """压一段录像和封面；返回 True 表示新压了。失败时删掉半成品。"""
+    mp4 = os.path.join(MEDIA, rid + '.mp4')
+    jpg = os.path.join(MEDIA, rid + '.jpg')
+    tmp = mp4 + '.tmp.mp4'
+    try:
+        subprocess.run([ff, '-loglevel', 'error', '-y', '-i', src, '-an', '-vf', CROP + ',fps=15',
+                        '-c:v', 'libx264', '-preset', 'slow', '-crf', '32', '-pix_fmt', 'yuv420p',
+                        '-movflags', '+faststart', tmp], check=True, timeout=60)
+        os.replace(tmp, mp4)
+        for t in (t_poster, 0):   # 太短的录像在第 0 秒取封面
+            subprocess.run([ff, '-loglevel', 'error', '-y', '-ss', str(t), '-i', mp4, '-frames:v', '1',
+                            '-q:v', '5', jpg], timeout=20)
+            if os.path.exists(jpg) and os.path.getmtime(jpg) >= os.path.getmtime(mp4):
+                return True
+        return False
+    except Exception:
+        if os.path.exists(tmp):
+            os.remove(tmp)
+        return False
 FINGERS = ['拇', '食', '中', '无名', '小']
 
 
@@ -142,6 +183,7 @@ def auto_verdict(m, run_s):
 
 
 def main():
+    vjobs = []
     names = load(NAMES, {})
     notes = load(NOTES, {})
     compare = load(COMPARE, {})
@@ -165,7 +207,10 @@ def main():
         md, hm = mt.group(1), mt.group(2)
         start = meta.get('start') or f'{md[:2]}-{md[2:]} {hm[:2]}:{hm[2:4]}:{hm[4:]}'
         video = meta.get('video') or {}
-        vfile = video.get('file') if video.get('file') and os.path.exists(os.path.join(LOGS, video['file'])) else None
+        vsrc = os.path.join(LOGS, video['file']) if video.get('file') else None
+        if not (vsrc and os.path.exists(vsrc)):
+            vsrc = None
+        vjobs.append((rid, vsrc, video.get('csv_offset_s')))
         cmp = compare.get(rid.split('_')[1]) if rid.startswith('1125_') else None
         d_tm = None
         if cmp and cmp.get('win'):
@@ -193,9 +238,25 @@ def main():
             'verdict_auto': not note.get('verdict'),
             'turns': note.get('turns'),
             'note': note.get('note'),
-            'video': vfile,
-            'video_run_s': video.get('csv_offset_s') if vfile else None,
+            'video': None,
+            'video_run_s': None,
         })
+    # 录像：压小放进 media/runs/（增量）
+    os.makedirs(MEDIA, exist_ok=True)
+    ff = find_ffmpeg()
+    new = fail = 0
+    byid = {x['id']: x for x in runs}
+    for rid, vsrc, off in vjobs:
+        mp4 = os.path.join(MEDIA, rid + '.mp4')
+        if vsrc and ff and (not os.path.exists(mp4) or os.path.getmtime(mp4) < os.path.getmtime(vsrc)
+                            or not os.path.exists(os.path.join(MEDIA, rid + '.jpg'))):
+            if compress(ff, vsrc, rid, (off or 0) + 5):
+                new += 1
+            else:
+                fail += 1
+        if os.path.exists(mp4):
+            byid[rid]['video'] = 'media/runs/' + rid + '.mp4'
+            byid[rid]['video_run_s'] = off
     runs.sort(key=lambda x: x['id'], reverse=True)
     out = {
         'source': 'playstation/.cache/rotate_logs/rotate_sharpa_*.csv（+ .json）',
@@ -203,9 +264,16 @@ def main():
         'baseline': {'force_scale': 0.667, 'current_coef': 0.3, 'grasp_offset': 2},
         'runs': runs,
     }
-    with open(OUT, 'w', encoding='utf-8') as f:
+    with open(OUT + '.tmp', 'w', encoding='utf-8') as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
-    print(f'{len(runs)} 条 → {os.path.relpath(OUT, HAND)}')
+    os.replace(OUT + '.tmp', OUT)   # playstation 可能同时在跑，整份替换
+    nv = sum(1 for x in runs if x['video'])
+    msg = f'学习站历史表 {len(runs)} 条（{nv} 条有录像），新压 {new} 段录像'
+    if fail:
+        msg += f'，{fail} 段压缩失败'
+    if not ff:
+        msg += '；没找到 ffmpeg，跳过录像'
+    print(msg + f'，用时 {time.time() - T0:.0f} 秒')
 
 
 if __name__ == '__main__':

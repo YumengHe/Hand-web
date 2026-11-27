@@ -88,7 +88,6 @@ input[type="search"] { flex: 1; min-width: 0; }
   background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--c);
   border-radius: 10px; padding: 16px 18px 12px;
 }
-.paper.read { opacity: .6; }
 .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; font-size: 13px; color: var(--muted); }
 .tag { display: inline-flex; align-items: center; gap: 6px; color: var(--ink); font-weight: 600; }
 .meta .date, .meta .aid { font-family: var(--mono); font-size: 12px; }
@@ -107,13 +106,6 @@ mark { background: var(--mark); color: inherit; border-radius: 2px; padding: 0 1
 details summary { cursor: pointer; font-size: 13px; color: var(--muted); width: fit-content; }
 details p { font-size: 14px; color: var(--muted); margin: 8px 0 4px; }
 .actions { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 13.5px; }
-.actions button {
-  font: inherit; cursor: pointer; color: var(--muted); background: none;
-  border: 1px solid var(--line); border-radius: 6px; padding: 2px 10px;
-}
-.actions button:hover { color: var(--ink); border-color: var(--muted); }
-.actions button[aria-pressed="true"] { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
-.actions .sp { margin-left: auto; }
 
 .empty { color: var(--muted); text-align: center; padding: 40px 0; }
 .foot { color: var(--muted); font-size: 13px; padding-top: 28px; padding-bottom: 48px; margin-top: 40px; border-top: 1px solid var(--line); }
@@ -122,7 +114,6 @@ details p { font-size: 14px; color: var(--muted); margin: 8px 0 4px; }
   .controls { flex-direction: column; }
   .count { margin-left: 0; width: 100%; }
   .paper { padding: 14px 14px 10px; }
-  .actions .sp { margin-left: 0; }
 }
 
 /* ---- compare page ---- */
@@ -327,9 +318,8 @@ table.runs tr.short td { color: var(--muted); }
 table.runs small { color: var(--muted); }
 .runs-filter { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; margin: 6px 0 10px; font-size: 14.5px; }
 .runs-filter select { font: inherit; padding: 3px 6px; }
-.cover { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin: 8px 0 10px; }
-.cover .cell { display: flex; flex-direction: column; gap: 2px; text-align: left; font: inherit; font-size: 13.5px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); cursor: pointer; }
-.cover .cell .p { font-weight: 700; }
+.cover td { vertical-align: middle; }
+.cover .cell { display: flex; gap: 8px; align-items: baseline; width: 100%; min-width: 96px; text-align: left; font: inherit; font-size: 13.5px; padding: 5px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); cursor: pointer; }
 .cover .cell .what { color: var(--muted); }
 .cover .cell .n { font-weight: 600; }
 .cover .cell.todo .n { color: var(--muted); }
@@ -342,3 +332,13 @@ table.runs small { color: var(--muted); }
 .m-buy b { display: block; font: 600 12px var(--mono); color: var(--muted); letter-spacing: .06em; }
 .m-buy p { margin: 4px 0; }
 .m-gnote { font-size: 14px; margin: 4px 0 8px; } .m-gnote summary { cursor: pointer; color: var(--accent); } .m-gnote p { color: var(--muted); }
+
+/* 历史记录表里点开的录像 */
+table.runs tr.vrow td { background: var(--bg); }
+table.runs tr.vrow video { display: block; width: 360px; max-width: 100%; height: auto; aspect-ratio: 1; background: #000; border-radius: 6px; margin-bottom: 4px; }
+table.runs .vbtn { font-size: 13px; padding: 2px 8px; white-space: nowrap; }
+@media (max-width: 560px) {
+  #cover { min-width: 0; }
+  #cover th:nth-child(2), #cover td:nth-child(2) { display: none; }
+  .cover .cell { min-width: 0; padding: 5px 6px; gap: 4px; flex-wrap: wrap; }
+}

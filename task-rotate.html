@@ -321,10 +321,10 @@
     <div class="explain">
       <p><strong>三个部署参数：</strong><b>触觉系数</b> <code>force_scale</code>：指尖原始力乘它，小于 0.2 的清零，再给策略；合拢阶段手一格格合，直到乘过系数的力达到 1 才停（<code>sharpa_wave_deploy_env.py</code> 第 334 行），所以原始力要到 1 ÷ 系数：0.2 时 5 N、0.667 时 1.5 N、1.0 时 1 N。<b>电流系数</b> <code>current_coef</code>：SDK <code>set_current_coeff</code>，限制电机出力，SE 上限 0.6（<code>SharpaWaveSDK.h</code> 注释）。<b>多合几格</b> <code>grasp_offset</code>：合拢停下后再往里走几格当起步握姿，只影响开头。</p>
       <p><strong>官方值</strong> 0.667 / 0.3 / 2（触觉 / 电流 / 多合；电流 WM-Craftnet 用 0.5、SDK 示例 0.6），<strong>我们现在</strong> 0.667 / 0.4 / 0（11-25 前触觉是 0.2）。官方和网上都没有正式说明（查过官方仓库、SDK、两个第三方复制仓库、UniLab 版、Tacmap 和 UniLab 论文），所以自己测。</p>
-      <p><strong>测试规程：</strong>官方 <code>0.4-0.6-8</code>，圆柱 2，每种情况 3 次、顺序打乱，自动停，每次 30 秒（建议改 60 秒，待定）。现场记圈数和结果，其余从记录和录像里算。方案 A 是下面 8 种情况（24 次）；另两个选项：B 全组合（触觉 0.2 / 0.667 / 1.0 × 电流 0.3 / 0.4 / 0.6 × 多合 0 / 2，18 种、54 次），C 是 A 做完后圆柱 1 再做一遍。<strong>范围待定，先按 A 展示。</strong></p>
+      <p><strong>测试规程（方案 A）：</strong>官方 <code>0.4-0.6-8</code> 和 v1 学生两个模型 × 下面 8 种参数 = 16 种情况，每种 3 次（共 48 次）、顺序打乱；圆柱 2，60 秒自动停。现场记圈数和结果，其余从记录和录像里算。</p>
     </div>
-    <p class="sub-label"><strong>方案 A 覆盖情况</strong>：按规程测了几次 / 3，“参考”是参数相同但不按规程的记录（不计次数）。点一格只看那一种。</p>
-    <div id="cover" class="cover" aria-live="polite"></div>
+    <p class="sub-label"><strong>方案 A 覆盖情况</strong><span id="cover-sum"></span>：每格是按规程测了几次 / 3（按规程 = 圆柱 2、60 秒自动停且跑满 59 秒以上）；“参考”是模型和参数相同、但不按规程的记录，不计次数。点一格只看那一种。</p>
+    <div class="tablewrap"><table class="dense cover" id="cover"><thead><tr><th>触觉 / 电流 / 多合</th><th>改了什么</th><th>官方 0.4-0.6-8</th><th>v1 学生</th></tr></thead><tbody></tbody></table></div>
     <p class="legend" id="runs-legend"><span class="v v-ok">一直转</span><span class="v v-stop">停住</span><span class="v v-stuck">卡住</span><span class="v v-drop">掉了</span><span class="v v-short">太短不算</span><span><span class="pdiff">0.2</span> 和官方 0.667 / 0.3 / 2 不同</span><span>小指掌根被压 <span class="hg">≤ 5%</span><span class="hm">5–25%</span><span class="hb">&gt; 25%</span></span><span><i>自动</i> 没人工判定，按脚本规则</span></p>
     <div class="runs-filter">
       <label>模型 <select id="f-model"><option value="">全部</option></select></label>
@@ -340,7 +340,7 @@
         <li>每次真手运行一行，按时间倒序。数据由 <code>tools/build_real_runs.py</code> 扫描 <code>playstation/.cache/rotate_logs/rotate_sharpa_*.csv</code>（+ 同名 .json）生成 <code>data/real_runs.json</code>；圈数、结果判定、备注是人工填的（<code>data/real_runs_notes.json</code>）。11-25 之前的记录没有 .json，模型、圆柱、参数是按当时的记录补的（带 * 号，鼠标停上去看依据）；模型和参数都不知道的记录（11-19 的 6 条）不进表。</li>
         <li><b>运行</b>：策略运行秒数，“自动”表示到时自动停。<b>小指掌根被压</b>：Isaac 第 2 个关节 <code>right_pinky_CMC</code> &lt; 0.06 rad 的时间占比 / 最长连续秒数（目标一直在上限约 0.24 rad）。<b>步态</b>：第 2 秒起每 5 秒一段，22 个关节角做频谱取主频，各段中位数。<b>动作幅度</b>：每个控制步（50 ms）关节角变化的平均，mrad。<b>原始力</b>：有接触时的中位数，原始 = 记录值 ÷ 触觉系数（传感器 11-25 按秤核对过，基本准确）。<b>拇-中指尖距</b>：把真手关节角摆进仿真模型算的，0–5 秒 → 12–20 秒，只有 11-25 的几条（<code>logs/night_1125/t3/compare.json</code>）。</li>
         <li><b>自动判定</b>（没人工判定时用）：运行 &lt; 5 秒 = 太短；5 个指尖力全为 0 连续 ≥ 2 秒，或中指和无名指的力同时归零直到结束而拇指仍有力（圆柱倒进手心）= 掉了（显示“疑似掉落”时刻）；小指掌根被压最长 ≥ 5 秒 = 卡住；3 秒滑窗动作幅度 &lt; 本次第 2–10 秒中位数的 30% = 停住（显示“疑似停住”时刻）；否则一直转。</li>
-        <li><b>录像</b>：链到本机 playstation（8005），只在本机能看；录像保留 14 天。录像拍到了桌面和屏幕，不放进学习站。</li>
+        <li><b>录像</b>：只留手的区域（原片 640×480 裁成 340×300），15 fps。playstation 每次真手运行结束后自动跑上面的脚本，把录像压好放进 <code>media/runs/</code>；playstation 那边的原片 14 天后删掉，这里的保留。11-25 19:34 之前的记录没有录像。</li>
       </ul>
     </details>
 
@@ -597,12 +597,13 @@ PYTHONPATH=. LD_LIBRARY_PATH=/opt/sharpa-wave-sdk/lib python rl_isaaclab/scripts
   var VCLS = { '一直转': 'v-ok', '停住': 'v-stop', '卡住': 'v-stuck', '掉了': 'v-drop', '太短': 'v-short' };
   var PLAN = [[0.667, 0.3, 2, '官方全套，基准'], [0.2, 0.3, 2, '只改触觉'], [1.0, 0.3, 2, '只改触觉'], [0.667, 0.4, 2, '只改电流'],
               [0.667, 0.6, 2, '只改电流'], [0.667, 0.3, 0, '只改多合'], [0.667, 0.4, 0, '我们现在的默认'], [0.2, 0.4, 0, '我们以前的默认']];
-  var OFFICIAL = '官方 0.4-0.6-8';
+  var MODELS = ['官方 0.4-0.6-8', 'v1 学生'];
   var runs = [], base = {}, f = { model: '', object: '', short: false, plan: null };
-  var VIDEO = 'http://127.0.0.1:8005/rotate_logs/';
   function same(a, b) { return a != null && Math.abs(a - b) < 1e-3; }
-  function inPlan(r, p) { return r.model === OFFICIAL && r.object === 'cyl2' && same(r.force_scale, p[0]) && same(r.current_coef, p[1]) && r.grasp_offset === p[2]; }
-  function byRule(r) { return !!r.auto_stop_s && r.verdict !== '太短'; }
+  // plan = [模型序号, 参数序号]
+  function inPlan(r, q) { var p = PLAN[q[1]]; return r.model === MODELS[q[0]] && r.object === 'cyl2' && same(r.force_scale, p[0]) && same(r.current_coef, p[1]) && r.grasp_offset === p[2]; }
+  function byRule(r) { return r.auto_stop_s === 60 && r.run_s != null && r.run_s >= 59; }
+  function samePlan(a, b) { return !!(a && b && a[0] === b[0] && a[1] === b[1]); }
   function param(r, k) {
     var v = r[k], star = r.filled && r.filled.indexOf(k) !== -1;
     if (v == null) return el('td', { class: 'na', text: '—' });
@@ -620,7 +621,12 @@ PYTHONPATH=. LD_LIBRARY_PATH=/opt/sharpa-wave-sdk/lib python rl_isaaclab/scripts
     var pk = m.pinky_low_frac == null ? el('td', { class: 'na', text: '—' }) :
       el('td', { class: heat(m.pinky_low_frac), text: Math.round(m.pinky_low_frac * 100) + '% / ' + m.pinky_low_max_s + ' s' });
     var force = fr ? [0, 2, 3].map(function (i) { return fr[i] == null ? '—' : fr[i].toFixed(1); }).join(' / ') : '—';
-    var vid = r.video ? el('td', null, [el('a', { href: VIDEO + r.video, target: '_blank', rel: 'noopener', text: '看录像' })]) : el('td', { class: 'na', text: '' });
+    var vid = el('td', { class: 'na', text: '' });
+    if (r.video) {
+      var vb = el('button', { type: 'button', class: 'ghost vbtn', 'aria-expanded': 'false', text: '看录像' });
+      vb.addEventListener('click', function () { toggleVideo(vb, r); });
+      vid = el('td', null, [vb]);
+    }
     return el('tr', { class: r.verdict === '太短' ? 'short' : '' }, [
       el('td', { class: 'nw', text: r.start.replace(/^2026-/, '').slice(0, 14) }),
       el('td', { class: 'nw', text: r.model || '没记录' }),
@@ -638,38 +644,58 @@ PYTHONPATH=. LD_LIBRARY_PATH=/opt/sharpa-wave-sdk/lib python rl_isaaclab/scripts
       el('td', { class: 'w', text: r.note || '' })
     ]);
   }
+  function toggleVideo(btn, r) {
+    var tr = btn.closest('tr'), next = tr.nextElementSibling;
+    if (next && next.classList.contains('vrow')) { next.remove(); btn.setAttribute('aria-expanded', 'false'); btn.textContent = '看录像'; return; }
+    var v = el('video', { src: r.video, poster: r.video.replace(/\.mp4$/, '.jpg'), controls: '', muted: '', playsinline: '', preload: 'none' });
+    v.muted = true;
+    tr.after(el('tr', { class: 'vrow' }, [el('td', { colspan: '16' }, [v,
+      r.video_run_s != null ? el('span', { class: 'aside', text: '录像第 ' + r.video_run_s.toFixed(1) + ' 秒策略开始运行' }) : null])]));
+    btn.setAttribute('aria-expanded', 'true'); btn.textContent = '收起';
+    var pr = v.play(); if (pr && pr.catch) pr.catch(function () {});
+  }
   function draw() {
     var tb = document.querySelector('#runs tbody'), frag = document.createDocumentFragment(), n = 0;
     runs.forEach(function (r) {
       if (f.model && r.model !== f.model) return;
       if (f.object && r.object !== f.object) return;
       if (!f.short && r.verdict === '太短') return;
-      if (f.plan != null && !inPlan(r, PLAN[f.plan])) return;
+      if (f.plan && !inPlan(r, f.plan)) return;
       frag.appendChild(row(r)); n++;
     });
     if (!n) frag.appendChild(el('tr', null, [el('td', { colspan: '16', text: '没有符合的记录' })]));
     tb.textContent = ''; tb.appendChild(frag);
     document.getElementById('f-count').textContent = n + ' / ' + runs.length + ' 条';
-    Array.prototype.forEach.call(document.querySelectorAll('#cover button'), function (b, i) { b.setAttribute('aria-pressed', String(f.plan === i)); });
+    Array.prototype.forEach.call(document.querySelectorAll('#cover button'), function (b) {
+      b.setAttribute('aria-pressed', String(samePlan(f.plan, [+b.getAttribute('data-m'), +b.getAttribute('data-p')])));
+    });
   }
   function cover() {
-    var box = document.getElementById('cover');
+    var tb = document.querySelector('#cover tbody'), done = 0;
     PLAN.forEach(function (p, i) {
-      var hit = runs.filter(function (r) { return inPlan(r, p) && r.verdict !== '太短'; });
-      var ok = hit.filter(byRule).length, ref = hit.length - ok;
-      var b = el('button', { type: 'button', class: 'cell ' + (ok >= 3 ? 'done' : ok ? 'part' : 'todo') }, [
-        el('span', { class: 'p' }, [p[0], p[1], p[2]].reduce(function (acc, v, k) {
+      var cells = [
+        el('td', { class: 'nw' }, [p[0], p[1], p[2]].reduce(function (acc, v, k) {
           if (k) acc.push(' / ');
           var t = v === 1 ? '1.0' : String(v);
           acc.push(same(v, [base.force_scale, base.current_coef, base.grasp_offset][k]) ? t : el('span', { class: 'pdiff', text: t }));
           return acc;
         }, [])),
-        el('span', { class: 'what', text: (i + 1) + '. ' + p[3] }),
-        el('span', { class: 'n', text: ok + ' / 3' + (ref ? '，参考 ' + ref : '') })
-      ]);
-      b.addEventListener('click', function () { f.plan = f.plan === i ? null : i; draw(); });
-      box.appendChild(b);
+        el('td', { class: 'nw', text: p[3] })
+      ];
+      MODELS.forEach(function (m, j) {
+        var q = [j, i], hit = runs.filter(function (r) { return inPlan(r, q); });
+        var n = hit.filter(byRule).length, ok = Math.min(3, n), ref = hit.length - n;
+        done += ok;
+        var b = el('button', { type: 'button', class: 'cell ' + (ok >= 3 ? 'done' : ok ? 'part' : 'todo'), 'data-m': String(j), 'data-p': String(i),
+          'aria-label': m + ' ' + p[0] + ' / ' + p[1] + ' / ' + p[2] + '：' + ok + ' / 3' }, [
+          el('span', { class: 'n', text: ok + ' / 3' }), ref ? el('span', { class: 'what', text: '参考 ' + ref }) : null
+        ]);
+        b.addEventListener('click', function () { f.plan = samePlan(f.plan, q) ? null : q; draw(); });
+        cells.push(el('td', null, [b]));
+      });
+      tb.appendChild(el('tr', null, cells));
     });
+    document.getElementById('cover-sum').textContent = '（已测 ' + done + ' / 48 次，还差 ' + (48 - done) + ' 次）';
   }
   function opts(id, key, label) {
     var s = document.getElementById(id), seen = {};
