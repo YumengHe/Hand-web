@@ -24,6 +24,7 @@ nohup ./serve.sh > /tmp/hand-web.log 2>&1 &
 - `setup.html`：Sharpa 开箱、固定、接线、连电脑、关机
 - `start.html`：只用手的入门五步（带打勾进度）
 - `task-rotate.html`：任务 1，手里转圆柱（sharpa-rl-lab）：流程、观测和动作、奖励、真手准备、我们的进度
+- `task-chopsticks.html`：调研：灵巧手用筷子（已有工作总表、人手握筷子研究、路线、难点、对我们的意义）；相关文章在文献库里带细标签 `chopsticks`
 - `sims.html`：仿真平台（Isaac Gym / Sim / Lab、Newton、MuJoCo）的上下级和对比，以及和我们任务的关系
 - `units.html`：单位（Hz、ms、度/弧度、速度/加速度）和 Sharpa Wave 的物理限制（关节范围、速度、力矩），带 Hz 换算和平滑过渡计算器
 - `data/papers.json`：全部论文数据，页面唯一的数据来源

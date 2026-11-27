@@ -1,5 +1,277 @@
 [
  {
+  "id": "2008.00101",
+  "short": "TeleChop",
+  "title": "Telemanipulation with Chopsticks: Analyzing Human Factors in User Demonstrations",
+  "authors": [
+   "Liyiming Ke",
+   "Ajinkya Kamat",
+   "Jingqiang Wang",
+   "Tapomayukh Bhattacharjee",
+   "Christoforos Mavrogiannis",
+   "Siddhartha S. Srinivasa"
+  ],
+  "date": "2020-07-31",
+  "cat": "teleop",
+  "star": false,
+  "zh": "比较三种采集筷子示范的方式：普通筷子、带动捕标记的筷子、遥操作臂上的筷子（25 人用户研究）。",
+  "abstract": "Chopsticks constitute a simple yet versatile tool that humans have used for thousands of years to perform a variety of challenging tasks ranging from food manipulation to surgery. Applying such a simple tool in a diverse repertoire of scenarios requires significant adaptability. Towards developing autonomous manipulators with comparable adaptability to humans, we study chopsticks-based manipulation to gain insights into human manipulation strategies. We conduct a within-subjects user study with 25 participants, evaluating three different data-collection methods: normal chopsticks, motion-captured chopsticks, and a novel chopstick telemanipulation interface. We analyze factors governing human performance across a variety of challenging chopstick-based grasping tasks. Although participants rated teleoperation as the least comfortable and most difficult-to-use method, teleoperation enabled users to achieve the highest success rates on three out of five objects considered. Further, we notice that subjects quickly learned and adapted to the teleoperation interface. Finally, while motion-captured chopsticks could provide a better reflection of how humans use chopsticks, the teleoperation interface can produce quality on-hardware demonstrations from which the robot can directly learn.",
+  "tasks": [
+   "tool"
+  ],
+  "subtasks": [
+   "chopsticks"
+  ],
+  "mount": "arm",
+  "mount_note": "已核对原文：自制 6 自由度臂（HEBI 模块），末端装一对电动筷子。",
+  "did": "25 人用三种方式各夹 5 种东西（泡沫、薯片、螺母、铅笔、14 mm 球）；遥操作在 3/5 种上成功率最高。真机。",
+  "venue": "IROS 2020",
+  "hand": "不是灵巧手：6 自由度臂 + 电动筷子（一根固定、一根转）",
+  "real": true,
+  "sensing": "人手筷子用 OptiTrack 动捕；机器人没有触觉或力反馈",
+  "relevance": "low",
+  "verified_from": "https://arxiv.org/abs/2008.00101"
+ },
+ {
+  "id": "2011.06719",
+  "short": "Grasping with Chopsticks",
+  "title": "Grasping with Chopsticks: Combating Covariate Shift in Model-free Imitation Learning for Fine Manipulation",
+  "authors": [
+   "Liyiming Ke",
+   "Jingqiang Wang",
+   "Tapomayukh Bhattacharjee",
+   "Byron Boots",
+   "Siddhartha Srinivasa"
+  ],
+  "date": "2020-11-13",
+  "cat": "vla",
+  "star": false,
+  "zh": "用遥操作示范做模仿学习，让臂上的筷子夹 1–2 cm 的小方块和小球；平均成功率从 37.3% 提到 80%。",
+  "abstract": "Billions of people use chopsticks, a simple yet versatile tool, for fine manipulation of everyday objects. The small, curved, and slippery tips of chopsticks pose a challenge for picking up small objects, making them a suitably complex test case. This paper leverages human demonstrations to develop an autonomous chopsticks-equipped robotic manipulator. Due to the lack of accurate models for fine manipulation, we explore model-free imitation learning, which traditionally suffers from the covariate shift phenomenon that causes poor generalization. We propose two approaches to reduce covariate shift, neither of which requires access to an interactive expert or a model, unlike previous approaches. First, we alleviate single-step prediction errors by applying an invariant operator to increase the data support at critical steps for grasping. Second, we generate synthetic corrective labels by adding bounded noise and combining parametric and non-parametric methods to prevent error accumulation. We demonstrate our methods on a real chopstick-equipped robot that we built, and observe the agent's success rate increase from 37.3% to 80%, which is comparable to the human expert performance of 82.6%.",
+  "tasks": [
+   "tool"
+  ],
+  "subtasks": [
+   "chopsticks",
+   "grasp_exec"
+  ],
+  "mount": "arm",
+  "mount_note": "已核对原文：6 自由度臂 + 1 自由度电动筷子。",
+  "did": "每种物体 500 条遥操作示范；夹起 1 cm 方块、20 mm 球、14 mm 球并举 1 s，各 25 次：平均 80.0%（人遥操作 82.7%）。真机。",
+  "venue": "ICRA 2021",
+  "hand": "不是灵巧手：6 自由度臂 + 1 自由度电动筷子",
+  "real": true,
+  "sensing": "物体位置靠外部跟踪 + 臂末端位姿；没有触觉",
+  "relevance": "low",
+  "verified_from": "https://arxiv.org/abs/2011.06719"
+ },
+ {
+  "id": "2205.14313",
+  "short": "Chopsticks Gripping Styles",
+  "title": "Learning to Use Chopsticks in Diverse Gripping Styles",
+  "authors": [
+   "Zeshi Yang",
+   "KangKang Yin",
+   "Libin Liu"
+  ],
+  "date": "2022-05-28",
+  "cat": "rl",
+  "star": false,
+  "zh": "仿真里让多指手握住两根独立的筷子：贝叶斯优化 + 强化学习找 17 种握法，再用运动规划 + 强化学习夹、搬、扔物体。",
+  "abstract": "Learning dexterous manipulation skills is a long-standing challenge in computer graphics and robotics, especially when the task involves complex and delicate interactions between the hands, tools and objects. In this paper, we focus on chopsticks-based object relocation tasks, which are common yet demanding. The key to successful chopsticks skills is steady gripping of the sticks that also supports delicate maneuvers. We automatically discover physically valid chopsticks holding poses by Bayesian Optimization (BO) and Deep Reinforcement Learning (DRL), which works for multiple gripping styles and hand morphologies without the need of example data. Given as input the discovered gripping poses and desired objects to be moved, we build physics-based hand controllers to accomplish relocation tasks in two stages. First, kinematic trajectories are synthesized for the chopsticks and hand in a motion planning stage. The key components of our motion planner include a grasping model to select suitable chopsticks configurations for grasping the object, and a trajectory optimization module to generate collision-free chopsticks trajectories. Then we train physics-based hand controllers through DRL again to track the desired kinematic trajectories produced by the motion planner. We demonstrate the capabilities of our framework by relocating objects of various shapes and sizes, in diverse gripping styles and holding positions for multiple hand morphologies. Our system achieves faster learning speed and better control robustness, when compared to vanilla systems that attempt to learn chopstick-based skills without a gripping pose optimization module and/or without a kinematic motion planner.",
+  "tasks": [
+   "tool"
+  ],
+  "subtasks": [
+   "chopsticks"
+  ],
+  "mount": "none",
+  "mount_note": "已核对原文：只在 MuJoCo 1.5 里，30 自由度的仿真手装在 7 自由度仿真臂上，没有真机。",
+  "did": "仿真手握两根独立的筷子，夹起、搬运、扔出、叠放不同形状大小的物体；标准握法学得最快。只有仿真。",
+  "venue": "SIGGRAPH 2022（ACM TOG 41(4)）",
+  "hand": "仿真人手 30 自由度（拇指 6、四指各 4，其余模拟手掌变形），也试了其他形态的手",
+  "real": false,
+  "sensing": "仿真状态（无视觉、无触觉）",
+  "relevance": "low",
+  "verified_from": "https://arxiv.org/abs/2205.14313"
+ },
+ {
+  "id": "2303.05508",
+  "short": "CherryBot",
+  "title": "Cherry-Picking with Reinforcement Learning : Robust Dynamic Grasping in Unstable Conditions",
+  "authors": [
+   "Yunchu Zhang",
+   "Liyiming Ke",
+   "Abhay Deshpande",
+   "Abhishek Gupta",
+   "Siddhartha Srinivasa"
+  ],
+  "date": "2023-03-09",
+  "cat": "rl",
+  "star": false,
+  "zh": "臂上装筷子，用仿真预训练 + 真机 30 分钟强化学习，夹空中摆动的小物体，失败后马上重试。",
+  "abstract": "Grasping small objects surrounded by unstable or non-rigid material plays a crucial role in applications such as surgery, harvesting, construction, disaster recovery, and assisted feeding. This task is especially difficult when fine manipulation is required in the presence of sensor noise and perception errors; errors inevitably trigger dynamic motion, which is challenging to model precisely. Circumventing the difficulty to build accurate models for contacts and dynamics, data-driven methods like reinforcement learning (RL) can optimize task performance via trial and error, reducing the need for accurate models of contacts and dynamics. Applying RL methods to real robots, however, has been hindered by factors such as prohibitively high sample complexity or the high training infrastructure cost for providing resets on hardware. This work presents CherryBot, an RL system that uses chopsticks for fine manipulation that surpasses human reactiveness for some dynamic grasping tasks. By integrating imprecise simulators, suboptimal demonstrations and external state estimation, we study how to make a real-world robot learning system sample efficient and general while reducing the human effort required for supervision. Our system shows continual improvement through 30 minutes of real-world interaction: through reactive retry, it achieves an almost 100% success rate on the demanding task of using chopsticks to grasp small objects swinging in the air. We demonstrate the reactiveness, robustness and generalizability of CherryBot to varying object shapes and dynamics (e.g., external disturbances like wind and human perturbations). Videos are available at https://goodcherrybot.github.io/.",
+  "tasks": [
+   "tool"
+  ],
+  "subtasks": [
+   "chopsticks",
+   "grasp_exec"
+  ],
+  "mount": "arm",
+  "mount_note": "已核对原文：自制 6 自由度臂，末端装筷子。",
+  "did": "夹弹珠、樱桃、悬绳摆动的小球，6 秒内允许重试，各 10 次全部成功；换 10 种新物体共 100 次成功 64%。真机。",
+  "venue": "RSS 2023",
+  "hand": "不是灵巧手：6 自由度臂 + 筷子末端",
+  "real": true,
+  "sensing": "训练时 OptiTrack 动捕给物体位置，测试时用相机分割或 YOLO；没有触觉",
+  "relevance": "low",
+  "verified_from": "https://arxiv.org/abs/2303.05508"
+ },
+ {
+  "id": "2311.02277",
+  "short": "HASHI",
+  "title": "HASHI: Highly Adaptable Seafood Handling Instrument for Manipulation in Industrial Settings",
+  "authors": [
+   "Austin Allison",
+   "Nathaniel Hanson",
+   "Sebastian Wicke",
+   "Taşkın Padır"
+  ],
+  "date": "2023-11-03",
+  "cat": "hardware",
+  "star": false,
+  "zh": "两根筷子各自能俯仰、偏航、升降的夹持器，每根带 6 轴力 / 力矩传感器，用来夹海鲜等软滑食物。",
+  "abstract": "The seafood processing industry provides fertile ground for robotics to impact the future-of-work from multiple perspectives including productivity, worker safety, and quality of work life. The robotics research challenge is the realization of flexible and reliable manipulation of soft, deformable, slippery, spiky and scaly objects. In this paper, we propose a novel robot end effector, called HASHI, that employs chopstick-like appendages for precise and dexterous manipulation. This gripper is capable of in-hand manipulation by rotating its two constituent sticks relative to each other and offers control of objects in all three axes of rotation by imitating human use of chopsticks. HASHI delicately positions and orients food through embedded 6-axis force-torque sensors. We derive and validate the kinematic model for HASHI, as well as demonstrate grip force and torque readings from the sensorization of each chopstick. We also evaluate the versatility of HASHI through grasping trials of a variety of real and simulated food items with varying geometry, weight, and firmness.",
+  "tasks": [
+   "tool"
+  ],
+  "subtasks": [
+   "chopsticks",
+   "hardware"
+  ],
+  "mount": "arm",
+  "mount_note": "已核对原文：装在 7 自由度协作臂上。",
+  "did": "12 种食物（寿司、扇贝、葡萄、毛豆、锅贴、刺身、西兰花、虾等）：举起平移 9/12 种不掉，转 90° 8/12 种不掉。真机。",
+  "venue": "ICRA 2024",
+  "hand": "不是灵巧手：两根筷子各 3 个舵机（俯仰、偏航、升降）",
+  "real": true,
+  "sensing": "每根筷子 1 个 6 轴力 / 力矩传感器",
+  "relevance": "low",
+  "verified_from": "https://arxiv.org/abs/2311.02277"
+ },
+ {
+  "id": "2507.06822",
+  "short": "Tweezer HRL",
+  "title": "Hierarchical Reinforcement Learning for Articulated Tool Manipulation with Multifingered Hand",
+  "authors": [
+   "Wei Xu",
+   "Yanchao Zhao",
+   "Weichao Guo",
+   "Xinjun Sheng"
+  ],
+  "date": "2025-07-09",
+  "cat": "rl",
+  "star": false,
+  "zh": "分层强化学习让多指手操作镊子状工具（调开口）去夹不同大小的小物体；真机多次尝试成功率 70.8%。",
+  "abstract": "Manipulating articulated tools, such as tweezers or scissors, has rarely been explored in previous research. Unlike rigid tools, articulated tools change their shape dynamically, creating unique challenges for dexterous robotic hands. In this work, we present a hierarchical, goal-conditioned reinforcement learning (GCRL) framework to improve the manipulation capabilities of anthropomorphic robotic hands using articulated tools. Our framework comprises two policy layers: (1) a low-level policy that enables the dexterous hand to manipulate the tool into various configurations for objects of different sizes, and (2) a high-level policy that defines the tool's goal state and controls the robotic arm for object-picking tasks. We employ an encoder, trained on synthetic pointclouds, to estimate the tool's affordance states--specifically, how different tool configurations (e.g., tweezer opening angles) enable grasping of objects of varying sizes--from input point clouds, thereby enabling precise tool manipulation. We also utilize a privilege-informed heuristic policy to generate replay buffer, improving the training efficiency of the high-level policy. We validate our approach through real-world experiments, showing that the robot can effectively manipulate a tweezer-like tool to grasp objects of diverse shapes and sizes with a 70.8 % success rate. This study highlights the potential of RL to advance dexterous robotic manipulation of articulated tools.",
+  "tasks": [
+   "tool"
+  ],
+  "subtasks": [
+   "articulated",
+   "tool_use"
+  ],
+  "mount": "arm",
+  "mount_note": "已核对原文：Schunk SVH 手装在机械臂上，高层策略控制臂。",
+  "did": "Schunk SVH 手用镊子夹 1.5–2.5 cm 的球、方块、圆柱、四面体，每种 12 次：第一次就成 54.2%，允许多次尝试 70.8%。MuJoCo 里训练，真机验证。",
+  "venue": "IROS 2025",
+  "hand": "Schunk SVH 五指，20 个关节、9 个主动自由度",
+  "real": true,
+  "sensing": "Azure Kinect 点云；没有指尖触觉（原文把部分打滑失败归于这一点）",
+  "relevance": "low",
+  "verified_from": "https://arxiv.org/abs/2507.06822"
+ },
+ {
+  "id": "2604.09294",
+  "short": "POMDAR",
+  "title": "A Benchmark of Dexterity for Anthropomorphic Robotic Hands",
+  "authors": [
+   "Davide Liconti",
+   "Yuning Zhou",
+   "Yasunori Toshimitsu",
+   "Ronan Hinchet",
+   "Robert K. Katzschmann"
+  ],
+  "date": "2026-04-10",
+  "cat": "survey",
+  "star": false,
+  "zh": "从人手运动分类法推出的 18 项灵巧度基准（含“筷子”一项），可全 3D 打印，用不同自由度的 ORCA 手遥操作测过。",
+  "abstract": "Dexterity is a central yet ambiguously defined concept in the design and evaluation of anthropomorphic robotic hands. In practice, the term is often used inconsistently, with different systems evaluated under disparate criteria, making meaningful comparisons across designs difficult. This highlights the need for a unified, performance-based definition of dexterity grounded in measurable outcomes rather than proxy metrics. In this work, we introduce POMDAR, a comprehensive dexterity benchmark that formalizes dexterity as task performance across a structured set of manipulation and grasping motions. The benchmark was systematically derived from established taxonomies in human motor control. It is implemented in both real-world and simulation and includes four manipulation configurations: vertical and horizontal configurations, continuous rotation, and pure grasping. The task designs contain mechanical scaffolding to constrain task motion, suppress compensatory strategies, and enable metrics to be measured unambiguously. We define a quantitative scoring metric combining task correctness and execution speed, effectively measuring dexterity as throughput. This enables objective, reproducible, and interpretable evaluation across different hand designs. POMDAR provides an open-source, standardized, and taxonomy-grounded benchmark for consistent comparison and evaluation of anthropomorphic robot hands to facilitate a systematic advancement of dexterous manipulation platforms. CAD, simulation files, and evaluation videos are publicly available at https://srl-ethz.github.io/POMDAR/.",
+  "tasks": [
+   "none"
+  ],
+  "subtasks": [
+   "rot_theory",
+   "chopsticks"
+  ],
+  "mount": "arm",
+  "mount_note": "已核对原文：ORCA 手装在 Franka 臂上。",
+  "did": "同一只 ORCA 手锁关节得到 5 / 7 / 11 / 16 自由度，遥操作做 18 项任务；原文说筷子、挤压、掌心这几项要拇指或多指侧摆，只有部分配置做得了。真机 + MuJoCo。",
+  "venue": "arXiv 2026",
+  "hand": "ORCA 手，锁关节成 5 / 7 / 11 / 16 自由度四种",
+  "real": true,
+  "sensing": "遥操作（Rokoko 手套或 Apple Vision Pro）",
+  "relevance": "low",
+  "verified_from": "https://arxiv.org/abs/2604.09294"
+ },
+ {
+  "id": "2609.05585",
+  "short": "Dexterity Benchmark Review",
+  "title": "Benchmarking Dexterity of Multifingered Robot Hands: A Review and Perspective",
+  "authors": [
+   "Anthony Shilati",
+   "Anunth Ramaswami",
+   "Luke Batteas",
+   "Sylvia Tan",
+   "Anthony Barcio",
+   "Sairam Umakanth",
+   "Preksha Rao",
+   "David McDougall",
+   "Landry Graves",
+   "Ahmet A. Ozkan",
+   "Yunsoo Yoon",
+   "Arushi Pradhan",
+   "Michael G. Henry",
+   "Rohan Kota",
+   "Damian Gonzalez",
+   "Gray C. Thomas",
+   "Gary K. Fedder",
+   "J. Edward Colgate",
+   "Kevin M. Lynch"
+  ],
+  "date": "2026-09-04",
+  "cat": "survey",
+  "star": false,
+  "zh": "多指手灵巧度评测的综述：把用筷子夹饺子拆成固定抓握（下面那根）、手内操作（上面那根）和非抓握（推饺子）三类。",
+  "abstract": "Robot hands are a key interface between AI and the physical world, making advances in robotic dexterity essential to realizing the vision of physical AI. While impressive dexterity has been demonstrated with simple grippers, multifingered hands offer the potential for substantially greater versatility, precision, and adaptability in manipulation. In this review, we survey the state of the art in benchmarking the dexterity of multifingered robot hands. Recognizing dexterity as a complex and multifaceted concept, we present the perspective of the U.S. National Science Foundation HAND Engineering Research Center, with a particular focus on fine in-hand manipulation. We introduce a framework consisting of three benchmark levels that correspond to increasing system complexity, review representative benchmarks at each level, and propose new benchmarks and metrics to address limitations in the literature. More information can be found at https://hand-erc.github.io/benchmarking/.",
+  "tasks": [
+   "none"
+  ],
+  "subtasks": [
+   "survey"
+  ],
+  "mount": "none",
+  "mount_note": "综述，没有自己的实验。",
+  "did": "综述多指手怎么评灵巧度；基准清单里有“用筷子把小木块一块块夹进容器”。",
+  "venue": "Annual Review of Control, Robotics, and Autonomous Systems 第 10 卷（2027，待发表）",
+  "hand": "综述",
+  "real": false,
+  "sensing": "—",
+  "relevance": "low",
+  "verified_from": "https://arxiv.org/abs/2609.05585"
+ },
+ {
   "id": "2609.18117",
   "short": "OpenDexGrasp",
   "title": "OpenDexGrasp: Open-vocabulary Task-Oriented Dexterous Grasping",
