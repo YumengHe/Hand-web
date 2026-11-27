@@ -8,7 +8,7 @@
 <style>
   .ref { font-size: 13px; color: var(--muted); }
   #works table.dense td.w { min-width: 120px; }
-  #works table.dense td.w:nth-child(7) { min-width: 200px; }
+  #works table.dense td.w:nth-child(8) { min-width: 200px; }
   .find li { margin: 8px 0; }
   .fig { margin: 14px 0; }
   .fig img { display: block; width: 100%; max-width: 900px; height: auto; border: 1px solid var(--line); border-radius: 10px; }
@@ -21,6 +21,7 @@
   tr:has(td.neg) td { background: #fbe6d8; }
   tr:has(td.pos) td:nth-last-child(-n+2) { color: #1f6a57; font-weight: 600; }
   tr:has(td.neg) td:nth-last-child(-n+2) { color: #a2451f; font-weight: 600; }
+  #train-tab td:last-child { min-width: 360px; }
   .tag-inf { font-size: 12px; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; margin-right: 4px; white-space: nowrap; }
 </style>
 </head>
@@ -54,13 +55,12 @@
     <a href="#sim">2. 仿真初试</a>
     <a href="#ends" class="toc-sub">筷子的头尾</a>
     <a href="#reward" class="toc-sub">奖励设计</a>
-    <a href="#train">3. 训练配置</a>
-    <a href="#works">4. 文献：机器人和仿真工作</a>
-    <a href="#human">5. 文献：人手怎么握筷子</a>
-    <a href="#routes">6. 几条路线</a>
-    <a href="#hard">7. 难在哪</a>
-    <a href="#us">8. 对我们的 Sharpa Wave 意味着什么（调研时的推断）</a>
-    <a href="#skipped">9. 搜到但没收的</a>
+    <a href="#train" class="toc-sub">训练和结果</a>
+    <a href="#works">3. 文献：机器人和仿真工作</a>
+    <a href="#human">4. 文献：人手怎么握筷子</a>
+    <a href="#hard">5. 难在哪</a>
+    <a href="#us">6. 对我们的 Sharpa Wave 意味着什么（调研时的推断）</a>
+    <a href="#skipped">7. 搜到但没收的</a>
   </nav>
 
   <section id="sticks">
@@ -69,19 +69,19 @@
     <figure class="fig"><img src="media/chop_variants_iso.png" alt="7 种筷子并排的渲染图" loading="lazy"></figure>
     <div class="tablewrap">
       <table class="dense">
-        <thead><tr><th>名字</th><th>握持段截面</th><th>尖端</th><th>打印估重</th><th>想验证什么</th></tr></thead>
+        <thead><tr><th>名字</th><th>握持段截面</th><th>尖端</th><th>打印估重</th><th>想验证什么</th><th>仿真稳定握姿</th><th>全随机摆放的成功率</th><th>能扛 2 倍自重外力</th><th>碰到指尖触觉垫<br>（下筷 / 上筷）</th></tr></thead>
         <tbody>
-          <tr><td><strong>STD</strong> 标准中式</td><td>方 7×7，全长匀速收锥</td><td>圆 Ø4</td><td>5.8 g</td><td class="w">基准：这只手用普通筷子差在哪</td></tr>
-          <tr><td>SQ9</td><td>方 9×9</td><td>圆 Ø4</td><td>9.8 g</td><td class="w">粗细第 2 档（约日式粗筷）</td></tr>
-          <tr><td>SQ12</td><td>方 12×12</td><td>圆 Ø4</td><td>14.1 g</td><td class="w">粗细第 3 档（指尖宽的 83%）</td></tr>
-          <tr><td>SQ15</td><td>方 15×15</td><td>圆 Ø4</td><td>18.9 g</td><td class="w">粗细上限（和指尖一样宽），太粗会不会反而不好捏</td></tr>
-          <tr><td>RD9</td><td>圆 Ø9</td><td>圆 Ø4</td><td>8.3 g</td><td class="w">和 SQ9 只差形状：方截面防滚有多大用</td></tr>
-          <tr><td>FLAT</td><td>扁 14×6</td><td>扁 6×3</td><td>10.9 g</td><td class="w">宽面约等于指尖宽，指腹整面贴住、不滚</td></tr>
-          <tr><td><strong>START</strong> 入门款</td><td>扁方 14×9，带防滑横槽</td><td>平头 8×5，带横纹</td><td>14.1 g</td><td class="w">最好拿的起步款</td></tr>
+          <tr><td><strong>STD</strong> 标准中式</td><td>方 7×7，全长匀速收锥</td><td>圆 Ø4</td><td>5.8 g</td><td class="w">基准：这只手用普通筷子差在哪</td><td>1871</td><td>0.09%（36 / 41040）</td><td>105</td><td>11% / 12%</td></tr>
+          <tr><td>SQ9</td><td>方 9×9</td><td>圆 Ø4</td><td>9.8 g</td><td class="w">粗细第 2 档（约日式粗筷）</td><td class="na">没搜</td><td class="na">没搜</td><td class="na">没搜</td><td class="na">没搜</td></tr>
+          <tr><td>SQ12</td><td>方 12×12</td><td>圆 Ø4</td><td>14.1 g</td><td class="w">粗细第 3 档（指尖宽的 83%）</td><td>3013</td><td>0.07%（29 / 41040）</td><td>47</td><td>4% / 28%</td></tr>
+          <tr><td>SQ15</td><td>方 15×15</td><td>圆 Ø4</td><td>18.9 g</td><td class="w">粗细上限（和指尖一样宽），太粗会不会反而不好捏</td><td class="na">没搜</td><td class="na">没搜</td><td class="na">没搜</td><td class="na">没搜</td></tr>
+          <tr><td>RD9</td><td>圆 Ø9</td><td>圆 Ø4</td><td>8.3 g</td><td class="w">和 SQ9 只差形状：方截面防滚有多大用</td><td class="na">没搜</td><td class="na">没搜</td><td class="na">没搜</td><td class="na">没搜</td></tr>
+          <tr><td>FLAT</td><td>扁 14×6</td><td>扁 6×3</td><td>10.9 g</td><td class="w">宽面约等于指尖宽，指腹整面贴住、不滚</td><td>2098</td><td>0.07%（27 / 41040）</td><td>401</td><td>33% / 40%</td></tr>
+          <tr><td><strong>START</strong> 入门款</td><td>扁方 14×9，带防滑横槽</td><td>平头 8×5，带横纹</td><td>14.1 g</td><td class="w">最好拿的起步款</td><td>2430</td><td>0.12%（42 / 35308）</td><td>63</td><td>14% / 10%</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="ref">尺寸单位 mm。估重按 PLA、3 圈墙 + 15% 填充算，误差约 ±20%。</p>
+    <p class="ref">尺寸单位 mm。估重按 PLA、3 圈墙 + 15% 填充算，误差约 ±20%。后 4 列是仿真握姿搜索（见<a href="#grasp">第 2 节</a>），每种尝试 98304 次。</p>
     <p>手的尺寸（从官方模型量）：食指指尖宽 14.4 mm；虎口 31–38 mm，比任何一种筷子都粗，没法像人那样用虎口夹住下面那根（推断）。</p>
   </section>
 
@@ -90,36 +90,25 @@
     <p class="route-note">全部是仿真结果，没上真手。数字来自 <code>sharpa-rl-lab-il3/logs/chopsticks_1126/</code>。</p>
 
     <h3 class="sub">任务</h3>
-    <div class="tablewrap">
-      <table class="dense">
-        <tbody>
-          <tr><td>手</td><td class="w">固定，和转圆柱训练同一姿态：掌心朝上，指尖抬高 20°</td></tr>
-          <tr><td>筷子</td><td class="w">两根自由刚体，不规定握法</td></tr>
-          <tr><td>目标</td><td class="w">筷尖间隙 0–40 mm，每 2–4 秒重新抽一次</td></tr>
-          <tr><td>动作 / 控制</td><td class="w">同转圆柱：22 维相对目标角，20 Hz</td></tr>
-          <tr><td>观测</td><td class="w">老师：能看到筷子位姿。学生：只有关节角 + 指尖触觉 + 目标</td></tr>
-          <tr><td>奖励</td><td class="w">间隙跟上目标；两个筷尖不前后错开、不交叉；筷子不漂、不掉；省力。见<a href="#reward">奖励设计</a></td></tr>
-        </tbody>
-      </table>
-    </div>
+    <ul class="find">
+      <li>手固定，和转圆柱训练同一姿态：掌心朝上，指尖抬高 20°。动作和控制同转圆柱：22 维相对目标角，20 Hz。</li>
+      <li>两根自由刚体筷子，不规定握法；目标是筷尖间隙 0–40 mm，每 2–4 秒重新抽一次。</li>
+      <li>观测：老师能看到筷子位姿；学生只有关节角 + 指尖触觉 + 目标。</li>
+    </ul>
 
     <h3 class="sub" id="ends">筷子分头尾：握持端粗，筷尖细</h3>
-    <div class="tablewrap">
-      <table class="dense">
-        <tbody>
-          <tr><td>模型</td><td class="w">每种筷子都有锥度。连杆原点在握持端端面中心，沿 +x 到筷尖，长 240 mm。<code>meta.json</code> 记了筷尖中心 <code>tip_center</code> 和握持端中心 <code>top_center</code>。截面（握持端 → 筷尖）：START 14×9 → 8×5 mm，STD 6×6 → 4×4，SQ12 12×12 → 4×4，FLAT 14×6 → 6×3</td></tr>
-          <tr><td>目标量哪头</td><td class="w">只量筷尖：间隙 = 两个 <code>tip_center</code> 的距离 − 筷尖厚度</td></tr>
-          <tr><td>握哪一段</td><td class="w">握姿搜索时，筷子上离握持端 60–130 mm 的一点放进手上方的采样区：沿手指 70–160 mm，侧向 −40 到 +60 mm，离掌面 15–60 mm。之后手指随机合拢，碰到就停，所以实际接触点没有规定</td></tr>
-          <tr><td>朝哪边</td><td class="w">筷子大致沿手指方向：偏航（绕掌心法向）±40°，俯仰 −10° 到 +30°。筷尖朝指尖外伸，伸出握点 110–180 mm</td></tr>
-          <tr><td>两根的关系</td><td class="w">两根的筷尖在同一头，并且要同时满足：筷尖距 &lt; 60 mm，前后错开 &lt; 30 mm，不交叉，两根轴线最近距离 &gt; 1.15 × 握持端截面最大边 + 1 mm。中点离掌面近的那根定为下筷（橙）</td></tr>
-          <tr><td>绕长轴转多少</td><td class="w">没有规定：<code>roll</code> 在 0–2π 里随机。方截面哪面朝上、START 的防滑槽朝哪，都是随机的</td></tr>
-          <tr><td>训练时握点会不会跑</td><td class="w">没有直接约束握点位置的奖励项，只有三处间接限制：筷尖中点漂移扣分、关节离开局握姿扣分、任一根重心离开局位置 &gt; 60 mm 判掉落。手沿筷子滑动 6 cm 以内不会被单独发现</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <ul class="find">
+      <li>模型有锥度，截面见第 1 节的表。连杆原点在握持端端面中心，沿 +x 到筷尖，长 240 mm；<code>meta.json</code> 记了筷尖中心 <code>tip_center</code> 和握持端中心 <code>top_center</code>。</li>
+      <li>目标只量筷尖：间隙 = 两个 <code>tip_center</code> 的距离 − 筷尖厚度。</li>
+      <li>握哪一段：握姿搜索时，筷子上离握持端 60–130 mm 的一点放进手上方的采样区（沿手指 70–160 mm，侧向 −40 到 +60 mm，离掌面 15–60 mm）。之后手指随机合拢、碰到就停，实际接触点没有规定。</li>
+      <li>朝哪边：大致沿手指方向，偏航（绕掌心法向）±40°，俯仰 −10° 到 +30°；筷尖朝指尖外伸，伸出握点 110–180 mm。</li>
+      <li>两根的关系：筷尖在同一头，并且同时满足筷尖距 &lt; 60 mm、前后错开 &lt; 30 mm、不交叉、两根轴线最近距离 &gt; 1.15 × 握持段（离端面 80 mm 处）截面最大边 + 1 mm。中点离掌面近的那根定为下筷（橙）。</li>
+      <li>绕长轴转多少没有规定：<code>roll</code> 在 0–2π 里随机，方截面哪面朝上、START 的防滑槽朝哪都是随机的。</li>
+      <li>训练时握点会不会跑：没有直接约束握点位置的奖励项，只有三处间接限制（筷尖中点漂移扣分、关节离开局握姿扣分、任一根重心离开局位置 &gt; 60 mm 判掉落）。手沿筷子滑动 6 cm 以内不会被单独发现。</li>
+    </ul>
 
     <h3 class="sub" id="reward">奖励设计</h3>
-    <p class="ref">来源：<code>chopsticks_env.py</code>（<code>_get_rewards</code> / <code>_get_dones</code> / <code>_update_goal</code>）和 <code>chopsticks_env_cfg.py</code>，下面是 v3 的设置，4 种筷子相同。“每步贡献”= 权重 × tensorboard 里该项最后 20 个记录的平均（START 训练到 2 亿步，SQ12 到 0.66 亿步）。</p>
+    <p class="ref">来源：<code>chopsticks_env.py</code>（<code>_get_rewards</code> / <code>_get_dones</code> / <code>_update_goal</code>）和 <code>chopsticks_env_cfg.py</code>，下面是 v3 的设置，4 种筷子相同；v1、v2 的差别见<a href="#train">训练和结果</a>的备注。“每步贡献”= 权重 × tensorboard 里该项最后 20 个记录的平均（START 训练到 2 亿步，SQ12 到 0.66 亿步）。</p>
 
     <figure class="fig">
       <svg viewBox="0 0 1000 300" role="img" aria-label="间隙、前后错开、漂移分别量的是什么">
@@ -152,19 +141,13 @@
       </svg>
       <figcaption>示意图，不按比例。黑点是代码里用到的点：筷尖中心、筷子中点。图里没有画哪根在动：第一轮（v3）的奖励不区分上筷和下筷，两根都是自由的，谁动都可以；“下筷顶住不动、只有上筷动”是第二轮要加的要求。</figcaption>
     </figure>
-
     <p><strong>目标</strong></p>
-    <div class="tablewrap">
-      <table class="dense">
-        <tbody>
-          <tr><td>间隙 G</td><td class="w"><code>|tip_b − tip_a| − 筷尖厚度</code>；厚度取筷尖宽、厚里小的那个：START 5 mm，STD / SQ12 4 mm，FLAT 3 mm</td></tr>
-          <tr><td>开局</td><td class="w">目标 = 这个握姿本来的间隙（截到 0–40 mm），保持 0.5–1.5 s（10–30 步）</td></tr>
-          <tr><td>之后</td><td class="w">每 2–4 s（40–80 步）重抽一次：0–40 mm 均匀分布，其中 20% 直接设成 0（合上）</td></tr>
-          <tr><td>误差 e</td><td class="w"><code>e = |G − 目标|</code>；目标为 0 时 <code>e = max(G, 0)</code>（代码注释：压得更紧不算误差）</td></tr>
-          <tr><td>不规定握法</td><td class="w">奖励只看筷尖。没有“哪根手指碰哪根筷子”的项，只有 <code>p_pose</code> 把关节拉向这一局开局的握姿</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <ul class="find">
+      <li>间隙 G = <code>|tip_b − tip_a| − 筷尖厚度</code>；厚度取筷尖宽、厚里小的那个：START 5 mm，STD / SQ12 4 mm，FLAT 3 mm。</li>
+      <li>开局目标 = 这个握姿本来的间隙（截到 0–40 mm），保持 0.5–1.5 s（10–30 步）；之后每 2–4 s（40–80 步）重抽一次，0–40 mm 均匀分布，其中 20% 直接设成 0（合上）。</li>
+      <li>误差 <code>e = |G − 目标|</code>；目标为 0 时 <code>e = max(G, 0)</code>（代码注释：压得更紧不算误差）。</li>
+      <li>奖励只看筷尖，没有“哪根手指碰哪根筷子”的项，只有 <code>p_pose</code> 把关节拉向这一局开局的握姿。</li>
+    </ul>
 
     <p><strong>每一项</strong>（<span class="hg" style="padding:0 6px;border-radius:4px">绿底 = 加分</span> <span class="hb" style="padding:0 6px;border-radius:4px">红底 = 扣分</span>；每步算一次，一局最长 20 s = 400 步，每步最多 +4）</p>
     <div class="tablewrap">
@@ -187,44 +170,8 @@
       </table>
     </div>
     <p class="ref">“功”的贡献按 tensorboard 里没封顶的平均算，封顶后只会更小。</p>
-
-    <p><strong>结束条件</strong>（相对开局，任一条成立就算掉）</p>
-    <div class="tablewrap">
-      <table class="dense">
-        <tbody>
-          <tr><td>掉落</td><td class="w">任一根重心离开局位置 &gt; 60 mm；任一根重心下降 &gt; 40 mm；间隙 &gt; 100 mm；状态出现 NaN</td></tr>
-          <tr><td>超时</td><td class="w">20 s（400 步）</td></tr>
-          <tr><td>掉了另扣分吗</td><td class="w">不扣。掉了只是拿不到后面每步的分</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <p><strong>重力课程</strong></p>
-    <div class="tablewrap">
-      <table class="dense">
-        <tbody>
-          <tr><td>起点 / 终点</td><td class="w">4.0 → 9.81 m/s²。全局一个重力，所有环境一起变</td></tr>
-          <tr><td>条件</td><td class="w">每个控制步：<code>ema = 0.98·ema + 0.02·这一步的掉落比例</code>（初值 0.05）。前 1000 步不加，之后 <code>ema &lt; 4e-3</code> 就加 0.01，每步最多加一次</td></tr>
-          <tr><td>v3 实测</td><td class="w">4 次 v3 都是 1660 万步开始加、2610 万步到 9.81（tensorboard <code>gravity_z</code>）。4.0 → 9.81 要加 581 次，每次 16384 步，合 952 万步，和实测的 950 万步一致：一开始加就没停过</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <p><strong>v1 → v2 → v3</strong>（都是 START 老师）</p>
-    <div class="tablewrap">
-      <table class="dense">
-        <thead><tr><th></th><th>v1</th><th>v2</th><th>v3</th></tr></thead>
-        <tbody>
-          <tr><td>起点</td><td>从头训</td><td>接 v1 的存档续训</td><td>从头训</td></tr>
-          <tr><td>存活分</td><td>0.5</td><td>0.5</td><td>1.0</td></tr>
-          <tr><td>漂移权重 / 封顶</td><td>0.5 / 50 mm</td><td>1.5 / 100 mm</td><td>1.0 / 100 mm</td></tr>
-          <tr><td>重力起点</td><td>2.0</td><td>2.0</td><td>4.0</td></tr>
-          <tr><td>加重力条件</td><td class="w">这一步的掉落比例 &lt; 5e-4 → +0.05</td><td class="w">滑动平均 &lt; 4e-3 → +0.01</td><td>同 v2</td></tr>
-          <tr><td>为什么改</td><td>—</td><td class="w">v1 重力一直停在 2.0（cfg 注释）</td><td class="w">代码里没写原因；<span class="tag-inf">推断</span>针对 v2 每步回报变负</td></tr>
-          <tr><td>结果</td><td class="w hb">8100 万步手动停。每步掉落比例 0.0015–0.012，从没低于 5e-4，重力全程 2.0</td><td class="w hb">3300 万步手动停。局长从约 220 步掉到 15–32 步，回报最低 −66，掉落比例 0.015–0.069，重力全程 2.0。3.3M 步时每步平均回报约 −1.1（−35 ÷ 32 步）；<span class="tag-inf">推断</span>掉落不另扣分，每步为负时早掉反而亏得少</td><td class="w hg">4 种筷子都训完，重力到 9.81，结果见下</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <p><strong>结束条件</strong>：相对开局，任一根重心移动 &gt; 60 mm、任一根重心下降 &gt; 40 mm、间隙 &gt; 100 mm 或状态出现 NaN 就算掉；20 s（400 步）超时。掉了不另扣分，只是拿不到后面每步的分。</p>
+    <p><strong>重力课程</strong>：4.0 → 9.81 m/s²，全局一个重力，所有环境一起变。每个控制步算 <code>ema = 0.98·ema + 0.02·这一步的掉落比例</code>（初值 0.05），前 1000 步不加，之后 <code>ema &lt; 4e-3</code> 就加 0.01，每步最多加一次。4 次 v3 都是 1660 万步开始加、2610 万步到 9.81（tensorboard <code>gravity_z</code>）；4.0 → 9.81 要加 581 次，每次 16384 步，合 952 万步，和实测的 950 万步一致：一开始加就没停过。</p>
 
     <p><strong>没解决的</strong></p>
     <ul class="find">
@@ -234,36 +181,27 @@
       <li>握点没有直接约束，手沿筷子滑动 6 cm 以内不会被单独发现（见<a href="#ends">头尾</a>）。</li>
     </ul>
 
-    <h3 class="sub">起始握姿：自动搜，不靠人示范</h3>
-    <p>随机摆筷子 → 手指合拢 → 撤掉支撑，在重力和扰动下还稳住的留下。</p>
-    <div class="tablewrap">
-      <table class="dense">
-        <thead><tr><th>筷子</th><th>尝试次数</th><th>稳定握姿</th><th>全随机摆放的成功率</th><th>能扛 2 倍自重外力</th><th>碰到指尖触觉垫的比例<br>（下筷 / 上筷）</th></tr></thead>
-        <tbody>
-          <tr><td>START</td><td>98304</td><td>2430</td><td>0.12%（42 / 35308）</td><td>63</td><td>14% / 10%</td></tr>
-          <tr><td>STD</td><td>98304</td><td>1871</td><td>0.09%（36 / 41040）</td><td>105</td><td>11% / 12%</td></tr>
-          <tr><td>SQ12</td><td>98304</td><td>3013</td><td>0.07%（29 / 41040）</td><td>47</td><td>4% / 28%</td></tr>
-          <tr><td>FLAT</td><td>98304</td><td>2098</td><td>0.07%（27 / 41040）</td><td>401</td><td>33% / 40%</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p>其余稳定握姿是在这些全随机成功的握姿上加小扰动繁殖出来的。筷子大多夹在指节侧面和指缝里，不像人的握法。</p>
+    <h3 class="sub" id="grasp">起始握姿：自动搜，不靠人示范</h3>
+    <p>随机摆筷子 → 手指合拢 → 撤掉支撑，在重力和扰动下还稳住的留下。搜了 START、STD、SQ12、FLAT 四种，数字在<a href="#sticks">第 1 节</a>的表里。其余稳定握姿是在全随机成功的握姿上加小扰动繁殖出来的。筷子大多夹在指节侧面和指缝里，不像人的握法。</p>
     <figure class="fig"><img src="media/chop_grasps_start.jpg" alt="START 筷子的 12 个稳定握姿" loading="lazy"><figcaption>START 的 12 个稳定握姿。橙色是下筷（靠掌心），蓝色是上筷，绿色是指尖触觉垫。</figcaption></figure>
 
-    <h3 class="sub">结果</h3>
+    <h3 class="sub" id="train">训练和结果</h3>
+    <p class="route-note">每次正式训练一行，包括没采用的。</p>
     <div class="tablewrap">
-      <table class="dense">
-        <thead><tr><th>筷子</th><th>类型</th><th>步数</th><th>从不掉<br>（共 512）</th><th>间隙误差 mm<br>中位 / 平均</th><th>误差在 2 mm 内</th><th>目标 0 时<br>间隙中位</th></tr></thead>
+      <table class="dense" id="train-tab">
+        <thead><tr><th>筷子</th><th>类型</th><th>版本</th><th>重力</th><th>步数</th><th>局数</th><th>用时</th><th>末段回报</th><th>从不掉<br>（共 512）</th><th>间隙误差 mm<br>中位 / 平均</th><th>误差在 2 mm 内</th><th>目标 0 时<br>间隙中位</th><th>备注</th></tr></thead>
         <tbody>
-          <tr><td>START</td><td>老师</td><td>2.00 亿</td><td>303</td><td>1.72 / 7.40</td><td>51%</td><td>12.8 mm</td></tr>
-          <tr><td>STD</td><td>老师</td><td>0.66 亿</td><td>294</td><td>3.22 / 8.29</td><td>43%</td><td>7.2 mm</td></tr>
-          <tr><td><strong>SQ12</strong></td><td>老师</td><td>0.66 亿</td><td class="hg">356</td><td class="hg">0.40 / 1.97</td><td class="hg">82%</td><td class="hg">1.4 mm</td></tr>
-          <tr><td>FLAT</td><td>老师</td><td>0.66 亿</td><td class="hb">267</td><td class="hb">6.16 / 10.72</td><td>37%</td><td class="hb">17.5 mm</td></tr>
-          <tr><td>SQ12</td><td>学生</td><td>1.00 亿</td><td class="hb">227</td><td>4.48 / 6.64</td><td class="hb">25%</td><td>7.1 mm</td></tr>
+          <tr><td>START</td><td>老师</td><td>v1</td><td>2.0（没加上去）</td><td>0.81 亿（手动停）</td><td>523,665</td><td>44 分钟</td><td>326</td><td class="na">没评估</td><td class="na">没评估</td><td class="na">没评估</td><td class="na">没评估</td><td class="w hb">没采用。存活分 0.5，漂移 0.5 / 封顶 50 mm；重力课程照搬转圆柱：从 2.0 起，这一步掉落比例 &lt; 5e-4 才加 0.05。每步掉落比例 0.0015–0.012，从没低于 5e-4，重力全程 2.0</td></tr>
+          <tr><td>START</td><td>老师</td><td>v2</td><td>2.0（没加上去）</td><td>0.33 亿（手动停）</td><td>1,774,057</td><td>18 分钟</td><td>最低 −66，停时约 6</td><td class="na">没评估</td><td class="na">没评估</td><td class="na">没评估</td><td class="na">没评估</td><td class="w hb">没采用，策略崩了。从 v1 的 6500 万步存档续训；漂移改成 1.5 / 封顶 100 mm，加重力改成掉落比例滑动平均 &lt; 4e-3 就加 0.01（cfg 注释：v1 重力一直停在 2.0）。局长从约 220 步掉到 15–32 步，掉落比例 0.015–0.069；3.3M 步时每步平均回报约 −1.1（−35 ÷ 32 步）。<span class="tag-inf">推断</span>掉落不另扣分，每步为负时早掉反而亏得少</td></tr>
+          <tr><td>START</td><td>老师</td><td>v3</td><td>4.0 → 9.81</td><td>2.00 亿</td><td>703,737</td><td>101 分钟</td><td>499</td><td>303</td><td>1.72 / 7.40</td><td>51%</td><td>12.8 mm</td><td class="w">存活分改成 1.0，漂移 1.0 / 封顶 100 mm，重力从 4.0 起。改的原因代码里没写；<span class="tag-inf">推断</span>针对 v2 每步回报变负</td></tr>
+          <tr><td>STD</td><td>老师</td><td>v3</td><td>4.0 → 9.81</td><td>0.66 亿</td><td>288,830</td><td>35 分钟</td><td>453</td><td>294</td><td>3.22 / 8.29</td><td>43%</td><td>7.2 mm</td><td class="w">同 START v3</td></tr>
+          <tr><td><strong>SQ12</strong></td><td>老师</td><td>v3</td><td>4.0 → 9.81</td><td>0.66 亿</td><td>237,397</td><td>31 分钟</td><td>894</td><td class="hg">356</td><td class="hg">0.40 / 1.97</td><td class="hg">82%</td><td class="hg">1.4 mm</td><td class="w">同 START v3</td></tr>
+          <tr><td>FLAT</td><td>老师</td><td>v3</td><td>4.0 → 9.81</td><td>0.66 亿</td><td>299,240</td><td>38 分钟</td><td>452</td><td class="hb">267</td><td class="hb">6.16 / 10.72</td><td>37%</td><td class="hb">17.5 mm</td><td class="w">同 START v3</td></tr>
+          <tr><td>SQ12</td><td>学生</td><td>v3</td><td>全程 9.81</td><td>1.00 亿</td><td>276,482</td><td>约 46 分钟</td><td>601</td><td class="hb">227</td><td>4.48 / 6.64</td><td class="hb">25%</td><td>7.1 mm</td><td></td></tr>
         </tbody>
       </table>
     </div>
-    <p class="ref">测法：512 个环境跑 60 秒，随机化全开，正常重力。误差只算目标已保持 1 秒以上的步。绿色是这一列最好，红色是最差。</p>
+    <p class="ref">末段回报是训练末段的平均回报。评估：512 个环境跑 60 秒，随机化全开，正常重力；误差只算目标已保持 1 秒以上的步；绿色是这一列最好，红色是最差。所有训练相同：16384 个环境，RTX 5090；随机化为手的 PD 刚度、阻尼 ×0.5–2，摩擦倍数 0.7–1.5，关节噪声 ±0.02 rad，触觉增益 ×0.4–2.5；筷子摩擦 0.5–0.8，质量 ×0.8–1.25，重心沿长度 ±5 mm，随机外力。</p>
     <figure class="fig"><img src="media/chop_eval_sq12_teacher.png" alt="SQ12 老师的评估曲线" loading="lazy"><figcaption>SQ12 老师：左边是 3 个环境的目标间隙（灰）和实际间隙（蓝），右边是误差分布、目标和实际的对比、还没掉过的环境比例随时间的变化。</figcaption></figure>
 
     <div class="vids">
@@ -284,36 +222,17 @@
     </ul>
   </section>
 
-  <section id="train">
-    <h2>3. 训练配置</h2>
-    <p class="route-note">每次正式训练一行，包括没采用的。</p>
-    <div class="tablewrap">
-      <table class="dense">
-        <thead><tr><th>筷子</th><th>类型</th><th>重力</th><th>步数</th><th>局数</th><th>用时</th><th>分数 / 结果</th><th>备注</th></tr></thead>
-        <tbody>
-          <tr><td>START v1</td><td>老师</td><td class="w">课程照搬转圆柱（从 2.0 起），一直停在 2.0</td><td>0.81 亿（手动停）</td><td>523,665</td><td>44 分钟</td><td>停时回报 326，没评估</td><td class="w">没采用</td></tr>
-          <tr><td>START v2</td><td>老师</td><td class="w">加重力的条件放宽：掉落率滑动平均 &lt; 4e-3 就加 0.01</td><td>0.33 亿（手动停）</td><td>1,774,057</td><td>18 分钟</td><td>策略崩了：回报最低 −66，停时约 6</td><td class="w">从 v1 的 6500 万步存档续训；没采用</td></tr>
-          <tr><td>START v3</td><td>老师</td><td>4.0 → 9.81</td><td>2.00 亿</td><td>703,737</td><td>101 分钟</td><td>499</td><td></td></tr>
-          <tr><td>STD v3</td><td>老师</td><td>4.0 → 9.81</td><td>0.66 亿</td><td>288,830</td><td>35 分钟</td><td>453</td><td></td></tr>
-          <tr><td>SQ12 v3</td><td>老师</td><td>4.0 → 9.81</td><td>0.66 亿</td><td>237,397</td><td>31 分钟</td><td>894</td><td></td></tr>
-          <tr><td>FLAT v3</td><td>老师</td><td>4.0 → 9.81</td><td>0.66 亿</td><td>299,240</td><td>38 分钟</td><td>452</td><td></td></tr>
-          <tr><td>SQ12 v3</td><td>学生</td><td>全程 9.81</td><td>1.00 亿</td><td>276,482</td><td>约 46 分钟</td><td>601</td><td></td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="ref">分数是训练末段的平均回报。v3 的重力课程 1660 万步开始加、2610 万步到 9.81（见<a href="#reward">奖励设计</a>）。v3 随机化：手的 PD 刚度、阻尼 ×0.5–2，摩擦倍数 0.7–1.5，关节噪声 ±0.02 rad，触觉增益 ×0.4–2.5；筷子摩擦 0.5–0.8，质量 ×0.8–1.25，重心沿长度 ±5 mm，随机外力。16384 个环境，RTX 5090。</p>
-  </section>
-
   <section id="works">
-    <h2>4. 文献：机器人和仿真工作</h2>
+    <h2>3. 文献：机器人和仿真工作</h2>
     <p class="route-note">前 5 篇是筷子本身，后 4 篇是紧邻方向（多指手用镊子 / 夹子等开合工具、把筷子当考题的基准和综述）。9 篇都在<a href="papers.html">文献库</a>里，前 5 篇和 POMDAR 带细标签“用筷子”。</p>
     <div class="tablewrap">
       <table class="dense">
-        <thead><tr><th>年份</th><th>文章</th><th>手 / 硬件</th><th>方法</th><th>真机 / 仿真</th><th>感知</th><th>做到什么（原文数字）</th><th>代码 / 数据</th></tr></thead>
+        <thead><tr><th>年份</th><th>文章</th><th>路线</th><th>手 / 硬件</th><th>方法</th><th>真机 / 仿真</th><th>感知</th><th>做到什么（原文数字）</th><th>代码 / 数据</th></tr></thead>
         <tbody>
           <tr>
             <td>2020</td>
             <td class="w"><strong>TeleChop</strong>（IROS 2020）<br><a href="https://arxiv.org/abs/2008.00101" target="_blank" rel="noopener">Telemanipulation with Chopsticks: Analyzing Human Factors in User Demonstrations</a></td>
+            <td class="w">筷子装在臂上，当 1 自由度夹爪</td>
             <td class="w">自制 6 自由度臂，末端一对电动筷子：一根固定，一根装在电机轴上，同一平面开合</td>
             <td class="w">遥操作：人拿贴了动捕标记的筷子，臂跟着动；25 人用户研究</td>
             <td>真机</td>
@@ -324,6 +243,7 @@
           <tr>
             <td>2020</td>
             <td class="w"><strong>Grasping with Chopsticks</strong>（ICRA 2021）<br><a href="https://arxiv.org/abs/2011.06719" target="_blank" rel="noopener">Grasping with Chopsticks: Combating Covariate Shift in Model-free Imitation Learning for Fine Manipulation</a></td>
+            <td class="w">筷子装在臂上，当 1 自由度夹爪</td>
             <td class="w">同组的 6 自由度臂 + 1 自由度电动筷子</td>
             <td class="w">模仿学习：每种物体 500 条遥操作示范；行为克隆 + 最近邻集成，换到物体坐标系、加噪声造纠偏标签</td>
             <td>真机</td>
@@ -334,6 +254,7 @@
           <tr>
             <td>2022</td>
             <td class="w"><strong>Chopsticks Gripping Styles</strong>（SIGGRAPH 2022，ACM TOG 41(4)）<br><a href="https://arxiv.org/abs/2205.14313" target="_blank" rel="noopener">Learning to Use Chopsticks in Diverse Gripping Styles</a></td>
+            <td class="w">多指手握两根独立的筷子</td>
             <td class="w">仿真人手 30 自由度（拇指 6、四指各 4，其余模拟手掌变形，虎口单独建模），装在 7 自由度仿真臂上；还试了几种非人手形态</td>
             <td class="w">两层：贝叶斯优化 + PPO 找握姿（17 种握法）；运动规划出筷子轨迹，PPO 训练手去跟</td>
             <td class="w">仿真（MuJoCo 1.5，100 Hz）</td>
@@ -344,6 +265,7 @@
           <tr>
             <td>2023</td>
             <td class="w"><strong>CherryBot</strong>（RSS 2023）<br><a href="https://arxiv.org/abs/2303.05508" target="_blank" rel="noopener">Cherry-Picking with Reinforcement Learning: Robust Dynamic Grasping in Unstable Conditions</a></td>
+            <td class="w">筷子装在臂上，当 1 自由度夹爪</td>
             <td class="w">自制 6 自由度臂 + 筷子末端</td>
             <td class="w">强化学习：MuJoCo 近似仿真预训练 + 启发式控制器的数据 + 真机 30 分钟微调</td>
             <td>真机</td>
@@ -354,6 +276,7 @@
           <tr>
             <td>2023</td>
             <td class="w"><strong>HASHI</strong>（ICRA 2024）<br><a href="https://arxiv.org/abs/2311.02277" target="_blank" rel="noopener">HASHI: Highly Adaptable Seafood Handling Instrument for Manipulation in Industrial Settings</a></td>
+            <td class="w">专门做的多自由度筷子机构</td>
             <td class="w">专门做的筷子夹持器：两根筷子各 3 个舵机（俯仰、偏航、升降 35 mm），装在 7 自由度协作臂上</td>
             <td class="w">运动学模型；臂遥操作到预抓位姿，筷子按程序合拢</td>
             <td>真机</td>
@@ -364,6 +287,7 @@
           <tr>
             <td>2025</td>
             <td class="w"><strong>镊子分层强化学习</strong>（IROS 2025）<br><a href="https://arxiv.org/abs/2507.06822" target="_blank" rel="noopener">Hierarchical Reinforcement Learning for Articulated Tool Manipulation with Multifingered Hand</a></td>
+            <td class="w">多指手用带铰链的开合工具</td>
             <td class="w">Schunk SVH 五指手（20 个关节、9 个主动自由度）装在臂上，操作镊子状工具</td>
             <td class="w">分层强化学习（SAC）：低层调镊子开口，高层控臂；点云编码器估工具开口</td>
             <td class="w">MuJoCo 训练，真机验证</td>
@@ -374,6 +298,7 @@
           <tr>
             <td>2025</td>
             <td class="w"><strong>Articulated Tools / CATFA</strong>（arXiv）<br><a href="https://arxiv.org/abs/2509.23075" target="_blank" rel="noopener">In-Hand Manipulation of Articulated Tools with Dexterous Robot Hands with Sim-to-Real Transfer</a></td>
+            <td class="w">多指手用带铰链的开合工具</td>
             <td class="w">Inspire 手（6 个主动自由度）+ 自加的 36×44 电阻式触觉阵列；干扰实验时装在 Franka 臂上</td>
             <td class="w">Isaac Lab 里训特权老师，蒸馏成学生；再用不到 50 条真机示范学“触觉 + 关节力”的修正模块</td>
             <td>真机</td>
@@ -384,6 +309,7 @@
           <tr>
             <td>2026</td>
             <td class="w"><strong>POMDAR</strong>（arXiv）<br><a href="https://arxiv.org/abs/2604.09294" target="_blank" rel="noopener">A Benchmark of Dexterity for Anthropomorphic Robotic Hands</a></td>
+            <td class="w">把筷子当灵巧度考题</td>
             <td class="w">ORCA 手，锁关节得到 5 / 7 / 11 / 16 自由度四种配置，装在 Franka 臂上</td>
             <td class="w">基准：按人手运动分类法设计 18 项任务，其中一项是筷子（两根杆约 ±20° 受限转动，沿弯曲导轨移动）；遥操作测</td>
             <td class="w">真机 + MuJoCo</td>
@@ -394,6 +320,7 @@
           <tr>
             <td>2026</td>
             <td class="w"><strong>灵巧度评测综述</strong>（Annual Review of Control, Robotics, and Autonomous Systems 第 10 卷，2027 待发表）<br><a href="https://arxiv.org/abs/2609.05585" target="_blank" rel="noopener">Benchmarking Dexterity of Multifingered Robot Hands: A Review and Perspective</a></td>
+            <td class="w">把筷子当灵巧度考题</td>
             <td class="na">—</td>
             <td>综述</td>
             <td class="na">—</td>
@@ -404,57 +331,22 @@
         </tbody>
       </table>
     </div>
-  </section>
-
-  <section id="human">
-    <h2>5. 文献：人手怎么握筷子</h2>
-    <p class="route-note">设计握姿时用得上的人手研究。没收进文献库（文献库只收机器人工作）。</p>
-    <div class="tablewrap">
-      <table class="dense">
-        <thead><tr><th>年份</th><th>文章</th><th>测了谁、怎么测</th><th>结论（原文）</th></tr></thead>
-        <tbody>
-          <tr>
-            <td>2009</td>
-            <td class="w">Chen 等，<a href="https://doi.org/10.1007/978-3-642-03889-1_110" target="_blank" rel="noopener">Kinematics analysis of chopsticks manipulation</a>（IFMBE Proceedings 25/9，410–413 页）</td>
-            <td class="w">11 人：平行握 6 人、交叉握 5 人；在筷子上、下两个位置握，测手和腕的关节角、两筷夹角、筷尖距离、接近速度</td>
-            <td class="w">交叉握的筷子夹角更大；平行握的动作模式变化更多；作者认为同一种握法内部差别也大，需要更细的分类</td>
-          </tr>
-          <tr>
-            <td>2020</td>
-            <td class="w">Shimomura 等，<a href="https://doi.org/10.1186/s40101-020-00223-z" target="_blank" rel="noopener">What is the significance of the traditional pinching mode of holding chopsticks?</a>（Journal of Physiological Anthropology 39）</td>
-            <td class="w">8 人分两组，用非惯用手练 5 天：传统“钳式”握法 vs “剪刀式”握法；测完成时间和 5 块手部肌肉的肌电</td>
-            <td class="w">钳式完成任务的时间显著更短；钳式组小指短屈肌的活动显著增加，剪刀式组没有</td>
-          </tr>
-          <tr>
-            <td>2024</td>
-            <td class="w">Choji、Saito，<a href="https://doi.org/10.1589/jpts.36.551" target="_blank" rel="noopener">Motion capture-based evaluation of lower chopstick stability</a>（Journal of Physical Therapy Science 36(9)，551–556 页）</td>
-            <td class="w">34 名健康成人，动捕测下面那根筷子稳不稳；再用非惯用手练 10 天</td>
-            <td class="w">标准握法下面那根握住不动、上面那根负责开合；惯用手的下面那根显著更稳；非惯用手练 10 天后下面那根稳定性显著提高（摘要没给数字）</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section id="routes">
-    <h2>6. 几条路线</h2>
-    <div class="tablewrap">
-      <table class="dense">
-        <thead><tr><th>路线</th><th>文章</th><th>手指要做什么</th><th>现状</th></tr></thead>
-        <tbody>
-          <tr><td class="w">筷子装在臂上，当 1 自由度夹爪</td><td class="w">TeleChop、Grasping with Chopsticks、CherryBot</td><td class="w">没有手指；筷子由电机开合，全靠臂定位</td><td class="w">真机；夹 1–2 cm 小物体平均 80%（Grasping with Chopsticks），允许重试时夹摆动小物体 10/10（CherryBot）</td></tr>
-          <tr><td class="w">专门做的多自由度筷子机构</td><td class="w">HASHI</td><td class="w">没有手指；每根筷子 3 个舵机 + 力传感</td><td class="w">真机，12 种食物 8–9 种不掉</td></tr>
-          <tr><td class="w">多指手握两根独立的筷子</td><td class="w">Chopsticks Gripping Styles</td><td class="w">稳住两根筷子，同时让筷尖开合</td><td class="w">只有仿真，没上真机</td></tr>
-          <tr><td class="w">多指手用带铰链的开合工具</td><td class="w">镊子分层强化学习、Articulated Tools</td><td class="w">握住工具并调开口；两半由铰链连着，不会散开</td><td class="w">真机，镊子夹物 70.8%，开合 5 种工具 100%</td></tr>
-          <tr><td class="w">把筷子当灵巧度考题</td><td class="w">POMDAR、灵巧度评测综述</td><td class="w">遥操作完成筷子任务</td><td class="w">只给评分方法和得分图，不是自主策略</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <p>各路线现状：臂上 1 自由度筷子，真机夹 1–2 cm 小物体平均 80%（Grasping with Chopsticks），允许重试时夹摆动小物体 10/10（CherryBot）；专门的多自由度筷子机构（每根 3 个舵机 + 力传感），真机 12 种食物 8–9 种不掉；多指手握两根独立筷子，只有仿真；多指手用带铰链的工具，两半连着不会散开，真机镊子夹物 70.8%、开合 5 种工具 100%；灵巧度考题只给评分方法和得分图，是遥操作，不是自主策略。</p>
     <p>没找到的：真机多指灵巧手自己（不靠遥操作）握两根独立筷子夹东西的论文；Sharpa Wave 或其他 22 自由度手用筷子的工作或视频；多指手用筷子的公开数据集。</p>
   </section>
 
+  <section id="human">
+    <h2>4. 文献：人手怎么握筷子</h2>
+    <p class="route-note">设计握姿时用得上的人手研究。没收进文献库（文献库只收机器人工作）。</p>
+    <ul class="find">
+      <li><strong>2009</strong> Chen 等，<a href="https://doi.org/10.1007/978-3-642-03889-1_110" target="_blank" rel="noopener">Kinematics analysis of chopsticks manipulation</a>（IFMBE Proceedings 25/9，410–413 页）。11 人（平行握 6、交叉握 5），在筷子上、下两个位置握，测手和腕的关节角、两筷夹角、筷尖距离、接近速度。交叉握的筷子夹角更大；平行握的动作模式变化更多；作者认为同一种握法内部差别也大，需要更细的分类。</li>
+      <li><strong>2020</strong> Shimomura 等，<a href="https://doi.org/10.1186/s40101-020-00223-z" target="_blank" rel="noopener">What is the significance of the traditional pinching mode of holding chopsticks?</a>（Journal of Physiological Anthropology 39）。8 人分两组用非惯用手练 5 天：传统“钳式” vs “剪刀式”，测完成时间和 5 块手部肌肉的肌电。钳式完成时间显著更短；钳式组小指短屈肌的活动显著增加，剪刀式组没有。</li>
+      <li><strong>2024</strong> Choji、Saito，<a href="https://doi.org/10.1589/jpts.36.551" target="_blank" rel="noopener">Motion capture-based evaluation of lower chopstick stability</a>（Journal of Physical Therapy Science 36(9)，551–556 页）。34 名健康成人，动捕测下面那根稳不稳，再用非惯用手练 10 天。标准握法下面那根握住不动、上面那根负责开合；惯用手的下面那根显著更稳；非惯用手练 10 天后稳定性显著提高（摘要没给数字）。</li>
+    </ul>
+  </section>
+
   <section id="hard">
-    <h2>7. 难在哪</h2>
+    <h2>5. 难在哪</h2>
     <ul class="find">
       <li><strong>两根杆不相连，也没有指环。</strong>手要同时握住并操纵两根独立的杆；筷子上没有剪刀那种指环来稳住手和工具的接触；夹东西的接触点在杆尖，离手握的地方很远。<span class="ref">（Chopsticks Gripping Styles 引言）</span>镊子、剪刀、夹子都有铰链，筷子没有，所以这几篇工具论文的结果不能直接套到筷子上。</li>
       <li><strong>一根稳住、一根动。</strong>标准握法下面那根握住不动、上面那根负责开合<span class="ref">（Choji 2024）</span>；综述把下面那根归为固定抓握、上面那根归为手内操作<span class="ref">（灵巧度评测综述 图 1）</span>。仿真里拇指几乎总在扶上面那根，下面那根主要靠虎口托住<span class="ref">（Chopsticks Gripping Styles 5.2 节）</span>。</li>
@@ -466,7 +358,7 @@
   </section>
 
   <section id="us">
-    <h2>8. 对我们的 Sharpa Wave 意味着什么（调研时的推断）</h2>
+    <h2>6. 对我们的 Sharpa Wave 意味着什么（调研时的推断）</h2>
     <ul class="find">
       <li><span class="tag-inf">推断</span>自由度：Sharpa 四指根部能侧摆 ±18°，拇指第二关节也能侧摆（见<a href="compare.html">两只手的区别</a>），满足 POMDAR 说的“要有侧摆”。但 POMDAR 用的是 ORCA 手，侧摆角度够不够握筷子，没测。</li>
       <li><span class="tag-inf">推断</span>触觉：镊子那篇缺的正是指尖触觉；Sharpa 每个指尖有 60×60 触觉阵列，可能能用来发现筷子打滑。能不能真分辨出来，没测。</li>
@@ -477,20 +369,15 @@
   </section>
 
   <section id="skipped">
-    <h2>9. 搜到但没收的</h2>
-    <div class="tablewrap">
-      <table class="dense">
-        <thead><tr><th>文章</th><th>没收的原因</th></tr></thead>
-        <tbody>
-          <tr><td class="w">TUAT/Karlsruhe 五指仿人手（据说能用筷子）</td><td class="w">原始页面打不开（ResearchGate 403），作者、年份、筷子实验细节都核实不了</td></tr>
-          <tr><td class="w">Development of robot system for meal support using chopsticks（多指手遥操作用筷子）</td><td class="w">原始页面打不开（ResearchGate 403），核实不了</td></tr>
-          <tr><td class="w">Grasp and Transport Control of a Chopsticks-Type Robot（Yamasaki 等）</td><td class="w">全文要付费，只看到摘要；是弹性关节二指手，不是多指手</td></tr>
-          <tr><td class="w">KIWI（arXiv 2609.22809）</td><td class="w">“chopstick gripper”只是人手拿着采数据的铰链夹爪，不涉及用筷子</td></tr>
-          <tr><td class="w">Mana（arXiv 2606.13677，多指手用 4 种开合工具）、腹腔镜“筷子”手术机器人、软体驱动器筷子机器人</td><td class="w">和筷子关系较远，没打开原文核实</td></tr>
-          <tr><td class="w">Yamauchi 等 2010（“标准握法最有效”）</td><td class="w">只在 Chopsticks Gripping Styles 里被引用，没找到原文</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <h2>7. 搜到但没收的</h2>
+    <ul class="find">
+      <li>TUAT/Karlsruhe 五指仿人手（据说能用筷子）：原始页面打不开（ResearchGate 403），作者、年份、筷子实验细节都核实不了。</li>
+      <li>Development of robot system for meal support using chopsticks（多指手遥操作用筷子）：原始页面打不开（ResearchGate 403），核实不了。</li>
+      <li>Grasp and Transport Control of a Chopsticks-Type Robot（Yamasaki 等）：全文要付费，只看到摘要；是弹性关节二指手，不是多指手。</li>
+      <li>KIWI（arXiv 2609.22809）：“chopstick gripper”只是人手拿着采数据的铰链夹爪，不涉及用筷子。</li>
+      <li>Mana（arXiv 2606.13677，多指手用 4 种开合工具）、腹腔镜“筷子”手术机器人、软体驱动器筷子机器人：和筷子关系较远，没打开原文核实。</li>
+      <li>Yamauchi 等 2010（“标准握法最有效”）：只在 Chopsticks Gripping Styles 里被引用，没找到原文。</li>
+    </ul>
   </section>
 
 </main>
