@@ -16,6 +16,16 @@
   #train-tab td:last-child { min-width: 180px; }
   .fig.narrow img { max-width: 640px; }
   .tag-inf { font-size: 12px; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; margin-right: 4px; white-space: nowrap; }
+  .fig svg { display: block; width: 100%; max-width: 900px; height: auto; border: 1px solid var(--line); border-radius: 10px; background: #fffdf8; }
+  td.pos { border-left: 5px solid #2f7d6b; font-weight: 600; }
+  td.neg { border-left: 5px solid #b4532a; font-weight: 600; }
+  tr:has(td.pos) td { background: #e3f1e6; }
+  tr:has(td.neg) td { background: #fbe6d8; }
+  tr:has(td.pos) td:last-child { color: #1f6a57; font-weight: 600; }
+  tr:has(td.neg) td:last-child { color: #a2451f; font-weight: 600; }
+  #reward-tab td.w { min-width: 180px; }
+  .svgscroll { overflow-x: auto; max-width: 900px; }
+  .svgscroll svg { min-width: 680px; }
 </style>
 </head>
 <body>
@@ -96,7 +106,7 @@
   <section id="method">
     <h2>3. 现在的做法</h2>
     <ul class="find">
-      <li><strong>任务：</strong>手固定、掌心朝上（同转圆柱）；两根自由刚体筷子；策略每 50 ms 给 22 个关节的目标角。目标是筷尖间隙 0–40 mm，每 2–4 秒换一次，20% 的目标是 0（合上）。间隙 = 两个筷尖中心的距离 − 筷尖厚度（START 5 mm）。</li>
+      <li><strong>任务：</strong>手固定、掌心朝上（同转圆柱）；两根自由刚体筷子；策略每 50 ms 给 22 个关节的目标角。目标是让筷尖间隙跟上给定的数（怎么给见<a href="#reward">奖励</a>表下）。间隙 = 两个筷尖中心的距离 − 筷尖厚度（START 5 mm）。</li>
       <li><strong>筷子朝向（固定）：</strong>横跨手指，筷尖朝小指外侧、往掌面上方翘、略朝手腕；从用户在 playstation 存的“筷子”手型反推，开局只在 ±3 mm / ±3° 内抖。握点离握持端 80 mm，两根近乎平行、握点相距 19 mm，开局筷尖间隙 15 mm；宽面朝开合方向。另外两个候选朝向搜得少，握姿只有 9 个和 0 个。</li>
       <li><strong>握姿：</strong>筷子钉在上面的朝向，只搜手指；要求 2 秒后握点偏 &lt; 8 mm、方向偏 &lt; 8°，并且拿走上筷后下筷单独也稳（6 个方向各推 1.5 倍自重）。约 34 万次得到 1910 个，都是同一家族：下筷被拇指 + 中指 + 小指夹住（76%），上筷被拇指 + 中指（52%）或再加食指（44%）夹住。和用户摆的手型不一样。</li>
       <li><strong>重力：</strong>从 0.05 加到 10 m/s²，掉得少就加一档（+0.1），4260 万步加满。</li>
@@ -105,22 +115,85 @@
     <figure class="fig"><img src="media/chop_v4_canon_H2_render.jpg" alt="筷子的固定朝向：用户的筷子手型、搜到的握姿、手张开" loading="lazy"><figcaption>筷子的固定朝向。橙色下筷（顶住不动），蓝色上筷（开合）。左：用户的“筷子”手型；中：搜到的握姿之一；右：手张开，只看筷子位置。</figcaption></figure>
 
     <h3 class="sub" id="reward">奖励</h3>
+    <figure class="fig">
+      <div class="svgscroll"><svg viewBox="0 0 1000 350" role="img" aria-label="奖励里每一项量的是什么：间隙、下筷不动、上筷绕握点转、开合平面、前后错开、交叉">
+        <defs>
+          <marker id="rw-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b665e"/></marker>
+          <marker id="rw-arr-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4f8cc9"/></marker>
+          <marker id="rw-arr-o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b4532a"/></marker>
+        </defs>
+        <!-- 上筷：张开 / 合上（虚线），当前（实心） -->
+        <line x1="60" y1="138" x2="636" y2="60" stroke="#4f8cc9" stroke-width="2" stroke-dasharray="6 4"/>
+        <line x1="60" y1="94" x2="640" y2="165" stroke="#4f8cc9" stroke-width="2" stroke-dasharray="6 4"/>
+        <polygon points="60,100 640,125 640,131 60,120" fill="#4f8cc9"/>
+        <path d="M 658,160 A 425 425 0 0 0 654,64" fill="none" stroke="#4f8cc9" stroke-width="2.5" marker-start="url(#rw-arr-b)" marker-end="url(#rw-arr-b)"/>
+        <text x="672" y="70" font-size="18" fill="#2c6aa6">张开</text>
+        <text x="672" y="172" font-size="18" fill="#2c6aa6">合上</text>
+        <text x="60" y="44" font-size="19" fill="#2c6aa6">上筷（蓝）：绕自己的握点转，负责开合</text>
+        <!-- 下筷 -->
+        <polygon points="60,195 600,177 600,183 60,211" fill="#d9732a"/>
+        <text x="60" y="335" font-size="19" fill="#b4532a">下筷（橙，靠掌心）：顶住不动</text>
+        <!-- 握点 -->
+        <circle cx="230" cy="115" r="7" fill="#fff" stroke="#1f1d1a" stroke-width="2.5"/>
+        <text x="230" y="86" font-size="17" fill="#1f1d1a" text-anchor="middle">上筷握点不动（6 mm）</text>
+        <circle cx="230" cy="197" r="7" fill="#fff" stroke="#1f1d1a" stroke-width="2.5"/>
+        <text x="240" y="252" font-size="17" fill="#1f1d1a">下筷握点不动（3 mm）</text>
+        <line x1="236" y1="236" x2="231" y2="208" stroke="#1f1d1a" stroke-width="1.5"/>
+        <!-- 下筷不转 -->
+        <path d="M 46,180 A 26 26 0 0 0 46,228" fill="none" stroke="#b4532a" stroke-width="2.5" marker-start="url(#rw-arr-o)" marker-end="url(#rw-arr-o)"/>
+        <text x="20" y="252" font-size="17" fill="#b4532a">下筷不转（4°）</text>
+        <!-- 下筷筷尖不动 -->
+        <circle cx="600" cy="180" r="11" fill="none" stroke="#b4532a" stroke-width="2" stroke-dasharray="3 3"/>
+        <text x="625" y="216" font-size="17" fill="#b4532a">下筷筷尖不动（5 mm）</text>
+        <!-- 间隙 -->
+        <circle cx="640" cy="128" r="5" fill="#1f1d1a"/>
+        <circle cx="600" cy="180" r="5" fill="#1f1d1a"/>
+        <line x1="640" y1="128" x2="600" y2="180" stroke="#2f7d6b" stroke-width="3"/>
+        <text x="730" y="114" font-size="18" fill="#2f7d6b">间隙 G：跟踪目标 G*</text>
+        <text x="730" y="140" font-size="16" fill="#6b665e">筷尖连线不偏出纸面</text>
+        <text x="730" y="160" font-size="16" fill="#6b665e">（开合平面）</text>
+        <!-- 交叉 -->
+        <circle cx="350" cy="119" r="4" fill="#1f1d1a"/>
+        <circle cx="340" cy="191" r="4" fill="#1f1d1a"/>
+        <line x1="350" y1="119" x2="340" y2="191" stroke="#1f1d1a" stroke-dasharray="4 3"/>
+        <text x="362" y="171" font-size="15" fill="#1f1d1a">交叉：中点连线和筷尖连线反向</text>
+        <!-- 前后错开 -->
+        <line x1="600" y1="191" x2="600" y2="300" stroke="#b4532a" stroke-dasharray="3 3"/>
+        <line x1="640" y1="135" x2="640" y2="300" stroke="#b4532a" stroke-dasharray="3 3"/>
+        <line x1="600" y1="294" x2="640" y2="294" stroke="#b4532a" stroke-width="2.5" marker-start="url(#rw-arr-o)" marker-end="url(#rw-arr-o)"/>
+        <text x="588" y="300" font-size="17" fill="#b4532a" text-anchor="end">前后错开：两筷尖沿筷子方向差多少</text>
+        <text x="20" y="300" font-size="15" fill="#6b665e">左端握持端（粗）</text>
+      </svg></div>
+      <figcaption>奖励里几何项量的东西（示意，不按比例）：纸面就是开合平面，虚线是上筷张开、合上时的位置，括号里是该项得分降到 0.37 的距离。</figcaption>
+    </figure>
+    <p class="ref"><span class="hg" style="padding:0 6px;border-radius:4px">绿底 = 加分</span> <span class="hb" style="padding:0 6px;border-radius:4px">红底 = 扣分</span>。每步（50 ms）算一次，一局最长 400 步。G = 筷尖间隙，G* = 目标，e = |G − G*|（目标为 0 时 e = max(G, 0)，压得更紧不算误差），d<sub>尖</sub> = 下筷筷尖离开局的距离。“每步”= 权重 × 该项在 v4 训练末段（1.10 亿步）的平均值。</p>
     <div class="tablewrap">
-      <table class="dense">
-        <thead><tr><th>项</th><th>管什么</th><th>权重</th><th>怎么算</th></tr></thead>
+      <table class="dense" id="reward-tab">
+        <thead><tr><th>项</th><th>式子</th><th>权重</th><th>管什么</th><th>为什么这样设</th><th>v4 每步</th></tr></thead>
         <tbody>
-          <tr><td>存活</td><td class="w">没掉就有</td><td>+1.0</td><td>每步 1</td></tr>
-          <tr><td>跟踪间隙</td><td class="w">筷尖间隙跟上目标；下筷动了就拿不到</td><td>+2.0（粗）<br>+1.0（精）</td><td class="w">误差 8 mm / 2 mm 时得 0.37；再乘“下筷筷尖没动”的系数（动 10 mm 时 0.37）</td></tr>
-          <tr><td>下筷不动</td><td class="w">下筷筷尖、握点、朝向都保持开局</td><td>+1.5 / +0.75 / +0.75</td><td class="w">筷尖动 5 mm、握点动 3 mm、转 4° 时各得 0.37</td></tr>
-          <tr><td>上筷绕握点转</td><td class="w">上筷不整根平移</td><td>+0.5</td><td>握点动 6 mm 时得 0.37</td></tr>
-          <tr><td>不偏出开合平面</td><td class="w">两根不左右剪开</td><td>+0.75</td><td>偏 5 mm 时得 0.37</td></tr>
-          <tr><td>前后错开、交叉</td><td class="w">两个筷尖别一前一后，两根别交叉</td><td>−0.5 / −0.5</td><td>错开 30 mm 封顶</td></tr>
-          <tr><td>偏离握姿</td><td class="w">关节别离开局握姿太远</td><td>−0.05</td><td>22 个关节偏差的平方和</td></tr>
-          <tr><td>筷子速度、力矩、功</td><td class="w">筷子别晃，手省力</td><td>−0.3 / −0.1 / −0.5</td><td>—</td></tr>
+          <tr><td class="pos">存活</td><td>1</td><td>1.0</td><td class="w">没掉就有</td><td class="w">掉了不另扣分，靠这项让“别掉”值钱</td><td>+1.00</td></tr>
+          <tr><td class="pos">粗跟踪</td><td>exp(−e / 8 mm) × exp(−d<sub>尖</sub> / 10 mm)</td><td>2.0</td><td class="w">间隙跟上目标</td><td class="w"><span class="tag-inf">推断</span>尺度宽，误差大时也有梯度</td><td>+0.50</td></tr>
+          <tr><td class="pos">精跟踪</td><td>exp(−e / 2 mm) × exp(−d<sub>尖</sub> / 10 mm)</td><td>1.0</td><td class="w">间隙逼近到毫米级</td><td class="w"><span class="tag-inf">推断</span>粗跟踪在误差几毫米时已接近满分，要另一项把它压下去</td><td>+0.11</td></tr>
+          <tr><td class="pos">下筷筷尖不动</td><td>exp(−d<sub>尖</sub> / 5 mm)</td><td>1.5</td><td class="w">下筷顶住不动</td><td class="w">替代 v3 的“筷尖中点漂移”扣分：只动上筷时中点本来就要动；v3 中点漂移一直约 35 mm</td><td>+0.46</td></tr>
+          <tr><td class="pos">下筷握点不动</td><td>exp(−握点位移 / 3 mm)</td><td>0.75</td><td class="w">下筷不在手里滑</td><td class="w">v3 没约束握点，手沿筷子滑 6 cm 以内不会被发现</td><td>+0.32</td></tr>
+          <tr><td class="pos">下筷不转</td><td>exp(−转角 / 4°)，含绕长轴滚</td><td>0.75</td><td class="w">下筷朝向不变</td><td class="w"><span class="tag-inf">推断</span>筷尖、握点都不动时下筷还能绕长轴滚</td><td>+0.31</td></tr>
+          <tr><td class="pos">上筷握点不动</td><td>exp(−握点位移 / 6 mm)</td><td>0.5</td><td class="w">上筷绕握点转，不整根平移</td><td class="w">人用筷子就是这样开合；<span class="tag-inf">推断</span>尺度比下筷宽一倍，因为上筷要动</td><td>+0.16</td></tr>
+          <tr><td class="pos">不偏出开合平面</td><td>exp(−筷尖连线偏出开局平面的距离 / 5 mm)</td><td>0.75</td><td class="w">两根不左右剪开</td><td class="w"><span class="tag-inf">推断</span>只看间隙的话，左右错开也能凑出间隙</td><td>+0.15</td></tr>
+          <tr><td class="neg">前后错开</td><td>min(沿筷子方向的错开 / 30 mm, 1)</td><td>0.5</td><td class="w">两个筷尖别一前一后</td><td class="w"><span class="tag-inf">推断</span>筷尖错开就夹不住东西</td><td>−0.12</td></tr>
+          <tr><td class="neg">交叉</td><td>max(−cos(中点连线, 筷尖连线), 0)</td><td>0.5</td><td class="w">两根别在前半段交叉</td><td class="w"><span class="tag-inf">推断</span>交叉后筷尖距离也可能等于目标</td><td>0.00</td></tr>
+          <tr><td class="neg">偏离握姿</td><td>Σ(关节角 − 开局关节角)²，22 个关节</td><td>0.05</td><td class="w">手别离开局握姿太远</td><td class="w"><span class="tag-inf">推断</span>开局握姿是搜过、拿得稳的，留在附近更不容易掉</td><td>−0.04</td></tr>
+          <tr><td class="neg">筷子速度</td><td>两根重心速度之和（m/s）</td><td>0.3</td><td class="w">筷子别晃</td><td class="w">—</td><td>−0.01</td></tr>
+          <tr><td class="neg">力矩</td><td>Σ 力矩²</td><td>0.1</td><td class="w">手省力</td><td class="w">—</td><td>−0.08</td></tr>
+          <tr><td class="neg">功</td><td>min((Σ 力矩 × 关节速度)², 10)</td><td>0.5</td><td class="w">动作别猛</td><td class="w">—</td><td>−0.03</td></tr>
+          <tr><td colspan="5"><strong>合计</strong>（每步最多 +8.25）</td><td><strong>+2.73</strong></td></tr>
         </tbody>
       </table>
     </div>
-    <p class="ref">每步算一次，加分项满分 0–1。掉了不另扣分，只是拿不到后面的分；所以“不动”类要求都写成加分，避免每步回报变负（v2 回报变负后学会了早掉）。</p>
+    <ul class="find">
+      <li><strong>跟踪分乘“下筷没动”的系数</strong>：不乘的话，挪下筷也能凑出间隙；下筷筷尖动 10 mm，跟踪分只剩 37%。</li>
+      <li><strong>“不动”类写成加分</strong>：掉了不另扣分，只是拿不到后面每步的分；每步回报一旦为负，早掉反而划算（v2 就学会了早掉）。</li>
+      <li><strong>目标</strong>：开局保持握姿原来的间隙 0.5–1.5 s，之后每 2–4 s 在 0–40 mm 里均匀重抽，20% 直接是 0（合上）。正在改成只有关（0）/ 开（30 mm）两个状态来回切。</li>
+    </ul>
   </section>
 
   <section id="train">
